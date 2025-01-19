@@ -20,7 +20,7 @@
     <!-- Agrega el iframe de WhatsApp Web -->
     <div class="card-body text-center">
       <a
-        href="https://api.whatsapp.com/send?phone=521234567890&text=Hola%20%21%20Quiero%20más%20información"
+        href="https://api.whatsapp.com/send?phone=+50582712936&text=Hola%20%21%20Quiero%20más%20información"
         target="_blank"
         class="btn btn-primary">
         Enviar mensaje por WhatsApp

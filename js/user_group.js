@@ -27,9 +27,9 @@ function ListUserGroup() {
         data: "status",
         render: function (data, type, row) {
           if (data == "1") {
-            return "<span class='badge bg-success'>ACTIVE</span>";
+            return "<span class='badge bg-success'>ACTIVO</span>";
           } else {
-            return "<span class='badge bg-danger'>INACTIVE</span>";
+            return "<span class='badge bg-danger'>INACTIVO</span>";
           }
         },
       },
@@ -37,31 +37,13 @@ function ListUserGroup() {
       { data: "updated_at" },
       {
         defaultContent:
-          "<button type='button' class='btnEdit btn btn-info btn-block btn-sm'><i class='fa fa-edit'></i></button>",
-      },
-      {
-        data: "status",
-        render: function (data, type, row) {
-          if (data == "2") {
-            return "<button type='button' class='btnActivate btn btn-success btn-block btn-sm'><i class='far fa-check-circle'></i></button>";
-          } else {
-            return "<button type='button' class='btn btn-success btn-block btn-sm' disabled><i class='far fa-check-circle'></i></button>";
-          }
-        },
-      },
-      {
-        data: "status",
-        render: function (data, type, row) {
-          if (data == "1") {
-            return "<button type='button' class='btnDesactivate btn btn-danger btn-block btn-sm'><i class='far fa-times-circle'></i></button>";
-          } else {
-            return "<button type='button' class='btn btn-danger btn-block btn-sm' disabled><i class='far fa-times-circle'></i></button>";
-          }
-        },
-      },
-      {
-        defaultContent:
-          "<button type='button' class='btnDelet btn bg-maroon btn-block btn-sm'><i class='fas fa-trash-alt'></i></button>",
+      "<button type='button' class='btn btn-info dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'> Acciones </button>" +
+      "<div class='dropdown-menu'>" +
+      "<button class='btnEdit dropdown-item' type='button'><i class='fa fa-edit'></i> Editar</button>" +
+      "<button class='btnActivate dropdown-item' type='button'><i class='far fa-check-circle'></i> Activar</button>" +
+      "<button class='btnDesactivate dropdown-item' type='button'><i class='far fa-times-circle'></i> Desactivar</button>" +
+      "<button class='btnDelet dropdown-item' type='button'><i class='fas fa-trash-alt'></i> Eliminar</button>" +
+      "</div>",
       },
     ],
 
@@ -72,15 +54,10 @@ function ListUserGroup() {
     },
     fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
       $($(nRow).find("td")[0]).css("text-align", "center");
-      //$($(nRow).find("td")[1]).css("text-align", "center");
-      //$($(nRow).find("td")[2]).css("text-align", "center");
       $($(nRow).find("td")[3]).css("text-align", "center");
       $($(nRow).find("td")[4]).css("text-align", "center");
       $($(nRow).find("td")[5]).css("text-align", "center");
       $($(nRow).find("td")[6]).css("text-align", "center");
-      $($(nRow).find("td")[7]).css("text-align", "center");
-      $($(nRow).find("td")[8]).css("text-align", "center");
-      $($(nRow).find("td")[9]).css("text-align", "center");
     },
   });
 
@@ -137,6 +114,13 @@ btn_CreateGroup.addEventListener("click", function () {
       }
     });
   }
+});
+
+//Function cancel create group
+btn_Cancel.addEventListener("click", function () {
+  document.getElementById("inputGroupName").value = "";
+  document.getElementById("inputSlug").value = "";
+  $("#add .btn.btn-tool[data-card-widget='collapse']").trigger("click");
 });
 
 //configuration notification toastr
@@ -235,7 +219,12 @@ btn_EditGroup.addEventListener("click", function () {
 $("#list_group").on("click", ".btnActivate", function () {
   var data = tbl_users_group.row($(this).parents("tr")).data();
   let id = data.group_id;
+  let  statusValue = data.status;
   let status = 1;
+  if (statusValue == 1) {
+    toastr["warning"]("The GROUP is already ACTIVATED", "Warning");
+    return;
+  }
   Swal.fire({
     title: "Are you sure?",
     icon: "warning",
@@ -264,7 +253,12 @@ $("#list_group").on("click", ".btnActivate", function () {
 $("#list_group").on("click", ".btnDesactivate", function () {
   var data = tbl_users_group.row($(this).parents("tr")).data();
   let id = data.group_id;
+  let statusValue = data.status;
   let status = 2;
+  if (statusValue == 2) {
+    toastr["warning"]("The GROUP is already DESACTIVATED", "Warning");
+    return;
+  }
   Swal.fire({
     title: "Are you sure?",
     icon: "warning",

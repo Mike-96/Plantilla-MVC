@@ -3,7 +3,6 @@
   if (!isset($_SESSION['SESSION_ID'])) {
 	header('Location: login.php');
   }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -39,6 +38,8 @@
 	<link rel="stylesheet" href="plantilla/plugins/sweetalert2/sweetalert2.min.css">
   <!--Link css loader -->
   <link rel="stylesheet" href="plantilla/dist/css/loader.css">
+  <!--Link css styles -->
+  <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
