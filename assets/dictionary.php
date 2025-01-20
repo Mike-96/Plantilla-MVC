@@ -1,5 +1,6 @@
 
 <?php
+$nameCompany=["name"=>"Company Name"];
 $dictionary = [
     "number" => "#",
     "rolName" => "Nombre del Rol",
@@ -21,14 +22,53 @@ $dictionary = [
     "save" => "Guardar",
     "options" => "Opciones",
     "actions" => "Acciones",
+    "userName" => "Nombre de Usuario",
+    "account" => "Cuenta",
+    "password" => "Contraseña",
+    "repeatPassword" => "Repetir Contraseña",
+    "rolGroup" => "Grupo de Roles",
+    "list" => "Lista",
+    "card" => "Tarjeta",
+    "relatedStaff" => "Personal Relacionado",
+    "lastLogin" => "Último Inicio de Sesión",
+    "img" => "Imagen",
+    "firstName" => "Nombre",
+    "lastName" => "Apellido",
+    "email" => "Correo Electrónico",
+    "phone" => "Teléfono",
+    "address" => "Dirección",
+    "codeStaff" => "Código de Personal",
+    "dni" => "Identificación",
+    "birthDate" => "Fecha de Nacimiento",
+    "city" => "Ciudad",
+    "country" => "País",
+    "hireDate" => "Fecha de Contratación",
+    "generate" => "Generar",
+    "enter" => "Ingresar",
+    "addLatter" => "¿Agregar una letra al inicio del código?",
+    "addNumber" => "¿Agregar número alcódigo?",
+    "lenghCode" => "Longitud de caracteres del código",
+    "options" => "Opciones",
+    "department" => "Departamento",
+    "location" => "Ubicación",
+
 ];
 $title = [
     "rolGroup" => "Grupo de Roles",
     "listGroup" => "Lista de Grupos",
     "editRol" => "Editar Rol",
+    "navigationMenu" => "Menú de Navegación",
+    "users" => "Usuarios",
+    "listUsers" => "Lista de Usuarios",
+    "staff" => "Personal",
 ];
 $routers = [
     "listGroups" => "Lista de Grupos",
     "users" => "Usuarios",
+    "dashboard" => "Dashboard",
+    "users" => "Usuarios",
+    "listUsers" => "Lista de Usuarios",
+    "listRoles" => "Lista de Roles",
+    "staff" => "Personal",
 ];
 ?>

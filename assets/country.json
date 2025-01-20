@@ -1,0 +1,239 @@
+{
+    "country": [
+        {
+            "name": "Nicaragua",
+            "code": "NI",
+            "departments": [
+                {
+                    "name": "Boaco",
+                    "municipalities": [
+                        "Boaco",
+                        "Camoapa",
+                        "Santa Lucía",
+                        "San José de los Remates",
+                        "San Lorenzo",
+                        "Teustepe"
+                    ]
+                },
+                {
+                    "name": "Carazo",
+                    "municipalities": [
+                        "Jinotepe",
+                        "Diriamba",
+                        "San Marcos",
+                        "Santa Teresa",
+                        "Dolores",
+                        "La Paz de Carazo",
+                        "El Rosario",
+                        "La Conquista"
+                    ]
+                },
+                {
+                    "name": "Chinandega",
+                    "municipalities": [
+                        "Chinandega",
+                        "Corinto",
+                        "El Realejo",
+                        "Chichigalpa",
+                        "Posoltega",
+                        "El Viejo",
+                        "Puerto Morazán",
+                        "Somotillo",
+                        "Villa Nueva",
+                        "Santo Tomás del Norte",
+                        "Cinco Pinos",
+                        "San Pedro del Norte"
+                    ]
+                },
+                {
+                    "name": "Chontales",
+                    "municipalities": [
+                        "Juigalpa",
+                        "Acoyapa",
+                        "Santo Tomás",
+                        "Villa Sandino",
+                        "San Pedro de Lóvago",
+                        "La Libertad",
+                        "Santo Domingo",
+                        "San Francisco de Cuapa",
+                        "El Coral"
+                    ]
+                },
+                {
+                    "name": "Estelí",
+                    "municipalities": [
+                        "Estelí",
+                        "Pueblo Nuevo",
+                        "Condega",
+                        "San Juan de Limay",
+                        "La Trinidad",
+                        "San Nicolás"
+                    ]
+                },
+                {
+                    "name": "Granada",
+                    "municipalities": [
+                        "Granada",
+                        "Nandaime",
+                        "Diriomo",
+                        "Diriá"
+                    ]
+                },
+                {
+                    "name": "Jinotega",
+                    "municipalities": [
+                        "Jinotega",
+                        "San Rafael del Norte",
+                        "San Sebastián de Yalí",
+                        "La Concordia",
+                        "San José de Bocay",
+                        "El Cuá",
+                        "Santa María de Pantasma"
+                    ]
+                },
+                {
+                    "name": "León",
+                    "municipalities": [
+                        "León",
+                        "El Sauce",
+                        "La Paz Centro",
+                        "Santa Rosa del Peñón",
+                        "Quetzalguaque",
+                        "Nagarote",
+                        "El Jicaral",
+                        "La Paz de Carazo",
+                        "Achuapa",
+                        "Telica"
+                    ]
+                },
+                {
+                    "name": "Madriz",
+                    "municipalities": [
+                        "Somoto",
+                        "Palacagüina",
+                        "Telpaneca",
+                        "San Juan de Río Coco",
+                        "Yalagüina",
+                        "Totogalpa",
+                        "San Lucas",
+                        "Las Sabanas"
+                    ]
+                },
+                {
+                    "name": "Managua",
+                    "municipalities": [
+                        "Managua",
+                        "Ciudad Sandino",
+                        "Tipitapa",
+                        "Villa El Carmen",
+                        "San Rafael del Sur",
+                        "Ticuantepe",
+                        "Mateare",
+                        "El Crucero"
+                    ]
+                },
+                {
+                    "name": "Masaya",
+                    "municipalities": [
+                        "Masaya",
+                        "Nindirí",
+                        "Tisma",
+                        "Catarina",
+                        "San Juan de Oriente",
+                        "Nandasmo",
+                        "Niquinohomo",
+                        "Masatepe",
+                        "La Concepción"
+                    ]
+                },
+                {
+                    "name": "Matagalpa",
+                    "municipalities": [
+                        "Matagalpa",
+                        "San Ramón",
+                        "Matiguás",
+                        "Muy Muy",
+                        "Esquipulas",
+                        "San Dionisio",
+                        "Río Blanco",
+                        "Sébaco",
+                        "Ciudad Darío",
+                        "Terrabona",
+                        "Tuma-La Dalia",
+                        "Rancho Grande"
+                    ]
+                },
+                {
+                    "name": "Nueva Segovia",
+                    "municipalities": [
+                        "Ocotal",
+                        "Mozonte",
+                        "Santa María",
+                        "Macuelizo",
+                        "Dipilto",
+                        "Ciudad Antigua",
+                        "San Fernando",
+                        "El Jícaro",
+                        "Murra",
+                        "Quilalí",
+                        "Wiwilí de Nueva Segovia"
+                    ]
+                },
+                {
+                    "name": "Río San Juan",
+                    "municipalities": [
+                        "San Carlos",
+                        "San Miguelito",
+                        "El Almendro",
+                        "Morrito",
+                        "El Castillo",
+                        "San Juan del Norte"
+                    ]
+                },
+                {
+                    "name": "Rivas",
+                    "municipalities": [
+                        "Rivas",
+                        "San Jorge",
+                        "Tola",
+                        "San Juan del Sur",
+                        "Belén",
+                        "Potosí",
+                        "Buenos Aires",
+                        "Cárdenas",
+                        "Moyogalpa",
+                        "Altagracia"
+                    ]
+                },
+                {
+                    "name": "Región Autónoma de la Costa Caribe Norte",
+                    "municipalities": [
+                        "Bilwi (Puerto Cabezas)",
+                        "Waspam",
+                        "Bonanza",
+                        "Rosita",
+                        "Siuna",
+                        "Prinzapolka",
+                        "Mulukukú",
+                        "Wiwilí de Jinotega"
+                    ]
+                },
+                {
+                    "name": "Región Autónoma de la Costa Caribe Sur",
+                    "municipalities": [
+                        "Bluefields",
+                        "Laguna de Perlas",
+                        "Desembocadura de Río Grande",
+                        "Kukra Hill",
+                        "La Cruz de Río Grande",
+                        "El Tortuguero",
+                        "Paiwas",
+                        "Prinzapolka"
+                    ]
+                }
+            ]
+        }
+        
+
+    ]
+}

@@ -1,4 +1,4 @@
-<!-- <script src="../../js/user_group.js?rev=<?php echo time();?>"></script>  -->
+
 <?php
     require_once '../../assets/dictionary.php';
 ?>
@@ -8,7 +8,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1><i class="fas fa-users"></i> <?php echo $title['rolGroup']; ?></h1>
+                <p><i class="fas fa-users"></i> <?php echo $title['rolGroup']; ?></p>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -27,8 +27,8 @@
 
             <div class="col-md-12">
                 <div class="card card-danger card-outline collapsed-card">
-                    <div class="card-header">
-                        <h3 class="card-title" type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <div class="card-header" type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <h3 class="card-title">
                         <i class="fa fa-plus-square" aria-hidden="true"></i> <?php echo $dictionary['add']; ?></h3>
                         <div class="card-tools" id="add">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -87,7 +87,7 @@
                                     <th><?php echo $dictionary['status']; ?></th>
                                     <th><?php echo $dictionary['createAt']; ?></th>
                                     <th><?php echo $dictionary['updateAt']; ?></th>
-                                    <th class="btnth"><?php echo $dictionary['actions']; ?></th>
+                                    <th><?php echo $dictionary['actions']; ?></th>
                                 </tr>
                             </thead>
                             <tbody>

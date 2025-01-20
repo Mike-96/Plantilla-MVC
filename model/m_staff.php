@@ -70,25 +70,37 @@ class model_staff extends connectBD
     }
 
 
-    public function create_group($groupName, $slug, $status)
+    public function create_staff($group_id, $code_staff, $firts_name, $last_name, $email, $dni, $phone, $department, $salary, $hire_date, $address, $city, $country, $birthdate, $status)
     {
         $connexion = connectBD::connect();
-        $sql = "SELECT COUNT(*) FROM user_group WHERE group_name = ?";
+        $sql = "SELECT COUNT(*) FROM staff WHERE dni = ?";
         
         $query = $connexion->prepare($sql);
-        $query->bindParam(1, $groupName, PDO::PARAM_STR);
+        $query->bindParam(1, $dni, PDO::PARAM_STR);
         $query->execute();
         
         $row = $query->fetchColumn();
         
         if ($row == 0) {
-            $sqlInsert = "INSERT INTO user_group(group_name, slug, status, created_at) VALUES(?, ?, ?, NOW())";
+            $sqlInsert = "INSERT INTO staff($group_id, $code_staff, $firts_name, $last_name, $email, $dni, $phone, $department, $hire_date, $address, $city, $country, $birthdate, $status, created_at) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,NOW())";
             
             $queryInsert = $connexion->prepare($sqlInsert);
-            $queryInsert->bindParam(1, $groupName, PDO::PARAM_STR);
-            $queryInsert->bindParam(2, $slug, PDO::PARAM_STR);
-            $queryInsert->bindParam(3, $status, PDO::PARAM_INT);
-            
+            $queryInsert->bindParam(1, $group_id, PDO::PARAM_STR);
+            $queryInsert->bindParam(2, $code_staff, PDO::PARAM_STR);
+            $queryInsert->bindParam(3, $firts_name, PDO::PARAM_STR);
+            $queryInsert->bindParam(4, $last_name, PDO::PARAM_STR);
+            $queryInsert->bindParam(5, $email, PDO::PARAM_STR);
+            $queryInsert->bindParam(6, $dni, PDO::PARAM_STR);
+            $queryInsert->bindParam(7, $phone, PDO::PARAM_STR);
+            $queryInsert->bindParam(8, $department, PDO::PARAM_STR);
+            $queryInsert->bindParam(9, $salary, PDO::PARAM_STR);
+            $queryInsert->bindParam(10, $hire_date, PDO::PARAM_STR);
+            $queryInsert->bindParam(11, $address, PDO::PARAM_STR);
+            $queryInsert->bindParam(12, $city, PDO::PARAM_STR);
+            $queryInsert->bindParam(13, $country, PDO::PARAM_STR);
+            $queryInsert->bindParam(14, $birthdate, PDO::PARAM_STR);
+            $queryInsert->bindParam(15, $status, PDO::PARAM_INT);
+
             $queryInsert->execute();
             
             $this->close_connection();

@@ -37,7 +37,7 @@ function ListUserGroup() {
       { data: "updated_at" },
       {
         defaultContent:
-      "<button type='button' class='btn btn-info dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'> Acciones </button>" +
+      "<button type='button' class='btn btn-sm btn-info dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'> Acciones </button>" +
       "<div class='dropdown-menu'>" +
       "<button class='btnEdit dropdown-item' type='button'><i class='fa fa-edit'></i> Editar</button>" +
       "<button class='btnActivate dropdown-item' type='button'><i class='far fa-check-circle'></i> Activar</button>" +

@@ -1,15 +1,17 @@
+<?php
+include_once '../../assets/dictionary.php';
+?>
+
 <!-- header view page -->
 <section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1><i class="fas fa-sitemap"></i> Staff</h1>
+                <p><i class="fas fa-id-card-alt"></i> <?php echo $title['staff']; ?></p>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active">Administrations</li>
-                    <li class="breadcrumb-item active">Staff</li>
+                    <li class="breadcrumb-item active"> <?php echo $title['staff']; ?></li>
                 </ol>
             </div>
         </div>
@@ -23,10 +25,10 @@
 
             <div class="col-md-12">
                 <div class="card card-danger card-outline collapsed-card">
-                    <div class="card-header">
+                    <div class="card-header" type="button" class="btn btn-tool" data-card-widget="collapse">
                         <h3 class="card-title">
-                            <i class="fas fa-th-large"></i>
-                            Add Staff
+                            <i class="fas fa-address-book"></i>
+                            <?php echo $dictionary['add']; ?>
                         </h3>
                         <div class="card-tools" id="addStaff">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -40,56 +42,56 @@
                             <div class="form-row col-md-10">
 
                                 <div class="form-group col-md-6">
-                                    <label for="inputStaffName">FIRTS NAME <span style="color: red;">*</span></label>
+                                    <label for="inputStaffName"><?php echo $dictionary['firstName']; ?><span style="color: red;">*</span></label>
 
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-id-card"></i></span>
                                         </div>
-                                        <input type="text" class="form-control" id="inputStaffName" placeholder="Enter Firts Name">
+                                        <input type="text" class="form-control" id="inputStaffName">
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="inputStaffLastName">LAST NAME <span style="color: red;">*</span></label>
+                                    <label for="inputStaffLastName"><?php echo $dictionary['lastName']; ?><span style="color: red;">*</span></label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-id-card"></i></span>
                                         </div>
-                                        <input type="text" class="form-control" id="inputStaffLastName" placeholder="Enter Last Name">
+                                        <input type="text" class="form-control" id="inputStaffLastName">
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="inputCodeStaff">CODE STAFF <span style="color: red;">*</span></label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-id-card-alt"></i></span>
-                                        </div>
-                                        <input type="text" class="form-control" id="inputCodeStaff" placeholder="Enter Code">
-                                        <span class="input-group-append">
-                                            <button id="openGenerateCodeStaff" type="button" class="btn btn-info"><i class="fas fa-random"></i> Generate</button>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="inputEmail">EMAIL <span style="color: red;">*</span></label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-at"></i></span>
-                                        </div>
-                                        <input type="email" class="form-control" id="inputEmail" placeholder="Enter Email">
-                                    </div>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="inputDNI">DNI <span style="color: red;">*</span></label>
+                                    <label for="inputCodeStaff"><?php echo $dictionary['codeStaff']; ?><span style="color: red;">*</span></label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-fingerprint"></i></span>
                                         </div>
-                                        <input type="text" class="form-control" id="inputDNI" placeholder="Enter DNI">
+                                        <input type="text" class="form-control" id="inputCodeStaff">
+                                        <span class="input-group-append">
+                                            <button id="openGenerateCodeStaff" type="button" class="btn btn-info"><i class="fas fa-random"></i> <?php echo $dictionary['generate']; ?></button>
+                                        </span>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="inputPhone">PHONE <span style="color: red;">*</span></label>
+                                    <label for="inputEmail"><?php echo $dictionary['email']; ?><span style="color: red;">*</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-at"></i></span>
+                                        </div>
+                                        <input type="email" class="form-control" id="inputEmail">
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputDNI"><?php echo $dictionary['dni']; ?><span style="color: red;">*</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-passport"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control" id="inputDNI">
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputPhone"><?php echo $dictionary['phone']; ?><span style="color: red;">*</span></label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-phone"></i></span>
@@ -98,7 +100,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="inputBIRTHDATE">BIRTHDATE <span style="color: red;">*</span></label>
+                                    <label for="inputBIRTHDATE"><?php echo $dictionary['birthDate']; ?><span style="color: red;">*</span></label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
@@ -107,44 +109,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="inputADDRESS">ADDRESS <span style="color: red;">*</span></label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-map-marked-alt"></i></span>
-                                        </div>
-                                        <input type="text" class="form-control" id="inputADDRESS" placeholder="Enter Code">
-                                    </div>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="inputCITY">CITY <span style="color: red;">*</span></label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-city"></i></span>
-                                        </div>
-                                        <input type="text" class="form-control" id="inputCITY" placeholder="Enter City">
-                                    </div>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="inputCOUNTRY">COUNTRY <span style="color: red;">*</span></label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-flag"></i></span>
-                                        </div>
-                                        <input type="text" class="form-control" id="inputCOUNTRY" placeholder="Enter Country">
-                                    </div>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="selectGroup">GROUP <span style="color: red;">*</span></label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-users-cog"></i></span>
-                                        </div>
-                                        <select class="custom-select form-control" id="selectGroup"></select>
-                                    </div>
-                                </div>
-
-                                <div class="form-group col-md-6">
-                                    <label for="inputHIREDATE">HIRE DATE <span style="color: red;">*</span></label>
+                                    <label for="inputHIREDATE"><?php echo $dictionary['hireDate']; ?><span style="color: red;">*</span></label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
@@ -152,10 +117,71 @@
                                         <input type="text" class="form-control" id="inputHIREDATE" placeholder="yyyy/mm/dd">
                                     </div>
                                 </div>
+                                <!-- Pais -->
+                                <div class="form-group col-md-6">
+                                    <label for="inputCOUNTRY"><?php echo $dictionary['country']; ?><span style="color: red;">*</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-globe-americas"></i></span>
+                                        </div>
+                                        <select class="custom-select form-control" id="selectCountry"></select>
+                                    </div>
+                                </div>
+                                <!-- Departamento -->
+                                <div class="form-group col-md-6">
+                                    <label for="inputDepartment"><?php echo $dictionary['department']; ?><span style="color: red;">*</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-city"></i></span>
+                                        </div>
+                                        <select class="custom-select form-control" id="selectDepartment"></select>
+                                    </div>
+                                </div>
+                                <!-- localidad -->
+                                <div class="form-group col-md-6">
+                                    <label for="inputCITY"><?php echo $dictionary['location']; ?><span style="color: red;">*</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-map-marked-alt"></i></span>
+                                        </div>
+                                        <select class="custom-select form-control" id="selectCity"></select>
+                                    </div>
+                                </div>
+                                <!-- direccion -->
+                                <div class="form-group col-md-6">
+                                    <label for="inputADDRESS"><?php echo $dictionary['address']; ?><span style="color: red;">*</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-location-arrow"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control" id="inputADDRESS">
+                                    </div>
+                                </div>
+                                <!-- roles -->
+                                <div class="form-group col-md-6">
+                                    <label for="selectGroup"><?php echo $dictionary['rolGroup']; ?><span style="color: red;">*</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-users-cog"></i></span>
+                                        </div>
+                                        <select class="custom-select form-control" id="selectGroup"></select>
+                                    </div>
+                                </div>
+                                <!-- Status -->
+                                <div class="form-group col-md-6">
+                                    <label for="selectStatus"><?php echo $dictionary['status']; ?><span style="color: red;">*</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-exclamation-circle"></i></span>
+                                        </div>
+                                        <select class="custom-select form-control" id="selectStatus"></select>
+                                    </div>
+                                </div>
+
                                 <br>
                                 <div>
-                                    <button type="button" class="btn btn-danger"><i class="fas fa-ban"></i> Cancel</button>
-                                    <button id="btnCreateStaff" type="button" class="btn btn-success"><i class="fas fa-check"></i> CREATE</button>
+                                    <button type="button" class="btn btn-danger btn-sm"><i class="fas fa-ban"></i> <?php echo $dictionary['cancel']; ?></button>
+                                    <button id="btnCreateStaff" type="button" class="btn btn-success btn-sm"><i class="fas fa-check"></i> <?php echo $dictionary['create']; ?></button>
                                 </div>
                             </div>
                         </div>
@@ -213,11 +239,11 @@
 </section>
 
 <!-- modal generar staff -->
-<div class="modal fade" id="modalGenerateCodeStaff" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" draggable="true">
+<div class="modal fade" id="modalGenerateCodeStaff" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="undefined" draggable="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title"><b><i class="fas fa-filter"></i> Options</b></h4>
+                <h4 class="modal-title"><b><i class="fas fa-filter"></i> <?php echo $dictionary['options']; ?></b></h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true"><b><i class="far fa-times-circle"></i></b></span>
                 </button>
@@ -228,19 +254,19 @@
                     <div class="form-group">
                         <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
                             <input type="checkbox" class="custom-control-input" id="letters">
-                            <label class="custom-control-label" for="letters">Add a letter at the beginning of the code?</label>
+                            <label class="custom-control-label" for="letters"><?php echo $dictionary['addLatter']; ?></label>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
                             <input type="checkbox" checked="" class="custom-control-input" id="numbers">
-                            <label class="custom-control-label" for="numbers">Include numbers</label>
+                            <label class="custom-control-label" for="numbers"><?php echo $dictionary['addNumber']; ?></label>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="inputlong">Code length <span style="color: red;">*</span></label>
+                        <label for="inputlong"><?php echo $dictionary['lenghCode']; ?><span style="color: red;">*</span></label>
                         <input type="number" class="form-control" id="inputlong" placeholder="Enter the code size" value="7">
 
                     </div>
@@ -248,11 +274,11 @@
                 </div>
             </div>
 
-            <div class="modal-footer justify-content-between">  
-                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-ban"></i> Cancel</button>
-                <button id="btnGenerateCodeStaff" type="button" class="btn btn-success"><i class="fas fa-check"></i> Generate</button>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-ban"></i> <?php echo $dictionary['cancel']; ?></button>
+                <button id="btnGenerateCodeStaff" type="button" class="btn btn-success"><i class="fas fa-check"></i> <?php echo $dictionary['generate']; ?></button>
             </div>
-            
+
             <div class="loaderRandonCodeStaff" id="loaderRandonCodeStaff" style="display: none;"></div>
 
         </div>
@@ -272,5 +298,6 @@
     $(document).ready(function() {
         listStaff();
         comboBox_Group();
+        comboBox_Country();
     });
 </script>

@@ -76,83 +76,80 @@ var btn_OpenModalGenerate = document.getElementById("openGenerateCodeStaff");
 //Function add Staff
 btn_CreateStaff.addEventListener("click", function () {
   //selection input value
-  let txtFirstName = document.getElementById("inputStaffName").value;
-  let txtLastName = document.getElementById("inputStaffLastName").value;
-  let txtCodeSatff = document.getElementById("inputCodeStaff").value;
-  let txtEmail = document.getElementById("inputEmail").value;
-  let txtDNI = document.getElementById("inputDNI").value;
-  let txtPhone = document.getElementById("inputPhone").value;
-  let txtBirthdate = document.getElementById("inputBIRTHDATE").value;
-  let txtAddress = document.getElementById("inputADDRESS").value;
-  let txtCity = document.getElementById("inputCITY").value;
-  let txtCountry = document.getElementById("inputCOUNTRY").value;
-  let txtGroup = document.getElementById("selectGroup").value;
-  let txtHiredate = document.getElementById("inputHIREDATE").value;
+  let tGropupID = document.getElementById("selectGroup").value
+  let tCodeStaff = document.getElementById("inputCodeStaff").value;
+  let tName = document.getElementById("inputStaffName").value;
+  let tLastName = document.getElementById("inputStaffLastName").value;
+  let tEmail = document.getElementById("inputEmail").value;
+  let tDNI = document.getElementById("inputDNI").value;
+  let tPhone = document.getElementById("inputPhone").value;
+  let tDepartament = document.getElementById("selectDepartment").value;
+  let tHireDate = document.getElementById("inputHIREDATE").value;
+  let tAddress = document.getElementById("inputADDRESS").value;
+  let tCity = document.getElementById("selectCity").value;
+  let tCountry = document.getElementById("selectCountry").value;;
+  let tBirthDate = document.getElementById("inputBIRTHDATE").value;
+  let tStatus = document.getElementById("inputHIREDATE").value;
 
   if (
-    txtFirstName == 0 ||
-    txtLastName == 0 ||
-    txtCodeSatff == 0 ||
+    tCodeStaff == 0 ||
+    tName == 0 ||
+    tLastName == 0 ||
     txtEmail == 0 ||
-    txtDNI == 0 ||
-    txtPhone == 0 ||
-    txtBirthdate == 0 ||
-    txtAddress == 0 ||
-    txtCity == 0 ||
-    txtCountry == 0 ||
-    txtGroup == 0 ||
-    txtHiredate == 0
+    tEmail == 0 ||
+    tDNI == 0 ||
+    tPhone == 0 ||
+    tAddress == 0 ||
+    tHireDate == 0 ||
+    tAddress == 0 ||
+    tCity == 0 ||
+    tCountry == 0 ||
+    tBirthDate == 0 
   ) {
     //if input name empty, the operation does not proceed
-    toastr["error"]("Fill in the empty fields", "Error");
+    toastr["error"]("Rellena los campos vacíos", "Error");
   } else {
     $.ajax({
       url: "controller/user_group/c_create_staff.php",
       type: "POST",
       data: {
-        firstName: txtFirstName,
-        lastName: txtLastName,
-        code: txtCodeSatff,
-        email: txtEmail,
-        dni: txtDNI,
-        phone: txtPhone,
-        birthdate: txtBirthdate,
-        address: txtAddress,
-        city: txtCity,
-        country: txtCountry,
-        group: txtGroup,
-        hiredate: txtHiredate,
+        rolGroup: tGropupID,
+        codeStaff: tCodeStaff,
+        name: tName,
+        lastName: tLastName,
+        email: tEmail,
+        dni: tDNI,
+        phone: tPhone,
+        department: tDepartament,
+        hireDate: tHireDate,
+        address: tAddress,
+        city: tCity,
+        country: tCountry,
+        birthDate: tBirthDate,
+        status: tStatus,
+
       },
     }).done(function (resp) {
       if (resp == 1) {
         //if 1 , insert table of database
         tbl_staff.ajax.reload();
         cleanCreateStaff();
-        toastr["success"]("Staff successfully register", "Success");
+        toastr["success"]("Registro exitosamente", "Exito");
         $("#addStaff .btn.btn-tool[data-card-widget='collapse']").trigger(
           "click"
         );
       } else if (resp == 2) {
         //if 2, not insert, register is al ready register
-        toastr["warning"]("The Staff is already registered", "Warning");
+        toastr["warning"]("El personal ya está registrado", "Alerta");
       } else if (resp == 0) {
         //if 0, error connexion database
         toastr["error"](
-          "An error has occurred, please check your connection",
+          "Se ha producido un error, comprueba tu conexión",
           "Error"
         );
       }
     });
   }
-});
-
-//open modal generate code staff
-btn_OpenModalGenerate.addEventListener("click", function () {
-  $("#modalGenerateCodeStaff").modal({ backdrop: "static", keyboard: false });
-  $("#modalGenerateCodeStaff").modal("show");
-  $("#modalGenerateCodeStaff").draggable({
-    handle: ".modal-header", // Puedes arrastrar el modal desde la cabecera
-  });
 });
 
 //configuration notification toastr
@@ -184,10 +181,17 @@ function cleanCreateStaff() {
   document.getElementById("inputPhone").value = "";
   document.getElementById("inputBIRTHDATE").value = "";
   document.getElementById("inputADDRESS").value = "";
-  document.getElementById("inputCITY").value = "";
-  document.getElementById("inputCOUNTRY").value = "";
   document.getElementById("inputHIREDATE").value = "";
 }
+
+//open modal generate code staff
+btn_OpenModalGenerate.addEventListener("click", function () {
+  $("#modalGenerateCodeStaff").modal({ backdrop: "static", keyboard: false });
+  $("#modalGenerateCodeStaff").modal("show");
+  $("#modalGenerateCodeStaff").draggable({
+    handle: ".modal-header", // Puedes arrastrar el modal desde la cabecera
+  });
+});
 
 //generate code randon
 function generateRandomCode(length, includeNumbers, includeLetters) {
@@ -198,7 +202,7 @@ function generateRandomCode(length, includeNumbers, includeLetters) {
   // Validar que al menos se incluya una opción (letras o números)
   if (!includeNumbers && !includeLetters) {
     toastr["error"](
-      "Select at least one option (letters or numbers).",
+      "Seleccione al menos una opción (letras o números).",
       "Error"
     );
     return null;
@@ -236,14 +240,14 @@ function generateRandomCode(length, includeNumbers, includeLetters) {
     if (resp === "exists") {
       // Si el código ya existe, llama a generateRandomCode nuevamente para generar uno nuevo
       generateRandomCode(length, includeNumbers, includeLetters);
-      toastr["warning"]("This code already exists.", "Warning");
+      toastr["warning"]("Este código ya existe.", "Alerta");
     } else {
       // Si el código no existe, puedes proceder y retornar el código generado
       // Insertar el código generado en el campo de entrada
       document.getElementById("inputCodeStaff").value = code;
       // Cerrar el modal si es necesario
       $('#modalGenerateCodeStaff').modal('hide');
-      toastr["success"]("This code is available.", "Success");
+      toastr["success"]("Código está disponible.", "Exito");
     }
   });
 
@@ -258,7 +262,7 @@ document.getElementById("btnGenerateCodeStaff").addEventListener("click", functi
 
   // Validar longitud mínima
   if (length < 3 || length > 12) {
-      toastr["warning"]("Length must be at least 3.", "Warning");
+      toastr["error"]("La longitud debe tener entre 3 a 12 caracteres.", "Error");
       return;
   }
 
@@ -318,11 +322,7 @@ function comboBox_Group() {
       var options = "";
       for (var i = 0; i < data.data.length; i++) {
         options +=
-          "<option value='" +
-          data.data[i].group_id +
-          "'>" +
-          data.data[i].group_name +
-          "</option>";
+          "<option value='" + data.data[i].group_id + "'>" + data.data[i].group_name + "</option>";
       }
       $("#selectGroup").html(options);
     } else {
@@ -330,5 +330,78 @@ function comboBox_Group() {
     }
   });
 }
+
+//listar combo box list country y department
+function comboBox_Country() {
+  $.ajax({
+    url: './assets/country.json',
+    method: 'GET',
+    dataType: 'json',
+    success: function(data) {
+      var countryOptions = "";
+      var countries = data.country;
+      for (var i = 0; i < countries.length; i++) {
+        countryOptions += "<option value='" + i + "'>" + countries[i].name + "</option>";
+      }
+      $("#selectCountry").html(countryOptions);
+
+      // Inicializar selectDepartment con los departamentos del primer país
+      var firstCountryDepartments = countries[0].departments;
+      var departmentOptions = "";
+      for (var j = 0; j < firstCountryDepartments.length; j++) {
+        departmentOptions += "<option value='" + firstCountryDepartments[j].name + "'>" + firstCountryDepartments[j].name + "</option>";
+      }
+      $("#selectDepartment").html(departmentOptions);
+
+      // Inicializar selectCity con las municipalidades del primer departamento
+      var firstDepartmentMunicipalities = firstCountryDepartments[0].municipalities;
+      var municipalityOptions = "";
+      for (var k = 0; k < firstDepartmentMunicipalities.length; k++) {
+        municipalityOptions += "<option value='" + firstDepartmentMunicipalities[k] + "'>" + firstDepartmentMunicipalities[k] + "</option>";
+      }
+      $("#selectCity").html(municipalityOptions);
+
+      // Actualizar departamentos cuando se selecciona un país diferente
+      $("#selectCountry").change(function() {
+        var selectedIndex = $(this).val();
+        var departments = countries[selectedIndex].departments;
+        var departmentOptions = "";
+        for (var j = 0; j < departments.length; j++) {
+          departmentOptions += "<option value='" + departments[j].name + "'>" + departments[j].name + "</option>";
+        }
+        $("#selectDepartment").html(departmentOptions);
+
+        // Actualizar selectCity con las municipalidades del primer departamento del nuevo país
+        var firstDepartmentMunicipalities = departments[0].municipalities;
+        var municipalityOptions = "";
+        for (var k = 0; k < firstDepartmentMunicipalities.length; k++) {
+          municipalityOptions += "<option value='" + firstDepartmentMunicipalities[k] + "'>" + firstDepartmentMunicipalities[k] + "</option>";
+        }
+        $("#selectCity").html(municipalityOptions);
+      });
+
+      // Actualizar municipalidades cuando se selecciona un departamento diferente
+      $("#selectDepartment").change(function() {
+        var countryIndex = $("#selectCountry").val();
+        var selectedIndex = $(this).val();
+        var departments = countries[countryIndex].departments;
+        var municipalities = departments.filter(department => department.name === selectedIndex)[0].municipalities;
+        var municipalityOptions = "";
+        for (var k = 0; k < municipalities.length; k++) {
+          municipalityOptions += "<option value='" + municipalities[k] + "'>" + municipalities[k] + "</option>";
+        }
+        $("#selectCity").html(municipalityOptions);
+      });
+    },
+    error: function(xhr, status, error) {
+      console.error("Error al cargar el JSON:", error);
+    }
+  });
+}
+
+
+
+
+
 
 
