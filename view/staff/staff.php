@@ -253,7 +253,7 @@ include_once '../../assets/dictionary.php';
 
                     <div class="form-group">
                         <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
-                            <input type="checkbox" class="custom-control-input" id="letters">
+                            <input type="checkbox" checked="" class="custom-control-input" id="letters">
                             <label class="custom-control-label" for="letters"><?php echo $dictionary['addLatter']; ?></label>
                         </div>
                     </div>

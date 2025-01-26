@@ -89,19 +89,17 @@ btn_CreateStaff.addEventListener("click", function () {
   let tCity = document.getElementById("selectCity").value;
   let tCountry = document.getElementById("selectCountry").value;;
   let tBirthDate = document.getElementById("inputBIRTHDATE").value;
-  let tStatus = document.getElementById("inputHIREDATE").value;
+  let tStatus = document.getElementById("selectStatus").value;
 
   if (
     tCodeStaff == 0 ||
     tName == 0 ||
     tLastName == 0 ||
-    txtEmail == 0 ||
     tEmail == 0 ||
     tDNI == 0 ||
     tPhone == 0 ||
     tAddress == 0 ||
     tHireDate == 0 ||
-    tAddress == 0 ||
     tCity == 0 ||
     tCountry == 0 ||
     tBirthDate == 0 
@@ -110,7 +108,7 @@ btn_CreateStaff.addEventListener("click", function () {
     toastr["error"]("Rellena los campos vacíos", "Error");
   } else {
     $.ajax({
-      url: "controller/user_group/c_create_staff.php",
+      url: "controller/staff/c_create_staff.php",
       type: "POST",
       data: {
         rolGroup: tGropupID,
@@ -310,7 +308,7 @@ $('#inputHIREDATE').on('apply.daterangepicker', function(ev, picker) {
 });
 });
 
-//listar combo box list group 
+//listar combo box list group + estatus
 function comboBox_Group() {
   $.ajax({
     url: "controller/user_group/c_list_users_group.php",
@@ -325,79 +323,88 @@ function comboBox_Group() {
           "<option value='" + data.data[i].group_id + "'>" + data.data[i].group_name + "</option>";
       }
       $("#selectGroup").html(options);
+
+      // Inicializar selectDepartment con los departamentos del primer país
+      let status = ["","Activo", "Inactivo"];
+      let statusOptions = "";
+      for (let i = 1; i < status.length; i++) {
+        statusOptions += "<option value='" + i + "'>" + status[i] + "</option>";
+      }
+      $("#selectStatus").html(statusOptions);
     } else {
       $("#selectGroup").html("<option value=''>No records found</option>");
     }
   });
 }
 
-//listar combo box list country y department
+//listar combo box list country + department + city
 function comboBox_Country() {
   $.ajax({
     url: './assets/country.json',
     method: 'GET',
     dataType: 'json',
     success: function(data) {
-      var countryOptions = "";
-      var countries = data.country;
+      var countryOptions = ""; // Opciones para el select de países
+      var countries = data.country; // Obtener la lista de países del JSON
       for (var i = 0; i < countries.length; i++) {
-        countryOptions += "<option value='" + i + "'>" + countries[i].name + "</option>";
+        countryOptions += "<option value='" + countries[i].name + "'>" + countries[i].name + "</option>";
       }
-      $("#selectCountry").html(countryOptions);
+      $("#selectCountry").html(countryOptions); // Poblar el select de países con las opciones generadas
 
       // Inicializar selectDepartment con los departamentos del primer país
-      var firstCountryDepartments = countries[0].departments;
-      var departmentOptions = "";
+      var firstCountryDepartments = countries[0].departments; // Obtener los departamentos del primer país
+      var departmentOptions = ""; // Opciones para el select de departamentos
       for (var j = 0; j < firstCountryDepartments.length; j++) {
         departmentOptions += "<option value='" + firstCountryDepartments[j].name + "'>" + firstCountryDepartments[j].name + "</option>";
       }
-      $("#selectDepartment").html(departmentOptions);
+      $("#selectDepartment").html(departmentOptions); // Poblar el select de departamentos con las opciones del primer país
 
       // Inicializar selectCity con las municipalidades del primer departamento
-      var firstDepartmentMunicipalities = firstCountryDepartments[0].municipalities;
-      var municipalityOptions = "";
+      var firstDepartmentMunicipalities = firstCountryDepartments[0].municipalities; // Obtener las municipalidades del primer departamento
+      var municipalityOptions = ""; // Opciones para el select de municipalidades
       for (var k = 0; k < firstDepartmentMunicipalities.length; k++) {
         municipalityOptions += "<option value='" + firstDepartmentMunicipalities[k] + "'>" + firstDepartmentMunicipalities[k] + "</option>";
       }
-      $("#selectCity").html(municipalityOptions);
+      $("#selectCity").html(municipalityOptions); // Poblar el select de municipalidades con las opciones del primer departamento
 
       // Actualizar departamentos cuando se selecciona un país diferente
       $("#selectCountry").change(function() {
-        var selectedIndex = $(this).val();
-        var departments = countries[selectedIndex].departments;
+        var selectedCountry = $(this).val(); // Obtener el nombre del país seleccionado
+        var departments = countries.filter(country => country.name === selectedCountry)[0].departments; // Encontrar los departamentos del país seleccionado
         var departmentOptions = "";
         for (var j = 0; j < departments.length; j++) {
           departmentOptions += "<option value='" + departments[j].name + "'>" + departments[j].name + "</option>";
         }
-        $("#selectDepartment").html(departmentOptions);
+        $("#selectDepartment").html(departmentOptions); // Poblar el select de departamentos con las opciones del país seleccionado
 
         // Actualizar selectCity con las municipalidades del primer departamento del nuevo país
-        var firstDepartmentMunicipalities = departments[0].municipalities;
-        var municipalityOptions = "";
+        var firstDepartmentMunicipalities = departments[0].municipalities; // Obtener las municipalidades del primer departamento
+        var municipalityOptions = ""; // Opciones para el select de municipalidades
         for (var k = 0; k < firstDepartmentMunicipalities.length; k++) {
           municipalityOptions += "<option value='" + firstDepartmentMunicipalities[k] + "'>" + firstDepartmentMunicipalities[k] + "</option>";
         }
-        $("#selectCity").html(municipalityOptions);
+        $("#selectCity").html(municipalityOptions); // Poblar el select de municipalidades con las opciones del primer departamento del nuevo país
       });
 
       // Actualizar municipalidades cuando se selecciona un departamento diferente
       $("#selectDepartment").change(function() {
-        var countryIndex = $("#selectCountry").val();
-        var selectedIndex = $(this).val();
-        var departments = countries[countryIndex].departments;
-        var municipalities = departments.filter(department => department.name === selectedIndex)[0].municipalities;
-        var municipalityOptions = "";
-        for (var k = 0; k < municipalities.length; k++) {
+        var selectedCountry = $("#selectCountry").val(); // Obtener el nombre del país seleccionado
+        var selectedDepartment = $(this).val(); // Obtener el nombre del departamento seleccionado
+        var departments = countries.filter(country => country.name === selectedCountry)[0].departments; // Encontrar los departamentos del país seleccionado
+        var municipalities = departments.filter(department => department.name === selectedDepartment)[0].municipalities; // Encontrar las municipalidades del departamento seleccionado
+        var municipalityOptions = ""; // Opciones para el select de municipalidades
+        for (var k = 0; k < municipalities.length; k++) { // Poblar el select de municipalidades con las opciones del departamento seleccionado
           municipalityOptions += "<option value='" + municipalities[k] + "'>" + municipalities[k] + "</option>";
         }
-        $("#selectCity").html(municipalityOptions);
+        $("#selectCity").html(municipalityOptions); // Poblar el select de municipalidades con las opciones del departamento seleccionado
       });
     },
     error: function(xhr, status, error) {
-      console.error("Error al cargar el JSON:", error);
+      console.error("Error al cargar el JSON:", error); // Manejo de errores si la solicitud falla
     }
   });
 }
+
 
 
 

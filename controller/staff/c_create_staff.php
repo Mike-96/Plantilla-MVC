@@ -7,7 +7,7 @@
     $code_staff = htmlspecialchars($_POST['codeStaff'], ENT_QUOTES, 'UTF-8');
     $firts_name = strtoupper(htmlspecialchars($_POST['name'], ENT_QUOTES, 'UTF-8'));
     $last_name = strtoupper(htmlspecialchars($_POST['lastName'], ENT_QUOTES, 'UTF-8'));
-    $email = strtoupper(htmlspecialchars($_POST['email'], ENT_QUOTES, 'UTF-8'));
+    $email = htmlspecialchars($_POST['email'], ENT_QUOTES, 'UTF-8');
     $dni = strtoupper(htmlspecialchars($_POST['dni'], ENT_QUOTES, 'UTF-8'));
     $phone = strtoupper(htmlspecialchars($_POST['phone'], ENT_QUOTES, 'UTF-8'));
     $department = strtoupper(htmlspecialchars($_POST['department'], ENT_QUOTES, 'UTF-8'));
