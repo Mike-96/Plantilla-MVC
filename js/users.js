@@ -27,7 +27,7 @@ function list_user() {
       { data: "data_staff" },
       {
         data: "status",
-        render: function (data, type, row) {
+        render: function (data) {
           if (data == "1") {
             return "<span class='badge bg-success'>ACTIVO</span>";
           } else {

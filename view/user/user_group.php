@@ -105,7 +105,7 @@
 </section>
 
 <!-- modal edit group -->
-<div class="modal fade" id="modalEditGroup" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" draggable="true">
+<div class="modal fade" id="modalEditGroup" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="undefined" draggable="undefined">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -131,8 +131,8 @@
                 </div>
             </div>
             <div class="modal-footer justify-content-between">
-                <button id="btnEditCancelCreateGroup" type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-ban"></i> <?php echo $dictionary['cancel']; ?></button>
-                <button id="btnEditCreateRoleGroup" type="button" class="btn btn-success"><i class="fas fa-check"></i> <?php echo $dictionary['save']; ?></button>
+                <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal"><i class="fas fa-ban"></i>  <?php echo $dictionary['cancel']; ?></button>
+                <button id="btnEditCreateRoleGroup" type="button" class="btn btn-success btn-sm"><i class="fas fa-check"></i> <?php echo $dictionary['update']; ?></button>
             </div>
         </div>
     </div>

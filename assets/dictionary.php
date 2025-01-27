@@ -51,6 +51,12 @@ $dictionary = [
     "options" => "Opciones",
     "department" => "Departamento",
     "location" => "Ubicación",
+    "jobTitle" => "Puesto",
+    "nameStaff" => "Nombre del Colaborador",
+    "moreInfo" => "Más Información",
+    "infoStaff" => "Información del Personal",
+    "update" => "Actualizar",
+    "formatDate" => "Año - Mes - Día ",
 
 ];
 $title = [
@@ -60,7 +66,7 @@ $title = [
     "navigationMenu" => "Menú de Navegación",
     "users" => "Usuarios",
     "listUsers" => "Lista de Usuarios",
-    "staff" => "Personal",
+    "staffLis" => "Lista de Personal",
 ];
 $routers = [
     "listGroups" => "Lista de Grupos",
