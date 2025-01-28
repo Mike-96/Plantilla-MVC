@@ -25,7 +25,7 @@ class model_staff extends connectBD
                     staff.city,
                     staff.country,
                     staff.birthdate,
-                    staff.status,
+                    status.id_status as status,
                     staff.created_at,
                     staff.updated_at
                     FROM
@@ -33,7 +33,11 @@ class model_staff extends connectBD
                     INNER JOIN 
                     user_group
                     ON 
-                    staff.group_id = user_group.group_id";
+                    staff.group_id = user_group.group_id
+                    INNER JOIN
+                    status
+                    ON
+                    staff.status = status.id_status";
 
         $array = array();
         $query = $connexion->prepare($sql);

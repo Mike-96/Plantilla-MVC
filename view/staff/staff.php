@@ -188,11 +188,11 @@ include_once '../../assets/dictionary.php';
                             </div>
                         </div>
                         <div class="modal-footer justify-content-center">
-                            
-                        <div class="col-md-10">
-                            <button type="button" class="btn btn-danger btn-sm"><i class="fas fa-ban"></i> <?php echo $dictionary['cancel']; ?></button>
-                            <button id="btnCreateStaff" type="button" class="btn btn-success btn-sm"><i class="fas fa-check"></i> <?php echo $dictionary['create']; ?></button>
-                        </div>
+
+                            <div class="col-md-10">
+                                <button type="button" class="btn btn-danger btn-sm"><i class="fas fa-ban"></i> <?php echo $dictionary['cancel']; ?></button>
+                                <button id="btnCreateStaff" type="button" class="btn btn-success btn-sm"><i class="fas fa-check"></i> <?php echo $dictionary['create']; ?></button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -305,23 +305,58 @@ include_once '../../assets/dictionary.php';
 
                     <div class="col-12 d-flex align-items-stretch flex-column">
                         <div class="card bg-light d-flex flex-fill">
-                            <div class="card-header text-muted border-bottom-0">
-                                <span><span class="small"><i class="fas fa-user-tag"></i></span> <span id="infoRolGroup"></span></span>
+                            <div class="card-header border-bottom-0">
+                                    <span class="small">
+                                        <i class="fas fa-user-tag text-muted"></i>
+                                    </span> 
+                                    <span id="infoRolGroup"></span>
                             </div>
                             <div class="card-body pt-0">
                                 <div class="row">
                                     <div class="col-12">
                                         <span id="infoIdStaff" hidden></span>
                                         <h3 class="lead"><i class="fas fa-user text-muted"></i> <b id="infoNameStaff"></b></h3>
-                                        <ul class="ml-4 mb-0 fa-ul text-muted">
-                                            <li class="small"><span class="fa-li"><i class="fas fa-fingerprint"></i></span><span><?php echo $dictionary['codeStaff']; ?>: </span><span id="infoCodeStaff"></span></li>
-                                            <li class="small"><span class="fa-li"><i class="fas fa-passport"></i></span><span><?php echo $dictionary['dni']; ?>: </span><span id="infoDniStaff"></span></li>
-                                            <li class="small"><span class="fa-li"><i class="fas fa-birthday-cake"></i></span><span><?php echo $dictionary['birthDate']; ?>: </span><span id="infoBirthDateStaff"></span></li>
-                                            <li class="small"><span class="fa-li"><i class="fas fa-phone-square-alt"></i></span><span><?php echo $dictionary['phone']; ?>: </span><span id="infoPhoneStaff"></li>
-                                            <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span><span><?php echo $dictionary['address']; ?>: </span><span id="infoAddressStaff"></span></li>
-                                            <li class="small"><span class="fa-li"><i class="far fa-envelope"></i></span><span><?php echo $dictionary['email']; ?>: </span><span id="infoEmailStaff"></span></li>
-                                            <li class="small"><span class="fa-li"><i class="fas fa-file-signature"></i></span><span><?php echo $dictionary['hireDate']; ?>: </span><span id="infoHiredateStaff"></span></li>
-                                            <li class="small"><span class="fa-li"><i class="fas fa-calendar-alt"></i></span><span><?php echo $dictionary['createAt']; ?>: </span><span id="infoCreateStaff"></span></li>
+                                        <ul class="ml-4 mb-0 fa-ul">
+                                            <li class="small">
+                                                <span class="fa-li"><i class="fas fa-fingerprint text-muted"></i></span>
+                                                <span style="font-weight:bold"><?php echo $dictionary['codeStaff']; ?>: </span>
+                                                <p id="infoCodeStaff"></p>
+                                            </li>
+                                            <li class="small">
+                                                <span class="fa-li"><i class="fas fa-passport text-muted"></i></span>
+                                                <span style="font-weight:bold"><?php echo $dictionary['dni']; ?>: </span>
+                                                <p id="infoDniStaff"></p>
+                                            </li>
+                                            <li class="small">
+                                                <span class="fa-li"><i class="fas fa-birthday-cake text-muted"></i></span>
+                                                <span style="font-weight:bold"><?php echo $dictionary['birthDate']; ?>: </span>
+                                                <p id="infoBirthDateStaff"></p>
+                                            </li>
+                                            <li class="small">
+                                                <span class="fa-li"><i class="fas fa-phone-square-alt text-muted"></i></span>
+                                                <span style="font-weight:bold"><?php echo $dictionary['phone']; ?>: </span>
+                                                <p id="infoPhoneStaff"></p>
+                                            </li>
+                                            <li class="small">
+                                                <span class="fa-li"><i class="fas fa-lg fa-building text-muted"></i></span>
+                                                <span style="font-weight:bold"><?php echo $dictionary['address']; ?>: </span>
+                                                <p id="infoAddressStaff"></p>
+                                            </li>
+                                            <li class="small">
+                                                <span class="fa-li"><i class="far fa-envelope text-muted"></i></span>
+                                                <span style="font-weight:bold"><?php echo $dictionary['email']; ?>: </span>
+                                                <p id="infoEmailStaff"></p>
+                                            </li>
+                                            <li class="small">
+                                                <span class="fa-li"><i class="fas fa-file-signature text-muted"></i></span>
+                                                <span style="font-weight:bold"><?php echo $dictionary['hireDate']; ?>: </span>
+                                                <p id="infoHiredateStaff"></p>
+                                            </li>
+                                            <li class="small">
+                                                <span class="fa-li"><i class="fas fa-calendar-alt text-muted"></i></span>
+                                                <span style="font-weight:bold"><?php echo $dictionary['createAt']; ?>: </span>
+                                                <p id="infoCreateStaff"></p>
+                                            </li>
                                         </ul>
                                     </div>
                                 </div>

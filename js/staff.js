@@ -196,8 +196,6 @@ function cleanCreateStaff() {
   document.getElementById("inputDNI").value = "";
   document.getElementById("inputPhone").value = "";
   document.getElementById("inputBIRTHDATE").value = "";
-  document.getElementById("inputADDRESS").value = "";
-  document.getElementById("inputHIREDATE").value = "";
 }
 
 //open modal generate code staff
@@ -345,6 +343,7 @@ function comboBox_Group() {
           "</option>";
       }
       $("#selectGroup").html(options);
+      $("#selectEditGroup").html(options);
 
       // Inicializar selectDepartment con los departamentos del primer país
       let status = ["", "Activo", "Inactivo"];
@@ -353,6 +352,7 @@ function comboBox_Group() {
         statusOptions += "<option value='" + i + "'>" + status[i] + "</option>";
       }
       $("#selectStatus").html(statusOptions);
+      $("#selectEditStatus").html(statusOptions);
     } else {
       $("#selectGroup").html("<option value=''>No records found</option>");
     }
@@ -513,7 +513,7 @@ $("#list_staff").on("click", ".btnEdit", function () {
   });
 
   $("#inputEditStaffId").val(data.staff_id);
-  // $("#infoRolGroup").val(data.group_name);
+  $("#selectEditGroup").val(data.group_id);
   $("#inputEditStaffName").val(data.first_name);
   $("#inputEditStaffLastName").val(data.last_name);
   $("#inputEditCodeStaff").val(data.code_staff);
@@ -522,6 +522,11 @@ $("#list_staff").on("click", ".btnEdit", function () {
   $("#inputEditEmail").val(data.email);
   $("#inputEditBIRTHDATE").val(data.birthdate);
   $("#inputEditHIREDATE").val(data.hire_date);
+  $("#selectEditStatus").val(data.status);
+  $("#inputEditADDRESS").val(data.address);
+  $("#selectEditCity").val(data.city);
+  $("#selectEditDepartment").val(data.department);
+  $("#selectEditCountry").val(data.country);
 
   // actualizar el picker con la fecha pasada en el input desde la base de datos
   $('#inputEditBIRTHDATE').val(data.birthdate); // Asigna la fecha al input
