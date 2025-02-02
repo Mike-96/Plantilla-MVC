@@ -90,6 +90,8 @@ function listStaff() {
 
 //selection id button / inputs
 var btn_CreateStaff = document.getElementById("btnCreateStaff");
+var btn_EditStaff = document.getElementById("btnEditStaff");
+var btn_AddCancel = document.getElementById("btnCancelStaff");
 var btn_OpenModalGenerate = document.getElementById("openGenerateCodeStaff");
 
 //Function add Staff
@@ -305,16 +307,18 @@ document
 $(document).ready(function () {
   // Función para configurar cada datepicker
   function initializeDatePicker(inputId) {
-    $("#" + inputId).daterangepicker({
-      singleDatePicker: true,
-      showDropdowns: true,
-      autoUpdateInput: false,
-      locale: {
-        format: "YYYY-MM-DD",
-      },
-    }).on("apply.daterangepicker", function (ev, picker) {
-      $(this).val(picker.startDate.format("YYYY-MM-DD"));
-    });
+    $("#" + inputId)
+      .daterangepicker({
+        singleDatePicker: true,
+        showDropdowns: true,
+        autoUpdateInput: false,
+        locale: {
+          format: "YYYY-MM-DD",
+        },
+      })
+      .on("apply.daterangepicker", function (ev, picker) {
+        $(this).val(picker.startDate.format("YYYY-MM-DD"));
+      });
   }
 
   // Inicializa los datepickers
@@ -359,112 +363,6 @@ function comboBox_Group() {
   });
 }
 
-//listar combo box list country + department + city
-function comboBox_Country() {
-  $.ajax({
-    url: "./assets/country.json",
-    method: "GET",
-    dataType: "json",
-    success: function (data) {
-      var countryOptions = ""; // Opciones para el select de países
-      var countries = data.country; // Obtener la lista de países del JSON
-      for (var i = 0; i < countries.length; i++) {
-        countryOptions +=
-          "<option value='" +
-          countries[i].name +
-          "'>" +
-          countries[i].name +
-          "</option>";
-      }
-      $("#selectCountry").html(countryOptions); // Poblar el select de países con las opciones generadas
-
-      // Inicializar selectDepartment con los departamentos del primer país
-      var firstCountryDepartments = countries[0].departments; // Obtener los departamentos del primer país
-      var departmentOptions = ""; // Opciones para el select de departamentos
-      for (var j = 0; j < firstCountryDepartments.length; j++) {
-        departmentOptions +=
-          "<option value='" +
-          firstCountryDepartments[j].name +
-          "'>" +
-          firstCountryDepartments[j].name +
-          "</option>";
-      }
-      $("#selectDepartment").html(departmentOptions); // Poblar el select de departamentos con las opciones del primer país
-
-      // Inicializar selectCity con las municipalidades del primer departamento
-      var firstDepartmentMunicipalities =
-        firstCountryDepartments[0].municipalities; // Obtener las municipalidades del primer departamento
-      var municipalityOptions = ""; // Opciones para el select de municipalidades
-      for (var k = 0; k < firstDepartmentMunicipalities.length; k++) {
-        municipalityOptions +=
-          "<option value='" +
-          firstDepartmentMunicipalities[k] +
-          "'>" +
-          firstDepartmentMunicipalities[k] +
-          "</option>";
-      }
-      $("#selectCity").html(municipalityOptions); // Poblar el select de municipalidades con las opciones del primer departamento
-
-      // Actualizar departamentos cuando se selecciona un país diferente
-      $("#selectCountry").change(function () {
-        var selectedCountry = $(this).val(); // Obtener el nombre del país seleccionado
-        var departments = countries.filter(
-          (country) => country.name === selectedCountry
-        )[0].departments; // Encontrar los departamentos del país seleccionado
-        var departmentOptions = "";
-        for (var j = 0; j < departments.length; j++) {
-          departmentOptions +=
-            "<option value='" +
-            departments[j].name +
-            "'>" +
-            departments[j].name +
-            "</option>";
-        }
-        $("#selectDepartment").html(departmentOptions); // Poblar el select de departamentos con las opciones del país seleccionado
-
-        // Actualizar selectCity con las municipalidades del primer departamento del nuevo país
-        var firstDepartmentMunicipalities = departments[0].municipalities; // Obtener las municipalidades del primer departamento
-        var municipalityOptions = ""; // Opciones para el select de municipalidades
-        for (var k = 0; k < firstDepartmentMunicipalities.length; k++) {
-          municipalityOptions +=
-            "<option value='" +
-            firstDepartmentMunicipalities[k] +
-            "'>" +
-            firstDepartmentMunicipalities[k] +
-            "</option>";
-        }
-        $("#selectCity").html(municipalityOptions); // Poblar el select de municipalidades con las opciones del primer departamento del nuevo país
-      });
-
-      // Actualizar municipalidades cuando se selecciona un departamento diferente
-      $("#selectDepartment").change(function () {
-        var selectedCountry = $("#selectCountry").val(); // Obtener el nombre del país seleccionado
-        var selectedDepartment = $(this).val(); // Obtener el nombre del departamento seleccionado
-        var departments = countries.filter(
-          (country) => country.name === selectedCountry
-        )[0].departments; // Encontrar los departamentos del país seleccionado
-        var municipalities = departments.filter(
-          (department) => department.name === selectedDepartment
-        )[0].municipalities; // Encontrar las municipalidades del departamento seleccionado
-        var municipalityOptions = ""; // Opciones para el select de municipalidades
-        for (var k = 0; k < municipalities.length; k++) {
-          // Poblar el select de municipalidades con las opciones del departamento seleccionado
-          municipalityOptions +=
-            "<option value='" +
-            municipalities[k] +
-            "'>" +
-            municipalities[k] +
-            "</option>";
-        }
-        $("#selectCity").html(municipalityOptions); // Poblar el select de municipalidades con las opciones del departamento seleccionado
-      });
-    },
-    error: function (xhr, status, error) {
-      console.error("Error al cargar el JSON:", error); // Manejo de errores si la solicitud falla
-    },
-  });
-}
-
 //function open modal info staff
 $("#list_staff").on("click", ".btnView", function () {
   var data = tbl_staff.row($(this).parents("tr")).data();
@@ -499,7 +397,7 @@ $("#list_staff").on("click", ".btnView", function () {
   $("#infoCreateStaff").text(data.created_at);
 });
 
-//function open modal edit staff
+//function open modal edit staff y editar
 $("#list_staff").on("click", ".btnEdit", function () {
   var data = tbl_staff.row($(this).parents("tr")).data();
   if (tbl_staff.row(this).child.isShown()) {
@@ -512,6 +410,7 @@ $("#list_staff").on("click", ".btnEdit", function () {
     handle: ".modal-header",
   });
 
+  // Set form values
   $("#inputEditStaffId").val(data.staff_id);
   $("#selectEditGroup").val(data.group_id);
   $("#inputEditStaffName").val(data.first_name);
@@ -524,15 +423,112 @@ $("#list_staff").on("click", ".btnEdit", function () {
   $("#inputEditHIREDATE").val(data.hire_date);
   $("#selectEditStatus").val(data.status);
   $("#inputEditADDRESS").val(data.address);
-  $("#selectEditCity").val(data.city);
-  $("#selectEditDepartment").val(data.department);
-  $("#selectEditCountry").val(data.country);
 
-  // actualizar el picker con la fecha pasada en el input desde la base de datos
-  $('#inputEditBIRTHDATE').val(data.birthdate); // Asigna la fecha al input
-  $('#inputEditBIRTHDATE').data('daterangepicker').setStartDate(data.birthdate); // Establece la fecha del picker
+  // Update pickers with the date passed from the database
+  $("#inputEditBIRTHDATE").val(data.birthdate);
+  $("#inputEditBIRTHDATE").data("daterangepicker").setStartDate(data.birthdate);
 
-  // actualizar el picker con la fecha pasada en el input desde la base de datos
-  $('#inputEditHIREDATE').val(data.hire_date); // Asigna la fecha al input
-  $('#inputEditHIREDATE').data('daterangepicker').setStartDate(data.hire_date); // Establece la fecha del picker
+  $("#inputEditHIREDATE").val(data.hire_date);
+  $("#inputEditHIREDATE").data("daterangepicker").setStartDate(data.hire_date);
+
+  // Actualizar campos de selección
+
+  // Establece el valor del país seleccionado y dispara el evento change para actualizar el selector de departamentos
+  $("#selectEditCountry").val(data.country).change();
+
+  // Usa setTimeout para esperar 500ms, asegurando que el cambio del país tenga efecto antes de proceder
+  setTimeout(() => {
+    // Establece el valor del departamento seleccionado y dispara el evento change para actualizar el selector de ciudades
+    $("#selectEditDepartment").val(data.department).change();
+
+    // Usa setTimeout para esperar otros 500ms, asegurando que el cambio del departamento tenga efecto antes de proceder
+    setTimeout(() => {
+      // Establece el valor de la ciudad seleccionada
+      $("#selectEditCity").val(data.city);
+    }, 300); // Espera 500ms para que los cambios anteriores tengan efecto
+  }, 300); // Espera 500ms para que el cambio del país tenga efecto
+
+});
+
+//Function add Staff
+btn_EditStaff.addEventListener("click", function () {
+  //selection input value
+  let tStaffID = document.getElementById("inputEditStaffId").value;
+  let tGropupID = document.getElementById("selectEditGroup").value;
+  let tCodeStaff = document.getElementById("inputEditCodeStaff").value;
+  let tName = document.getElementById("inputEditStaffName").value;
+  let tLastName = document.getElementById("inputEditStaffLastName").value;
+  let tEmail = document.getElementById("inputEditEmail").value;
+  let tDNI = document.getElementById("inputEditDNI").value;
+  let tPhone = document.getElementById("inputEditPhone").value;
+  let tDepartament = document.getElementById("selectEditDepartment").value;
+  let tHireDate = document.getElementById("inputEditHIREDATE").value;
+  let tAddress = document.getElementById("inputEditADDRESS").value;
+  let tCity = document.getElementById("selectEditCity").value;
+  let tCountry = document.getElementById("selectEditCountry").value;
+  let tBirthDate = document.getElementById("inputEditBIRTHDATE").value;
+  let tStatus = document.getElementById("selectEditStatus").value;
+
+  if (
+    tStaffID == 0 ||
+    tCodeStaff == 0 ||
+    tName == 0 ||
+    tLastName == 0 ||
+    tEmail == 0 ||
+    tDNI == 0 ||
+    tPhone == 0 ||
+    tAddress == 0 ||
+    tHireDate == 0 ||
+    tBirthDate == 0
+  ) {
+    //if input name empty, the operation does not proceed
+    toastr["error"]("Rellena los campos vacíos", "Error");
+  } else {
+    $.ajax({
+      url: "controller/staff/c_create_staff.php",
+      type: "POST",
+      data: {
+        staffID: tStaffID,
+        rolGroup: tGropupID,
+        codeStaff: tCodeStaff,
+        name: tName,
+        lastName: tLastName,
+        email: tEmail,
+        dni: tDNI,
+        phone: tPhone,
+        department: tDepartament,
+        hireDate: tHireDate,
+        address: tAddress,
+        city: tCity,
+        country: tCountry,
+        birthDate: tBirthDate,
+        status: tStatus,
+      },
+    }).done(function (resp) {
+      if (resp == 1) {
+        //if 1 , insert table of database
+        tbl_staff.ajax.reload();
+        cleanCreateStaff();
+        toastr["success"]("Registro exitosamente", "Exito");
+        $("#addStaff .btn.btn-tool[data-card-widget='collapse']").trigger(
+          "click"
+        );
+      } else if (resp == 2) {
+        //if 2, not insert, register is al ready register
+        toastr["warning"]("El personal ya está registrado", "Alerta");
+      } else if (resp == 0) {
+        //if 0, error connexion database
+        toastr["error"](
+          "Se ha producido un error, comprueba tu conexión",
+          "Error"
+        );
+      }
+    });
+  }
+});
+
+//Function cancel create group
+btn_Cancel.addEventListener("click", function () {
+  cleanCreateStaff();
+  $("#add .btn.btn-tool[data-card-widget='collapse']").trigger("click");
 });

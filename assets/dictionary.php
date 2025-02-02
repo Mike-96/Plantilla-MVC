@@ -57,6 +57,7 @@ $dictionary = [
     "infoStaff" => "Información del Personal",
     "update" => "Actualizar",
     "formatDate" => "Año - Mes - Día ",
+    "department" => "Departamento",
 
 ];
 $title = [

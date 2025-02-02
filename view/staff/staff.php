@@ -190,7 +190,7 @@ include_once '../../assets/dictionary.php';
                         <div class="modal-footer justify-content-center">
 
                             <div class="col-md-10">
-                                <button type="button" class="btn btn-danger btn-sm"><i class="fas fa-ban"></i> <?php echo $dictionary['cancel']; ?></button>
+                                <button id="btnCancelStaff" type="button" class="btn btn-danger btn-sm" data-dismiss="modal"><i class="fas fa-ban"></i> <?php echo $dictionary['cancel']; ?></button>
                                 <button id="btnCreateStaff" type="button" class="btn btn-success btn-sm"><i class="fas fa-check"></i> <?php echo $dictionary['create']; ?></button>
                             </div>
                         </div>
@@ -306,17 +306,22 @@ include_once '../../assets/dictionary.php';
                     <div class="col-12 d-flex align-items-stretch flex-column">
                         <div class="card bg-light d-flex flex-fill">
                             <div class="card-header border-bottom-0">
-                                    <span class="small">
-                                        <i class="fas fa-user-tag text-muted"></i>
-                                    </span> 
-                                    <span id="infoRolGroup"></span>
                             </div>
                             <div class="card-body pt-0">
                                 <div class="row">
                                     <div class="col-12">
                                         <span id="infoIdStaff" hidden></span>
-                                        <h3 class="lead"><i class="fas fa-user text-muted"></i> <b id="infoNameStaff"></b></h3>
                                         <ul class="ml-4 mb-0 fa-ul">
+                                            <li class="small">
+                                                <span class="fa-li"><i class="fas fa-user-tag text-muted"></i></span>
+                                                <span style="font-weight:bold"><?php echo $dictionary['department']; ?>: </span>
+                                                <p id="infoRolGroup"></p>
+                                            </li>
+                                            <li class="small">
+                                                <span class="fa-li"><i class="fas fa-user text-muted"></i></span>
+                                                <span style="font-weight:bold"><?php echo $dictionary['nameStaff']; ?>: </span>
+                                                <p class="lead"><b id="infoNameStaff"></b></p>
+                                            </li>
                                             <li class="small">
                                                 <span class="fa-li"><i class="fas fa-fingerprint text-muted"></i></span>
                                                 <span style="font-weight:bold"><?php echo $dictionary['codeStaff']; ?>: </span>
@@ -548,10 +553,12 @@ include_once '../../assets/dictionary.php';
 
 
 <script src="js/staff.js"></script>
+<script src="js/address.js"></script>
 <script>
     $(document).ready(function() {
         listStaff();
         comboBox_Group();
         comboBox_Country();
+        comboBox_EditCountry();
     });
 </script>
