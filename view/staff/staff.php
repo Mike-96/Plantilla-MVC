@@ -250,7 +250,7 @@ include_once '../../assets/dictionary.php';
             <div class="modal-header">
                 <h4 class="modal-title"><b><i class="fas fa-filter"></i> <?php echo $dictionary['options']; ?></b></h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true"><b><i class="far fa-times-circle"></i></b></span>
+                    <span aria-hidden="undefined"><b><i class="far fa-times-circle"></i></b></span>
                 </button>
             </div>
             <div class="modal-body">
@@ -297,7 +297,7 @@ include_once '../../assets/dictionary.php';
             <div class="modal-header">
                 <h4 class="modal-title"><b><i class="fas fa-info-circle"></i> <?php echo $dictionary['infoStaff']; ?></b></h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true"><b><i class="far fa-times-circle"></i></b></span>
+                    <span aria-hidden="undefined"><b><i class="far fa-times-circle"></i></b></span>
                 </button>
             </div>
             <div class="modal-body">
@@ -383,7 +383,7 @@ include_once '../../assets/dictionary.php';
             <div class="modal-header">
                 <h4 class="modal-title"><b><i class="far fa-edit"></i> <?php echo $dictionary['edit']; ?></b></h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true"><b><i class="far fa-times-circle"></i></b></span>
+                    <span aria-hidden="undefined"><b><i class="far fa-times-circle"></i></b></span>
                 </button>
             </div>
             <div class="modal-body">

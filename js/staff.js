@@ -48,13 +48,17 @@ function listStaff() {
       },
       {
         defaultContent:
-          "<button type='button' class='btn btn-sm btn-info dropdown-toggle' data-toggle='dropdown' aria-haspopup='undefined' aria-expanded='undefined'> Acciones </button>" +
-          "<div class='dropdown-menu'>" +
-          "<button class='btnEdit dropdown-item' type='button'><i class='fa fa-edit'></i> Editar</button>" +
-          "<button class='btnActivate dropdown-item' type='button'><i class='far fa-check-circle'></i> Activar</button>" +
-          "<button class='btnDesactivate dropdown-item' type='button'><i class='far fa-times-circle'></i> Desactivar</button>" +
-          "<button class='btnDelet dropdown-item' type='button'><i class='fas fa-trash-alt'></i> Eliminar</button>" +
-          "</div>",
+        "<button type='button' class='btn btn-sm btn-info dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'> Acciones </button>" +
+        "<div class='dropdown-menu'>" +
+        "<button class='btnEdit dropdown-item' type='button'><i class='fa fa-edit'></i> Editar</button>" +
+        "<button class='btnDelet dropdown-item' type='button'><i class='fas fa-trash-alt'></i> Eliminar</button>" +
+        "</div>",
+        // defaultContent:
+        //   "<button type='button' class='btn btn-sm btn-info dropdown-toggle' data-toggle='dropdown' aria-haspopup='undefined' aria-expanded='undefined'> Acciones </button>" +
+        //   "<div class='dropdown-menu'>" +
+        //   "<button class='btnEdit dropdown-item' type='button'><i class='fa fa-edit'></i> Editar</button>" +
+        //   "<button class='btnDelet dropdown-item' type='button'><i class='fas fa-trash-alt'></i> Eliminar</button>" +
+        //   "</div>",
       },
     ],
 
@@ -158,7 +162,7 @@ btn_CreateStaff.addEventListener("click", function () {
         );
       } else if (resp == 2) {
         //if 2, not insert, register is al ready register
-        toastr["warning"]("El personal ya está registrado", "Alerta");
+        toastr["warning"]("Revise uno o varios campos. El código, DNI o teléfono ya pertenece a un registro existente", "Alerta");
       } else if (resp == 0) {
         //if 0, error connexion database
         toastr["error"](
@@ -271,9 +275,7 @@ function generateRandomCode(length, includeNumbers, includeLetters) {
 }
 
 // Manejar el evento de clic en el botón "Generate"
-document
-  .getElementById("btnGenerateCodeStaff")
-  .addEventListener("click", function () {
+document.getElementById("btnGenerateCodeStaff").addEventListener("click", function () {
     const length = parseInt(document.getElementById("inputlong").value);
     const includeNumbers = document.getElementById("numbers").checked;
     const includeLetters = document.getElementById("letters").checked;
@@ -450,7 +452,7 @@ $("#list_staff").on("click", ".btnEdit", function () {
 
 });
 
-//Function add Staff
+//Function edit Staff
 btn_EditStaff.addEventListener("click", function () {
   //selection input value
   let tStaffID = document.getElementById("inputEditStaffId").value;
@@ -484,51 +486,93 @@ btn_EditStaff.addEventListener("click", function () {
     //if input name empty, the operation does not proceed
     toastr["error"]("Rellena los campos vacíos", "Error");
   } else {
-    $.ajax({
-      url: "controller/staff/c_create_staff.php",
-      type: "POST",
-      data: {
-        staffID: tStaffID,
-        rolGroup: tGropupID,
-        codeStaff: tCodeStaff,
-        name: tName,
-        lastName: tLastName,
-        email: tEmail,
-        dni: tDNI,
-        phone: tPhone,
-        department: tDepartament,
-        hireDate: tHireDate,
-        address: tAddress,
-        city: tCity,
-        country: tCountry,
-        birthDate: tBirthDate,
-        status: tStatus,
-      },
-    }).done(function (resp) {
-      if (resp == 1) {
-        //if 1 , insert table of database
-        tbl_staff.ajax.reload();
-        cleanCreateStaff();
-        toastr["success"]("Registro exitosamente", "Exito");
-        $("#addStaff .btn.btn-tool[data-card-widget='collapse']").trigger(
-          "click"
-        );
-      } else if (resp == 2) {
-        //if 2, not insert, register is al ready register
-        toastr["warning"]("El personal ya está registrado", "Alerta");
-      } else if (resp == 0) {
-        //if 0, error connexion database
-        toastr["error"](
-          "Se ha producido un error, comprueba tu conexión",
-          "Error"
-        );
+    Swal.fire({
+      title: "Esta seguro de actualizar?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, actualizar!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+          url: "controller/staff/c_edit_staff.php",
+          type: "POST",
+          data: {
+            rolGroup: tGropupID,
+            codeStaff: tCodeStaff,
+            name: tName,
+            lastName: tLastName,
+            email: tEmail,
+            dni: tDNI,
+            phone: tPhone,
+            department: tDepartament,
+            hireDate: tHireDate,
+            address: tAddress,
+            city: tCity,
+            country: tCountry,
+            birthDate: tBirthDate,
+            status: tStatus,
+            staffID: tStaffID,
+          }
+        }).done(function (resp) {
+          if (resp == 1) {
+            //if 1 , insert table of database
+            tbl_staff.ajax.reload();
+            $("#modalEditStaff").modal("hide");
+            toastr["success"]("Registro Actualizado", "Success");
+          } else if (resp == 2) {
+            //if 2, not insert, register is al ready register
+            toastr["warning"]("Revise uno o varios campos. El código, DNI o teléfono ya pertenece a un registro existente", "Warning");
+          } else if (resp == 0) {
+            //if 0, error connexion database
+            toastr["error"](
+              "Ha ocurrido un error, comprueba tu conexión",
+              "Error"
+            );
+          }
+        });
       }
     });
   }
 });
 
-//Function cancel create group
-btn_Cancel.addEventListener("click", function () {
+//Function cancel create staff
+btn_AddCancel.addEventListener("click", function () {
   cleanCreateStaff();
-  $("#add .btn.btn-tool[data-card-widget='collapse']").trigger("click");
+  $("#addStaff .btn.btn-tool[data-card-widget='collapse']").trigger("click");
+});
+
+//Function delete staff
+$("#list_staff").on("click", ".btnDelet", function () {
+  var data = tbl_staff.row($(this).parents("tr")).data();
+  if (tbl_staff.row(this).child.isShown()) {
+    //modal responsivo para moviles
+    var data = tbl_staff.row(this).data();
+  }
+  let id = data.staff_id;
+
+  Swal.fire({
+    title: "Esta seguro?",
+    text: "¡No podrás revertir esto!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "¡Sí, Eliminar!",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.ajax({
+        url: "controller/staff/c_delet_staff.php",
+        type: "POST",
+        data: {
+          staff_id: id,
+        },
+      }).done(function () {
+        tbl_staff.ajax.reload();
+        toastr["success"]("El registro fue eliminado exitosamente", "Success");
+      });
+    }
+    
+  });
 });

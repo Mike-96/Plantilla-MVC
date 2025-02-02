@@ -3,8 +3,6 @@ require_once 'database_connect.php';
 
 class model_user_group extends connectBD
 {
-
-
     public function list_user_group()
     {
         $connexion = connectBD::connect();
@@ -102,7 +100,6 @@ class model_user_group extends connectBD
             $this->close_connection();
     }
 
-    
     public function delete_group($id)
     {
         $connexion = connectBD::connect();
@@ -115,7 +112,6 @@ class model_user_group extends connectBD
             $this->close_connection();
         
     }
-
 
 }
 ?>

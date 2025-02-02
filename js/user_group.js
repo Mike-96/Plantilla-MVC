@@ -286,6 +286,10 @@ $("#list_group").on("click", ".btnDesactivate", function () {
 //Function delete group
 $("#list_group").on("click", ".btnDelet", function () {
   var data = tbl_users_group.row($(this).parents("tr")).data();
+  if (tbl_users_group.row(this).child.isShown()) {
+    //modal responsivo para moviles
+    var data = tbl_users_group.row(this).data();
+  }
   let id = data.group_id;
 
   Swal.fire({

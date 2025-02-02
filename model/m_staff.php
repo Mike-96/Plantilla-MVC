@@ -3,8 +3,6 @@ require_once 'database_connect.php';
 
 class model_staff extends connectBD
 {
-
-
     public function LIST_STAFF()
     {
         $connexion = connectBD::connect();
@@ -52,7 +50,6 @@ class model_staff extends connectBD
         return $array;
     }
 
-
     public function check_code($code)
     {
         $connexion = connectBD::connect();
@@ -74,102 +71,98 @@ class model_staff extends connectBD
         }
     }
 
-
     public function create_staff($group_id, $code_staff, $first_name, $last_name, $email, $dni, $phone, $department, $hire_date, $address, $city, $country, $birthdate, $status)
-{
-    $connexion = connectBD::connect();
-    $sql = "SELECT COUNT(*) FROM staff WHERE dni = ?";
-    
-    $query = $connexion->prepare($sql);
-    $query->bindParam(1, $dni, PDO::PARAM_STR);
-    $query->execute();
-    
-    $row = $query->fetchColumn();
-    
-    if ($row == 0) {
-        $sqlInsert = "INSERT INTO staff (group_id, code_staff, first_name, last_name, email, dni, phone, department, hire_date, address, city, country, birthdate, status, created_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,NOW())";
-        
-        $queryInsert = $connexion->prepare($sqlInsert);
-        $queryInsert->bindParam(1, $group_id, PDO::PARAM_STR);
-        $queryInsert->bindParam(2, $code_staff, PDO::PARAM_STR);
-        $queryInsert->bindParam(3, $first_name, PDO::PARAM_STR);
-        $queryInsert->bindParam(4, $last_name, PDO::PARAM_STR);
-        $queryInsert->bindParam(5, $email, PDO::PARAM_STR);
-        $queryInsert->bindParam(6, $dni, PDO::PARAM_STR);
-        $queryInsert->bindParam(7, $phone, PDO::PARAM_STR);
-        $queryInsert->bindParam(8, $department, PDO::PARAM_STR);
-        $queryInsert->bindParam(9, $hire_date, PDO::PARAM_STR);
-        $queryInsert->bindParam(10, $address, PDO::PARAM_STR);
-        $queryInsert->bindParam(11, $city, PDO::PARAM_STR);
-        $queryInsert->bindParam(12, $country, PDO::PARAM_STR);
-        $queryInsert->bindParam(13, $birthdate, PDO::PARAM_STR);
-        $queryInsert->bindParam(14, $status, PDO::PARAM_INT);
-        $queryInsert->execute();
-        
-        $this->close_connection();
-        return 1;
-    } else {
-        $this->close_connection();
-        return 2;
-    }
-}
-
-
-    public function update_group($id, $groupName, $slug)
     {
         $connexion = connectBD::connect();
-        $sql = "SELECT COUNT(*) FROM user_group WHERE group_name = ?";
-        
+        $sql = "SELECT COUNT(*) FROM staff WHERE code_staff = ? OR dni = ? OR phone = ?";
         $query = $connexion->prepare($sql);
-        $query->bindParam(1, $groupName, PDO::PARAM_STR);
+        $query->bindParam(1, $code_staff, PDO::PARAM_STR);
+        $query->bindParam(2, $dni, PDO::PARAM_STR);
+        $query->bindParam(3, $phone, PDO::PARAM_STR);
         $query->execute();
-        
-        $row = $query->fetchColumn();
-        
-        if ($row == 0) {
-            // Actualiza el registro existente
-            $sqlUpdate = "UPDATE user_group SET group_name = ?, slug = ?, updated_at = NOW() WHERE group_id = ?";
-            $queryUpdate = $connexion->prepare($sqlUpdate);
-            $queryUpdate->bindParam(1, $groupName, PDO::PARAM_STR);
-            $queryUpdate->bindParam(2, $slug, PDO::PARAM_STR);
-            $queryUpdate->bindParam(3, $id, PDO::PARAM_INT);
 
-            $queryUpdate->execute();
-            
+        $row = $query->fetchColumn();
+
+        if ($row == 0) {
+            $sqlInsert = "INSERT INTO staff (group_id, code_staff, first_name, last_name, email, dni, phone, department, hire_date, address, city, country, birthdate, status, created_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,NOW())";
+
+            $queryInsert = $connexion->prepare($sqlInsert);
+            $queryInsert->bindParam(1, $group_id, PDO::PARAM_STR);
+            $queryInsert->bindParam(2, $code_staff, PDO::PARAM_STR);
+            $queryInsert->bindParam(3, $first_name, PDO::PARAM_STR);
+            $queryInsert->bindParam(4, $last_name, PDO::PARAM_STR);
+            $queryInsert->bindParam(5, $email, PDO::PARAM_STR);
+            $queryInsert->bindParam(6, $dni, PDO::PARAM_STR);
+            $queryInsert->bindParam(7, $phone, PDO::PARAM_STR);
+            $queryInsert->bindParam(8, $department, PDO::PARAM_STR);
+            $queryInsert->bindParam(9, $hire_date, PDO::PARAM_STR);
+            $queryInsert->bindParam(10, $address, PDO::PARAM_STR);
+            $queryInsert->bindParam(11, $city, PDO::PARAM_STR);
+            $queryInsert->bindParam(12, $country, PDO::PARAM_STR);
+            $queryInsert->bindParam(13, $birthdate, PDO::PARAM_STR);
+            $queryInsert->bindParam(14, $status, PDO::PARAM_INT);
+            $queryInsert->execute();
+
             $this->close_connection();
-            return 1; // Éxito en la actualización
+            return 1;
         } else {
             $this->close_connection();
-            return 2; // El nombre del grupo ya existe
+            return 2;
         }
     }
-    
-    public function update_status_group($id, $status)
+
+    public function update_staff($staff_id, $group_id, $code_staff, $first_name, $last_name, $email, $dni, $phone, $department, $hire_date, $address, $city, $country, $birthdate, $status)
     {
         $connexion = connectBD::connect();
-            // Actualiza el registro existente
-            $sqlUpdate = "UPDATE user_group SET status = ?, updated_at = NOW() WHERE group_id = ?";
+        $sql = "SELECT COUNT(*) FROM staff WHERE (code_staff = ? OR dni = ? OR phone = ?) AND staff_id != ?";
+        $query = $connexion->prepare($sql);
+        $query->bindParam(1, $code_staff, PDO::PARAM_STR);
+        $query->bindParam(2, $dni, PDO::PARAM_STR);
+        $query->bindParam(3, $phone, PDO::PARAM_STR);
+        $query->bindParam(4, $staff_id, PDO::PARAM_INT);
+        $query->execute();
+
+        $row = $query->fetchColumn();
+
+
+        if ($row == 0) {
+            $sqlUpdate = "UPDATE staff SET group_id = ?, code_staff = ?, first_name = ?, last_name = ?, email = ?, dni = ?, phone = ?, department = ?, hire_date = ?, address = ?, city = ?, country = ?, birthdate = ?, status = ? WHERE staff_id = ?";
+
             $queryUpdate = $connexion->prepare($sqlUpdate);
-            $queryUpdate->bindParam(1, $status, PDO::PARAM_STR);
-            $queryUpdate->bindParam(2, $id, PDO::PARAM_INT);
+            $queryUpdate->bindParam(1, $group_id, PDO::PARAM_INT);
+            $queryUpdate->bindParam(2, $code_staff, PDO::PARAM_STR);
+            $queryUpdate->bindParam(3, $first_name, PDO::PARAM_STR);
+            $queryUpdate->bindParam(4, $last_name, PDO::PARAM_STR);
+            $queryUpdate->bindParam(5, $email, PDO::PARAM_STR);
+            $queryUpdate->bindParam(6, $dni, PDO::PARAM_STR);
+            $queryUpdate->bindParam(7, $phone, PDO::PARAM_STR);
+            $queryUpdate->bindParam(8, $department, PDO::PARAM_STR);
+            $queryUpdate->bindParam(9, $hire_date, PDO::PARAM_STR);
+            $queryUpdate->bindParam(10, $address, PDO::PARAM_STR);
+            $queryUpdate->bindParam(11, $city, PDO::PARAM_STR);
+            $queryUpdate->bindParam(12, $country, PDO::PARAM_STR);
+            $queryUpdate->bindParam(13, $birthdate, PDO::PARAM_STR);
+            $queryUpdate->bindParam(14, $status, PDO::PARAM_INT);
+            $queryUpdate->bindParam(15, $staff_id, PDO::PARAM_INT);
             $queryUpdate->execute();
-            
+
             $this->close_connection();
+            return 1;
+        } else {
+            $this->close_connection();
+            return 2; // El código, DNI o teléfono ya existe
+        }
     }
 
-    
-    public function delete_group($id)
+    public function delete_staff($staff_id)
     {
         $connexion = connectBD::connect();
-            // Actualiza el registro existente
-            $sqlDelete = "DELETE FROM user_group WHERE group_id = ?";
-            $queryDelete = $connexion->prepare($sqlDelete);
-            $queryDelete->bindParam(1, $id, PDO::PARAM_INT);
-            $queryDelete->execute();
-            
-            $this->close_connection();
-        
-    }
+        // Actualiza el registro existente
+        $sqlDelete = "DELETE FROM staff WHERE staff_id = ?";
+        $queryDelete = $connexion->prepare($sqlDelete);
+        $queryDelete->bindParam(1, $staff_id, PDO::PARAM_INT);
+        $queryDelete->execute();
 
+        $this->close_connection();
+    }
 }
-?>
