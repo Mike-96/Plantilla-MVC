@@ -85,7 +85,7 @@ btn_CreateGroup.addEventListener("click", function () {
 
   if (txtGroupName == 0) {
     //if input name empty, the operation does not proceed
-    toastr["error"]("GROUP NAME IS EMPTY", "Error");
+    toastr["error"]("EL NOMBRE DEL GRUPO ESTA VACIO", "Error");
   } else {
     $.ajax({
       url: "controller/user_group/c_create_group.php",
@@ -100,11 +100,11 @@ btn_CreateGroup.addEventListener("click", function () {
         //if 1 , insert table of database
         tbl_users_group.ajax.reload();
         cleanCreateGroup();
-        toastr["success"]("GROUP successfully register", "Success");
+        toastr["success"]("GRUPO REGISTRADO EXITOSAMENTE", "Success");
         $("#add .btn.btn-tool[data-card-widget='collapse']").trigger("click");
       } else if (resp == 2) {
         //if 2, not insert, register is al ready register
-        toastr["warning"]("The GROUP is already registered", "Warning");
+        toastr["warning"]("EL GRUPO YA ESTA REGISTRADO", "Warning");
       } else if (resp == 0) {
         //if 0, error connexion database
         toastr["error"](
@@ -185,7 +185,7 @@ btn_EditGroup.addEventListener("click", function () {
 
   if (txtGroupName == 0) {
     //if input name empty, the operation does not proceed
-    toastr["error"]("GROUP NAME IS EMPTY", "Error");
+    toastr["error"]("EL NOMBRE DEL GRUPO ESTA VACIO", "Error");
   } else {
     $.ajax({
       url: "controller/user_group/c_update_group.php",
@@ -203,11 +203,11 @@ btn_EditGroup.addEventListener("click", function () {
         toastr["success"]("GROUP successfully update", "Success");
       } else if (resp == 2) {
         //if 2, not insert, register is al ready register
-        toastr["warning"]("The GROUP is already registered", "Warning");
+        toastr["warning"]("EL GRUPO YA ESTA REGISTRADO", "Warning");
       } else if (resp == 0) {
         //if 0, error connexion database
         toastr["error"](
-          "An error has occurred, please check your connection",
+          "Se ha producido un error, por favor compruebe su conexión",
           "Error"
         );
       }

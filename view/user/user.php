@@ -1,5 +1,5 @@
 <?php
-    require_once '../../assets/dictionary.php';
+require_once '../../assets/dictionary.php';
 ?>
 
 
@@ -19,7 +19,7 @@
         </div>
     </div>
 </section>
- 
+
 <!-- card add user -->
 <section class="content">
     <div class="container-fluid">
@@ -43,11 +43,11 @@
 
                                 <div class="form-group">
                                     <label for="inputUserName"><?php echo $dictionary['userName']; ?><span style="color: red;">*</span></label>
-                                    <input type="text" class="form-control" id="inputUserName" placeholder="Enter UserName" required>
+                                    <input type="text" class="form-control" id="inputUserName" placeholder="" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputEmail"><?php echo $dictionary['account']; ?><span style="color: red;">*</span></label>
-                                    <input type="email" class="form-control" id="inputEmail" placeholder="Enter email" required>
+                                    <label for="inputAccount"><?php echo $dictionary['account']; ?><span style="color: red;">*</span></label>
+                                    <input type="email" class="form-control" id="inputAccount" placeholder="" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputPassword"><?php echo $dictionary['password']; ?><span style="color: red;">*</span></label>
@@ -65,14 +65,17 @@
                                         <option>Value 3</option>
                                     </select>
                                 </div>
-                                <button type="button" class="btn btn-danger btn-sm"><i class="fas fa-ban"></i> <?php echo $dictionary['cancel']; ?></button>
-                                <button type="button" class="btn btn-success btn-sm"><i class="fas fa-check"></i> <?php echo $dictionary['create']; ?></button>
+                            </div>
+                        </div>
+                        <div class="modal-footer justify-content-center">
+                            <div class="col-md-10">
+                                <button id="btnCancelCreateUser" type="button" class="btn btn-danger btn-sm" data-dismiss="modal"><i class="fas fa-ban"></i> <?php echo $dictionary['cancel']; ?></button>
+                                <button id="btnCreateUser" type="button" class="btn btn-success btn-sm"><i class="fas fa-check"></i> <?php echo $dictionary['create']; ?></button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 </section>
 
 <!-- card list user -->

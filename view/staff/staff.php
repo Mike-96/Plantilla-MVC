@@ -546,12 +546,6 @@ include_once '../../assets/dictionary.php';
 
 
 
-
-
-
-
-
-
 <script src="js/staff.js"></script>
 <script src="js/address.js"></script>
 <script>

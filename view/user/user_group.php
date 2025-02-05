@@ -1,6 +1,5 @@
-
 <?php
-    require_once '../../assets/dictionary.php';
+require_once '../../assets/dictionary.php';
 ?>
 
 <!-- header view page -->
@@ -29,7 +28,8 @@
                 <div class="card card-danger card-outline collapsed-card">
                     <div class="card-header" type="button" class="btn btn-tool" data-card-widget="collapse">
                         <h3 class="card-title">
-                        <i class="fa fa-plus-square" aria-hidden="true"></i> <?php echo $dictionary['add']; ?></h3>
+                            <i class="fa fa-plus-square" aria-hidden="true"></i> <?php echo $dictionary['add']; ?>
+                        </h3>
                         <div class="card-tools" id="add">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                 <i class="fas fa-plus"></i>
@@ -56,8 +56,12 @@
                                         <option value="0"> <?php echo $dictionary['inactive']; ?></option>
                                     </select>
                                 </div>
-                                <button id="btnCancelCreateGroup" type="button" class="btn btn-danger"><i class="fas fa-ban"></i> <?php echo $dictionary['cancel']; ?></button>
-                                <button id="btnCreateRoleGroup" type="button" class="btn btn-success"><i class="fas fa-check"></i> <?php echo $dictionary['create']; ?></button>
+                            </div>
+                        </div>
+                        <div class="modal-footer justify-content-center">
+                            <div class="col-md-10">
+                                <button id="btnCancelCreateGroup" type="button" class="btn btn-danger btn-sm" data-dismiss="modal"><i class="fas fa-ban"></i> <?php echo $dictionary['cancel']; ?></button>
+                                <button id="btnCreateRoleGroup" type="button" class="btn btn-success btn-sm"><i class="fas fa-check"></i> <?php echo $dictionary['create']; ?></button>
                             </div>
                         </div>
                     </div>
@@ -73,7 +77,8 @@
         <div class="card card-success card-outline">
             <div class="card-header">
                 <h3 class="card-title" id="role_group">
-                    <i class="fas fa-users-cog"></i> <?php echo $title['listGroup']; ?></h3>
+                    <i class="fas fa-users-cog"></i> <?php echo $title['listGroup']; ?>
+                </h3>
             </div>
             <div class="card-body">
                 <div class="row">
@@ -131,13 +136,12 @@
                 </div>
             </div>
             <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal"><i class="fas fa-ban"></i>  <?php echo $dictionary['cancel']; ?></button>
+                <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal"><i class="fas fa-ban"></i> <?php echo $dictionary['cancel']; ?></button>
                 <button id="btnEditCreateRoleGroup" type="button" class="btn btn-success btn-sm"><i class="fas fa-check"></i> <?php echo $dictionary['update']; ?></button>
             </div>
         </div>
     </div>
 </div>
-
 
 <script src="js/user_group.js"></script>
 <script>

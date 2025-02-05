@@ -26,7 +26,7 @@ function list_user() {
       { data: "group_name" },
       { data: "data_staff" },
       {
-        data: "status",
+        data: "id_status",
         render: function (data) {
           if (data == "1") {
             return "<span class='badge bg-success'>ACTIVO</span>";
@@ -44,7 +44,7 @@ function list_user() {
       "<button class='btnActivate dropdown-item' type='button'><i class='far fa-check-circle'></i> Activar</button>" +
       "<button class='btnDesactivate dropdown-item' type='button'><i class='far fa-times-circle'></i> Desactivar</button>" +
       "<button class='btnDelet dropdown-item' type='button'><i class='fas fa-trash-alt'></i> Eliminar</button>" +
-      "<button class='btnDesactivate dropdown-item' type='button'><i class='far fa-times-circle'></i> Cambiar Password</button>" +
+      "<button class='btnDesactivate dropdown-item' type='button'><i class='fas fa-key'></i> Cambiar Password</button>" +
       "</div>",
       },
     ],
