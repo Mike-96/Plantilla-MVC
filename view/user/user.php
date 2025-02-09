@@ -40,6 +40,16 @@ require_once '../../assets/dictionary.php';
                     <div class="card-body" style="display: none;">
                         <div class="d-flex justify-content-center">
                             <div class="form-row col-md-10">
+                                <!-- user img -->
+                                <div class="form-group col-md-6">
+                                    <label for=""><?php echo $dictionary['img']; ?></label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-image"></i></span>
+                                        </div>
+                                        <input type="file" class="" id="inputUserImg">
+                                    </div>
+                                </div>
                                 <!-- staff -->
                                 <div class="form-group col-md-6">
                                     <label for="inputUserStaff"><?php echo $dictionary['staff']; ?><span style="color: red;">*</span></label>
