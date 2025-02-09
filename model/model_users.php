@@ -21,18 +21,17 @@ class model_user extends connectBD
                 users.last_login,
                 users.created_at,
                 users.updated_at
-            FROM users
-            LEFT JOIN 
-            staff 
-            ON 
-            users.staff_id = staff.staff_id  
-            LEFT JOIN 
-            status 
-            ON 
-            staff.status = status.id_status 
-            WHERE 
-            users.email = BINARY ?";  
-
+                FROM users
+                LEFT JOIN 
+                staff 
+                ON 
+                users.staff_id = staff.staff_id  
+                LEFT JOIN 
+                status 
+                ON 
+                staff.status = status.id_status 
+                WHERE 
+                users.email = BINARY ?";
 
         $array = array();
         $query = $connexion->prepare($sql);
@@ -53,47 +52,55 @@ class model_user extends connectBD
     public function list_user()
     {
         $connexion = connectBD::connect();
-        $sql = "SELECT 
-                    users.user_id,
-                    users.user_image,
-                    users.user_name,
-                    users.email,
-                    users.sex,
-                    users.group_id,
-                    user_group.group_name,
-                    status.id_status,
-                    users.staff_id,
-                    CONCAT_WS(' ', staff.code_staff, staff.first_name, staff.last_name) AS data_staff,
-                    users.hash_password,
-                    users.raw_password,
-                    users.last_login,
-                    users.created_at,
-                    users.updated_at
-                    FROM
-                    users
-                    INNER JOIN 
-                    user_group
-                    ON 
-                    users.group_id = user_group.group_id
-                    LEFT JOIN 
-                    staff
-                    ON 
-                    users.staff_id = staff.staff_id
-                    LEFT JOIN
-                    status
-                    ON
-                    staff.status = status.id_status";
+        $sql = "SELECT
+                users.user_id, 
+                users.user_image, 
+                users.user_name, 
+                users.email, 
+                users.sex, 
+                user_group.group_id,
+                user_group.group_name, 
+                `status`.id_status, 
+                staff.staff_id, 
+                CONCAT_WS(' ', staff.code_staff, staff.first_name, staff.last_name) AS data_staff, 
+                users.hash_password, 
+                users.raw_password, 
+                users.last_login, 
+                users.created_at, 
+                users.updated_at 
+                FROM
+                users
+                LEFT JOIN
+                `status`
+                ON 
+                users.`status` = `status`.id_status
+                LEFT JOIN
+                staff
+                ON 
+                users.staff_id = staff.staff_id
+                LEFT JOIN
+                user_group
+                ON 
+		        users.group_id = user_group.group_id";
 
-        $array = array();
-        $query = $connexion->prepare($sql);
-        $query->execute();
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        try {
+            $query = $connexion->prepare($sql);
+            $query->execute();
+            $result = $query->fetchAll(PDO::FETCH_ASSOC);
 
-        foreach ($result as $response) {
-            $array["data"][] = $response;
+            $array = array();
+            foreach ($result as $response) {
+                $array["data"][] = $response;
+            }
+
+            return $array;
+        } catch (PDOException $e) {
+            // Manejar el error
+            echo "Error: " . $e->getMessage();
+            return false;
+        } finally {
+            // Cerrar la conexión
+            $this->close_connection();
         }
-
-        $this->close_connection();
-        return $array;
     }
 }

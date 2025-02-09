@@ -58,6 +58,8 @@ $dictionary = [
     "update" => "Actualizar",
     "formatDate" => "Año - Mes - Día ",
     "department" => "Departamento",
+    "staff" => "Personal",
+    "find" => "Buscar",
 
 ];
 $title = [

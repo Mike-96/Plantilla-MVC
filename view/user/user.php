@@ -39,31 +39,80 @@ require_once '../../assets/dictionary.php';
                     <!-- </a> -->
                     <div class="card-body" style="display: none;">
                         <div class="d-flex justify-content-center">
-                            <div class="align-self-center col-md-10">
-
-                                <div class="form-group">
+                            <div class="form-row col-md-10">
+                                <!-- staff -->
+                                <div class="form-group col-md-6">
+                                    <label for="inputUserStaff"><?php echo $dictionary['staff']; ?><span style="color: red;">*</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-id-card"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control" id="inputUserIdStaff" disabled hidden>
+                                        <input type="text" class="form-control" id="inputUserStaff" disabled>
+                                        <span class="input-group-append">
+                                            <button id="openFindUserStaff" type="button" class="btn btn-info"><i class="fas fa-search"></i> <?php echo $dictionary['find']; ?></button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <!-- user name -->
+                                <div class="form-group col-md-6">
                                     <label for="inputUserName"><?php echo $dictionary['userName']; ?><span style="color: red;">*</span></label>
-                                    <input type="text" class="form-control" id="inputUserName" placeholder="" required>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control" id="inputUserName">
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="inputAccount"><?php echo $dictionary['account']; ?><span style="color: red;">*</span></label>
-                                    <input type="email" class="form-control" id="inputAccount" placeholder="" required>
+                                <!-- account -->
+                                <div class="form-group col-md-6">
+                                    <label for="inputUserAccount"><?php echo $dictionary['account']; ?><span style="color: red;">*</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-sign-in-alt"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control" id="inputUserAccount">
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="inputPassword"><?php echo $dictionary['password']; ?><span style="color: red;">*</span></label>
-                                    <input type="password" class="form-control" id="inputPassword" placeholder="Password" required>
+                                <!-- password -->
+                                <div class="form-group col-md-6">
+                                    <label for="inputUserPassword"><?php echo $dictionary['password']; ?><span style="color: red;">*</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-key"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control" id="inputUserPassword">
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="repeatInputPassword"><?php echo $dictionary['repeatPassword']; ?><span style="color: red;">*</span></label>
-                                    <input type="password" class="form-control" id="repeatInputPassword" placeholder="Repeat Password" required>
+                                <!-- raw password -->
+                                <div class="form-group col-md-6">
+                                    <label for="inputUserRawPassword"><?php echo $dictionary['repeatPassword']; ?><span style="color: red;">*</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-key"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control" id="inputUserRawPassword">
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="exampleInputFile"><?php echo $dictionary['rolGroup']; ?><span style="color: red;">*</span></label>
-                                    <select class="custom-select rounded-0" id="exampleSelectRounded0">
-                                        <option>Value 1</option>
-                                        <option>Value 2</option>
-                                        <option>Value 3</option>
-                                    </select>
+                                <!-- roles -->
+                                <div class="form-group col-md-6">
+                                    <label for="selectUserRol"><?php echo $dictionary['rolGroup']; ?><span style="color: red;">*</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-users-cog"></i></span>
+                                        </div>
+                                        <select class="custom-select form-control" id="selectUserRol"></select>
+                                    </div>
+                                </div>
+                                <!-- Status -->
+                                <div class="form-group col-md-6">
+                                    <label for="selectUserStatus"><?php echo $dictionary['status']; ?><span style="color: red;">*</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-exclamation-circle"></i></span>
+                                        </div>
+                                        <select class="custom-select form-control" id="selectUserStatus"></select>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -143,6 +192,26 @@ require_once '../../assets/dictionary.php';
 <script src="js/users.js"></script>
 <script>
     $(document).ready(function() {
-        list_user();
+        listUser();
+        listComboBox();
     });
 </script>
+
+
+<div class="form-group" data-select2-id="29">
+    <label>Minimal</label>
+    <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true">
+        <option selected="selected" data-select2-id=></option>
+    </select>
+    <span class="select2 select2-container select2-container--default select2-container--below select2-container--focus" dir="ltr" data-select2-id="2" style="width: 100%;">
+        <span class="selection">
+            <span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-20ss-container">
+                <span class="select2-selection__rendered" id="select2-20ss-container" role="textbox" aria-readonly="true" title="Delaware">Delaware</span>
+                <span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span>
+            </span>
+        </span>
+        <span class="dropdown-wrapper" aria-hidden="true">
+
+        </span>
+    </span>
+</div>
