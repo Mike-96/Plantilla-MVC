@@ -74,6 +74,69 @@ function listUser() {
   });
 }
 
+let tblStaff
+function listStaff() {
+  tblStaff = $("#tblViewStaff").DataTable({
+    // buttons:['copy','csv','excel','pdf','print'],
+    ordering: true,
+    bLengthChange: true,
+    responsive: true,
+    searching: { regex: false },
+    dom: "fltip",
+    lengthMenu: [
+      [2, 5, 10, 25, 50, 100, -1],
+      [2, 5, 10, 25, 50, 100, "All"],
+    ],
+    pageLength: 10,
+    destroy: true,
+    async: false,
+    processing: true,
+    ajax: {
+      url: "controller/staff/c_list_staff.php",
+      type: "POST",
+      error: function (xhr, error, code) {
+        console.log("Error: ", error);
+      },
+    },
+    columns: [
+      { data: "staff_id" },
+      { data: "code_staff" },
+      {
+        data: null, // Combina `staff_name` y `last_name` en una sola columna
+        render: function (data) {
+          return `${data.first_name} ${data.last_name}`;
+        },
+      },
+      { data: "group_name" },
+      { 
+        defaultContent:
+          "<button type='button' class='btnSelect btn btn-sm bg-warning'><i class='fas fa-paper-plane'></i></button>",
+        },
+    ],
+    select: true,
+    // Otras opciones...
+    headerCallback: function (thead, data, start, end, display) {
+      $(thead).find('th').addClass('text-center');
+    },
+    fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+      $($(nRow).find("td")[0]).css('text-align', 'center');
+      $($(nRow).find("td")[1]).css('text-align', 'center');
+      $($(nRow).find("td")[3]).css('text-align', 'center');
+      $($(nRow).find("td")[4]).css('text-align', 'center');
+    },
+  });
+
+  tblStaff.on("draw.td", function () {
+    var PageInfo = $("#tblViewStaff").DataTable().page.info();
+    tblStaff
+      .column(0, { page: "current" })
+      .nodes()
+      .each(function (cell, i) {
+        cell.innerHTML = i + 1 + PageInfo.start;
+      });
+  });
+}
+
 //listar combo box list group + estatus
 function listComboBox() {
   $.ajax({
@@ -110,4 +173,29 @@ function listComboBox() {
   });
 }
 
+//Function open modal Staff
+let modalViewStaff = document.getElementById('openFindUserStaff');
+modalViewStaff.addEventListener("click", function () {
+  $("#modalViewStaff").modal({ backdrop: "static", keyboard: false });
+  $("#modalViewStaff").modal("show");
+  $("#modalViewStaff").draggable({
+    handle: ".modal-header",
+  });
+ 
+});
 
+//function open modal info staff y enviar datos al input personal , usuario y cuenta
+$("#tblViewStaff").on("click", ".btnSelect", function () {
+  var data = tblStaff.row($(this).parents("tr")).data();
+  if (tblStaff.row(this).child.isShown()) {
+    //modal responsivo para moviles
+    var data = tblStaff.row(this).data();
+  }
+
+  $("#inputUserIdStaff").val(data.staff_id);
+  $("#inputUserStaff").val(data.first_name + " " + data.last_name);
+  $("#inputUserName").val(data.first_name + " " + data.last_name);
+
+  $("#modalViewStaff").modal("hide");
+
+});

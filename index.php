@@ -40,6 +40,8 @@
   <link rel="stylesheet" href="plantilla/dist/css/loader.css">
   <!--Link css styles -->
   <link rel="stylesheet" href="./assets/css/style.css">
+  <!-- Link css dropzone -->
+  <link rel="stylesheet" href="./assets/pluguins/node_modules/dropzone/dist/dropzone.css">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -126,6 +128,9 @@
 <!-- SweetAlert2-->
 <script src="plantilla/plugins/sweetalert2/sweetalert2.all.min.js"></script>
 <script src="plantilla/plugins/sweetalert2/sweetalert2.min.js"></script>
+
+<!-- Link js dropzone -->
+<script src="./assets/pluguins/node_modules/dropzone/dist/dropzone-min.js"></script>
 
   
 </script>

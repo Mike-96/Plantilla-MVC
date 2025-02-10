@@ -23,7 +23,7 @@ function listStaff() {
       { data: "staff_id" },
       { data: "group_name" },
       {
-        data: null, // Combina `staff_name` y `dni`
+        data: null, // Combina `staff_name` y `last_name` en una sola columna
         render: function (data) {
           return `${data.first_name} ${data.last_name}`;
         },

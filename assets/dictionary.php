@@ -60,6 +60,8 @@ $dictionary = [
     "department" => "Departamento",
     "staff" => "Personal",
     "find" => "Buscar",
+    "select" => "Seleccionar",
+    "code" => "Código",
 
 ];
 $title = [

@@ -38,18 +38,21 @@ require_once '../../assets/dictionary.php';
                     </div>
                     <!-- </a> -->
                     <div class="card-body" style="display: none;">
+                        <!-- Solo inpunt img -->
                         <div class="d-flex justify-content-center">
                             <div class="form-row col-md-10">
                                 <!-- user img -->
                                 <div class="form-group col-md-6">
                                     <label for=""><?php echo $dictionary['img']; ?></label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-image"></i></span>
-                                        </div>
-                                        <input type="file" class="" id="inputUserImg">
-                                    </div>
+                                    <!-- Example of a form that Dropzone can take over -->
+                                    <form id="inputUserImg" class="dropzone mx-auto p-0"></form>
                                 </div>
+                            </div>
+                        </div>
+                        <!-- Resto de inpunts -->
+                        <div class="d-flex justify-content-center">
+
+                            <div class="form-row col-md-10">
                                 <!-- staff -->
                                 <div class="form-group col-md-6">
                                     <label for="inputUserStaff"><?php echo $dictionary['staff']; ?><span style="color: red;">*</span></label>
@@ -137,6 +140,52 @@ require_once '../../assets/dictionary.php';
             </div>
 </section>
 
+<!-- modal view staff -->
+<div class="modal fade" id="modalViewStaff" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="undefined" draggable="undefined">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"><b><i class="fas fa-info-circle"></i> <?php echo $title['staffLis']; ?></b></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="undefined"><b><i class="far fa-times-circle"></i></b></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="align-self-center">
+
+                    <div class="col-12 d-flex align-items-stretch flex-column">
+                            <div class="col-lg-12 table-responsive">
+
+                                <table id="tblViewStaff" class="display responsive" style="width:100%">
+                                    <thead class="bg-secondary">
+                                        <tr>
+                                            <th><?php echo $dictionary['number'] ?></th>
+                                            <th><?php echo $dictionary['code'] ?></th>
+                                            <th><?php echo $dictionary['staff'] ?></th>
+                                            <th><?php echo $dictionary['jobTitle'] ?></th>
+                                            <th><?php echo $dictionary['select'] ?></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+
+
+                            </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
 <!-- card list user -->
 <section class="content">
     <div class="container-fluid">
@@ -200,28 +249,11 @@ require_once '../../assets/dictionary.php';
 </section>
 
 <script src="js/users.js"></script>
+<script src="js/dropzone.js"></script>
 <script>
     $(document).ready(function() {
         listUser();
+        listStaff();
         listComboBox();
     });
 </script>
-
-
-<div class="form-group" data-select2-id="29">
-    <label>Minimal</label>
-    <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true">
-        <option selected="selected" data-select2-id=></option>
-    </select>
-    <span class="select2 select2-container select2-container--default select2-container--below select2-container--focus" dir="ltr" data-select2-id="2" style="width: 100%;">
-        <span class="selection">
-            <span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-20ss-container">
-                <span class="select2-selection__rendered" id="select2-20ss-container" role="textbox" aria-readonly="true" title="Delaware">Delaware</span>
-                <span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span>
-            </span>
-        </span>
-        <span class="dropdown-wrapper" aria-hidden="true">
-
-        </span>
-    </span>
-</div>
