@@ -184,7 +184,7 @@ modalViewStaff.addEventListener("click", function () {
  
 });
 
-//function open modal info staff y enviar datos al input personal , usuario y cuenta
+//function open modal info staff y enviar datos al input personal , usuario y cuenta al agregar usuario
 $("#tblViewStaff").on("click", ".btnSelect", function () {
   var data = tblStaff.row($(this).parents("tr")).data();
   if (tblStaff.row(this).child.isShown()) {
@@ -194,7 +194,8 @@ $("#tblViewStaff").on("click", ".btnSelect", function () {
 
   $("#inputUserIdStaff").val(data.staff_id);
   $("#inputUserStaff").val(data.first_name + " " + data.last_name);
-  $("#inputUserName").val(data.first_name + " " + data.last_name);
+  // $("#inputUserName").val(data.first_name + " " + data.last_name);
+  // $("#inputUserAccount").val(data.group_id);
 
   $("#modalViewStaff").modal("hide");
 

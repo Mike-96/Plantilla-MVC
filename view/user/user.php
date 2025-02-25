@@ -84,7 +84,7 @@ require_once '../../assets/dictionary.php';
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-sign-in-alt"></i></span>
                                         </div>
-                                        <input type="text" class="form-control" id="inputUserAccount">
+                                        <input type="text" class="form-control" id="inputUserAccount" placeholder="ohe">
                                     </div>
                                 </div>
                                 <!-- password -->
