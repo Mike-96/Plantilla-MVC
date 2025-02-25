@@ -31,7 +31,9 @@ function listUser() {
       {
         data: "id_status",
         render: function (data) {
-          return data == "1" ? "<span class='badge bg-success'>ACTIVO</span>" : "<span class='badge bg-danger'>INACTIVO</span>";
+          return data == "1"
+            ? "<span class='badge bg-success'>ACTIVO</span>"
+            : "<span class='badge bg-danger'>INACTIVO</span>";
         },
       },
       { data: "last_login" },
@@ -50,16 +52,16 @@ function listUser() {
     select: true,
     // Otras opciones...
     headerCallback: function (thead, data, start, end, display) {
-      $(thead).find('th').addClass('text-center');
+      $(thead).find("th").addClass("text-center");
     },
     fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-      $($(nRow).find("td")[0]).css('text-align', 'center');
-      $($(nRow).find("td")[1]).css('text-align', 'center');
-      $($(nRow).find("td")[3]).css('text-align', 'center');
-      $($(nRow).find("td")[4]).css('text-align', 'center');
-      $($(nRow).find("td")[5]).css('text-align', 'center');
-      $($(nRow).find("td")[6]).css('text-align', 'center');
-      $($(nRow).find("td")[7]).css('text-align', 'center');
+      $($(nRow).find("td")[0]).css("text-align", "center");
+      $($(nRow).find("td")[1]).css("text-align", "center");
+      $($(nRow).find("td")[3]).css("text-align", "center");
+      $($(nRow).find("td")[4]).css("text-align", "center");
+      $($(nRow).find("td")[5]).css("text-align", "center");
+      $($(nRow).find("td")[6]).css("text-align", "center");
+      $($(nRow).find("td")[7]).css("text-align", "center");
     },
   });
 
@@ -74,7 +76,7 @@ function listUser() {
   });
 }
 
-let tblStaff
+let tblStaff;
 function listStaff() {
   tblStaff = $("#tblViewStaff").DataTable({
     // buttons:['copy','csv','excel','pdf','print'],
@@ -108,21 +110,21 @@ function listStaff() {
         },
       },
       { data: "group_name" },
-      { 
+      {
         defaultContent:
           "<button type='button' class='btnSelect btn btn-sm bg-warning'><i class='fas fa-paper-plane'></i></button>",
-        },
+      },
     ],
     select: true,
     // Otras opciones...
     headerCallback: function (thead, data, start, end, display) {
-      $(thead).find('th').addClass('text-center');
+      $(thead).find("th").addClass("text-center");
     },
     fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-      $($(nRow).find("td")[0]).css('text-align', 'center');
-      $($(nRow).find("td")[1]).css('text-align', 'center');
-      $($(nRow).find("td")[3]).css('text-align', 'center');
-      $($(nRow).find("td")[4]).css('text-align', 'center');
+      $($(nRow).find("td")[0]).css("text-align", "center");
+      $($(nRow).find("td")[1]).css("text-align", "center");
+      $($(nRow).find("td")[3]).css("text-align", "center");
+      $($(nRow).find("td")[4]).css("text-align", "center");
     },
   });
 
@@ -174,14 +176,13 @@ function listComboBox() {
 }
 
 //Function open modal Staff
-let modalViewStaff = document.getElementById('openFindUserStaff');
+let modalViewStaff = document.getElementById("openFindUserStaff");
 modalViewStaff.addEventListener("click", function () {
   $("#modalViewStaff").modal({ backdrop: "static", keyboard: false });
   $("#modalViewStaff").modal("show");
   $("#modalViewStaff").draggable({
     handle: ".modal-header",
   });
- 
 });
 
 //function open modal info staff y enviar datos al input personal , usuario y cuenta al agregar usuario
@@ -194,9 +195,58 @@ $("#tblViewStaff").on("click", ".btnSelect", function () {
 
   $("#inputUserIdStaff").val(data.staff_id);
   $("#inputUserStaff").val(data.first_name + " " + data.last_name);
-  // $("#inputUserName").val(data.first_name + " " + data.last_name);
-  // $("#inputUserAccount").val(data.group_id);
+  $("#inputUserName").val(data.first_name + " " + data.last_name);
+
+  var firstInitial = data.first_name.charAt(0); // Obtener la primera letra de first_name
+  var firstWord = data.last_name.split(" ")[0].toLowerCase(); // Obtener la primera palabra de last_name
+  $("#inputUserAccount").val(firstInitial + firstWord);
 
   $("#modalViewStaff").modal("hide");
+});
 
+$(document).ready(function () {
+  //agrega la funcion de ver o ocultar password
+  $("#togglePassword").click(function () {
+    var input = $("#inputUserPassword");
+    var icon = $(this).find("i");
+    if (input.attr("type") === "password") {
+      input.attr("type", "text");
+      icon.removeClass("fas fa-eye").addClass("fas fa-eye-slash");
+    } else {
+      input.attr("type", "password");
+      icon.removeClass("fas fa-eye-slash").addClass("fas fa-eye");
+    }
+  });
+  //agrega la funcion de ver o ocultar repeat password
+  $("#togglePassword2").click(function () {
+    var input = $("#inputUserRawPassword");
+    var icon = $(this).find("i");
+    if (input.attr("type") === "password") {
+      input.attr("type", "text");
+      icon.removeClass("fas fa-eye").addClass("fas fa-eye-slash");
+    } else {
+      input.attr("type", "password");
+      icon.removeClass("fas fa-eye-slash").addClass("fas fa-eye");
+    }
+  });
+  //valida que los campos password y confirmar password sean iguales
+  $("#inputUserPassword, #inputUserRawPassword").on("input", function () {
+    var password1 = $("#inputUserPassword").val();
+    var password2 = $("#inputUserRawPassword").val();
+
+    // Verifica que ambos campos no estén vacíos antes de hacer la validación
+    if (password1 === "" && password2 === "") {
+      $("#inputUserPassword, #inputUserRawPassword").removeClass(
+        "is-valid is-invalid"
+      );
+    } else if (password1 === password2) {
+      $("#inputUserPassword, #inputUserRawPassword")
+        .removeClass("is-invalid")
+        .addClass("is-valid");
+    } else {
+      $("#inputUserPassword, #inputUserRawPassword")
+        .removeClass("is-valid")
+        .addClass("is-invalid");
+    }
+  });
 });

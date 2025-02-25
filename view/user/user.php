@@ -84,7 +84,7 @@ require_once '../../assets/dictionary.php';
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-sign-in-alt"></i></span>
                                         </div>
-                                        <input type="text" class="form-control" id="inputUserAccount" placeholder="ohe">
+                                        <input type="text" class="form-control" id="inputUserAccount">
                                     </div>
                                 </div>
                                 <!-- password -->
@@ -94,7 +94,10 @@ require_once '../../assets/dictionary.php';
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-key"></i></span>
                                         </div>
-                                        <input type="text" class="form-control" id="inputUserPassword">
+                                        <input type="password" class="form-control" id="inputUserPassword">
+                                            <div class="input-group-append">
+                                                <button id="togglePassword" type="button" class="input-group-text btn btn-sm"><i class="fas fa-eye"></i></button>
+                                            </div>
                                     </div>
                                 </div>
                                 <!-- raw password -->
@@ -104,7 +107,10 @@ require_once '../../assets/dictionary.php';
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-key"></i></span>
                                         </div>
-                                        <input type="text" class="form-control" id="inputUserRawPassword">
+                                        <input type="password" class="form-control" id="inputUserRawPassword">
+                                            <div class="input-group-append">
+                                                <button id="togglePassword2" type="button" class="input-group-text btn btn-sm"><i class="fas fa-eye"></i></button>
+                                            </div>
                                     </div>
                                 </div>
                                 <!-- roles -->
