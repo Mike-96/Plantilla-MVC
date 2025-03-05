@@ -204,6 +204,7 @@ $("#tblViewStaff").on("click", ".btnSelect", function () {
   $("#modalViewStaff").modal("hide");
 });
 
+//validar input de password y confirmar password
 $(document).ready(function () {
   //agrega la funcion de ver o ocultar password
   $("#togglePassword").click(function () {
@@ -250,3 +251,57 @@ $(document).ready(function () {
     }
   });
 });
+
+//Crear usuario
+let btnCreateUser = document.getElementById("btnCreateUser");
+btnCreateUser.addEventListener("click", function () {
+  let txtUserStaff   = document.getElementById("inputUserStaff").value;
+  let txtUserName    = document.getElementById("inputUserName").value;
+  let txtUserAccount = document.getElementById("inputUserAccount").value;
+  let txtUserPassword = document.getElementById("inputUserPassword").value;
+  let txtUserRawPassword = document.getElementById("inputUserRawPassword").value;
+  let txtUserRol     = document.getElementById("selectUserRol").value;
+  let txtUserStatus  = document.getElementById("selectUserStatus").value;
+  
+  // Usamos la ruta generada por Dropzone en el campo oculto
+  let photoPath = document.getElementById("userPhotoPath").value;
+
+  // Validar que los campos no estén vacíos (usa trim() para evitar espacios)
+  if (
+    txtUserStaff.trim() === "" ||
+    txtUserName.trim() === "" ||
+    txtUserAccount.trim() === "" ||
+    txtUserRawPassword.trim() === "" ||
+    txtUserPassword.trim() === ""
+  ) {
+    toastr["error"]("Verifique los campos Vacios", "Error");
+    return; // Cortamos la ejecución si hay error
+  }
+
+  $.ajax({
+    url: "controller/users/c_create_user.php",
+    type: "POST",
+    data: {
+      staff: txtUserStaff,
+      userName: txtUserName,
+      account: txtUserAccount,
+      password: txtUserPassword,
+      rawPassword: txtUserRawPassword,
+      rol: txtUserRol,
+      status: txtUserStatus,
+      photo: photoPath, // Enviamos la ruta de la imagen en lugar del objeto File
+    },
+    success: function (resp) {
+      if (resp == 1) {
+        tbl_users.ajax.reload();
+        toastr["success"]("Usuario registrado exitosamente", "Success");
+        $("#addUser .btn.btn-tool[data-card-widget='collapse']").trigger("click");
+      } else if (resp == 2) {
+        toastr["warning"]("El usuario ya está registrado", "Warning");
+      } else if (resp == 0) {
+        toastr["error"]("Error al crear usuario, Por favor verifique su conexión", "Error");
+      }
+    }
+  });
+});
+

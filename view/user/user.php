@@ -46,6 +46,7 @@ require_once '../../assets/dictionary.php';
                                     <label for=""><?php echo $dictionary['img']; ?></label>
                                     <!-- Example of a form that Dropzone can take over -->
                                     <form id="inputUserImg" class="dropzone mx-auto p-0"></form>
+                                    <input type="hidden" id="userPhotoPath" name="userPhotoPath" value="">
                                 </div>
                             </div>
                         </div>

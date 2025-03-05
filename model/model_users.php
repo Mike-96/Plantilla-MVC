@@ -103,4 +103,42 @@ class model_user extends connectBD
             $this->close_connection();
         }
     }
+
+    public function create_user($staff, $userName, $account, $password, $rawPassword, $rol, $status, $photo)
+    {
+        $connexion = connectBD::connect();
+        $sql = "SELECT COUNT(*) FROM users WHERE email = ? OR staff_id = ?";
+        $query = $connexion->prepare($sql);
+        $query->bindParam(1, $account, PDO::PARAM_STR);
+        $query->bindParam(2, $staff, PDO::PARAM_STR);
+        $query->execute();
+        $row = $query->fetchColumn();
+
+        if ($row == 0) {
+            $sqlInsert = "INSERT INTO users (staff_id, user_name, email, hash_password, raw_password, group_id, status, user_image) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            $queryInsert = $connexion->prepare($sqlInsert);
+            $queryInsert->bindParam(1, $staff);
+            $queryInsert->bindParam(2, $userName);
+            $queryInsert->bindParam(3, $account);
+            $queryInsert->bindParam(4, $password);
+            $queryInsert->bindParam(5, $rawPassword);
+            $queryInsert->bindParam(6, $rol);
+            $queryInsert->bindParam(7, $status);
+            $queryInsert->bindParam(8, $photo);
+            $queryInsert->execute();
+
+            // Ejecutar la inserción y manejar posibles errores
+            if ($queryInsert->execute()) {
+                $this->close_connection();
+                return 1; // Usuario creado exitosamente
+            } else {
+                $this->close_connection();
+                return 0; // Error al insertar usuario
+            }
+        } else {
+            // Usuario ya existe
+            $this->close_connection();
+            return 2; // Código de error para usuario existente
+        }
+    }
 }
