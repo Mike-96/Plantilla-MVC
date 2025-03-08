@@ -113,5 +113,32 @@ class model_user_group extends connectBD
         
     }
 
+    public function listSelectGroup()
+    {
+        $connexion = connectBD::connect();
+        $sql = "SELECT 
+                    user_group.group_id,
+                    user_group.group_name,
+                    user_group.slug,
+                    user_group.status,
+                    user_group.created_at,
+                    user_group.updated_at
+                    FROM
+                    user_group
+                    WHERE user_group.status = 1";
+
+        $array = array();
+        $query = $connexion->prepare($sql);
+        $query->execute();
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($result as $response) {
+            $array["data"][] = $response;
+        }
+
+        $this->close_connection();
+        return $array;
+    }
+
 }
 ?>

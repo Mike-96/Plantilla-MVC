@@ -8,28 +8,21 @@ class model_user extends connectBD
     {
         $connexion = connectBD::connect();
         $sql = "SELECT 
-                users.user_id,
-                users.user_image,
-                users.user_name,
-                users.email,
-                users.sex,
-                users.group_id,
-                status.id_status,
-                users.staff_id,
-                users.hash_password,
-                users.raw_password,
-                users.last_login,
-                users.created_at,
+                users.user_id, 
+                users.user_image, 
+                users.user_name, 
+                users.email, 
+                users.sex, 
+                users.group_id, 
+                users.`status`, 
+                users.staff_id, 
+                users.hash_password, 
+                users.raw_password, 
+                users.last_login, 
+                users.created_at, 
                 users.updated_at
-                FROM users
-                LEFT JOIN 
-                staff 
-                ON 
-                users.staff_id = staff.staff_id  
-                LEFT JOIN 
-                status 
-                ON 
-                staff.status = status.id_status 
+                FROM
+                users 
                 WHERE 
                 users.email = BINARY ?";
 
@@ -127,18 +120,11 @@ class model_user extends connectBD
             $queryInsert->bindParam(8, $photo);
             $queryInsert->execute();
 
-            // Ejecutar la inserción y manejar posibles errores
-            if ($queryInsert->execute()) {
-                $this->close_connection();
-                return 1; // Usuario creado exitosamente
-            } else {
-                $this->close_connection();
-                return 0; // Error al insertar usuario
-            }
-        } else {
-            // Usuario ya existe
             $this->close_connection();
-            return 2; // Código de error para usuario existente
+            return 1;
+        } else {
+            $this->close_connection();
+            return 2;
         }
     }
 }

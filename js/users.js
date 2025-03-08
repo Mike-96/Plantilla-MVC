@@ -1,7 +1,12 @@
-var tbl_users;
 function listUser() {
+  // Verifica si ya existe una instancia y destrúyela si es necesario
+  if ($.fn.dataTable.isDataTable("#table_user")) {
+    tbl_users.destroy(); // Destruye la instancia existente
+    $("#table_user").empty(); // Limpia el contenido previo (opcional)
+  }
+
+  // Reutiliza la variable global para inicializar la tabla
   tbl_users = $("#table_user").DataTable({
-    // buttons:['copy','csv','excel','pdf','print'],
     ordering: true,
     bLengthChange: true,
     responsive: true,
@@ -12,11 +17,10 @@ function listUser() {
       [2, 5, 10, 25, 50, 100, "All"],
     ],
     pageLength: 10,
-    destroy: true,
     async: false,
     processing: true,
     ajax: {
-      url: "controller/users/c_list_users.php",
+      url: "controller/users/c_list_users.php", // Cambié la URL para usuarios
       type: "POST",
       error: function (xhr, error, code) {
         console.log("Error: ", error);
@@ -50,7 +54,6 @@ function listUser() {
       },
     ],
     select: true,
-    // Otras opciones...
     headerCallback: function (thead, data, start, end, display) {
       $(thead).find("th").addClass("text-center");
     },
@@ -65,8 +68,9 @@ function listUser() {
     },
   });
 
+  // Manejo de numeración de filas
   tbl_users.on("draw.td", function () {
-    var PageInfo = $("#table_user").DataTable().page.info();
+    var PageInfo = tbl_users.page.info();
     tbl_users
       .column(0, { page: "current" })
       .nodes()
@@ -76,10 +80,15 @@ function listUser() {
   });
 }
 
-let tblStaff;
-function listStaff() {
-  tblStaff = $("#tblViewStaff").DataTable({
-    // buttons:['copy','csv','excel','pdf','print'],
+function listViewStaff() {
+  // Verifica si ya existe una instancia y destrúyela si es necesario
+  if ($.fn.dataTable.isDataTable("#tblViewStaff")) {
+    tblViewUserStaff.destroy(); // Destruye la instancia existente
+    $("#tblViewStaff").empty(); // Limpia el contenido previo (opcional)
+  }
+
+  // Reutiliza la variable global para inicializar la tabla
+  tblViewUserStaff = $("#tblViewStaff").DataTable({
     ordering: true,
     bLengthChange: true,
     responsive: true,
@@ -90,7 +99,6 @@ function listStaff() {
       [2, 5, 10, 25, 50, 100, "All"],
     ],
     pageLength: 10,
-    destroy: true,
     async: false,
     processing: true,
     ajax: {
@@ -104,7 +112,7 @@ function listStaff() {
       { data: "staff_id" },
       { data: "code_staff" },
       {
-        data: null, // Combina `staff_name` y `last_name` en una sola columna
+        data: null,
         render: function (data) {
           return `${data.first_name} ${data.last_name}`;
         },
@@ -116,7 +124,6 @@ function listStaff() {
       },
     ],
     select: true,
-    // Otras opciones...
     headerCallback: function (thead, data, start, end, display) {
       $(thead).find("th").addClass("text-center");
     },
@@ -128,9 +135,10 @@ function listStaff() {
     },
   });
 
-  tblStaff.on("draw.td", function () {
-    var PageInfo = $("#tblViewStaff").DataTable().page.info();
-    tblStaff
+  // Manejo de numeración de filas
+  tblViewUserStaff.on("draw.td", function () {
+    var PageInfo = tblViewUserStaff.page.info();
+    tblViewUserStaff
       .column(0, { page: "current" })
       .nodes()
       .each(function (cell, i) {
@@ -142,7 +150,7 @@ function listStaff() {
 //listar combo box list group + estatus
 function listComboBox() {
   $.ajax({
-    url: "controller/user_group/c_list_users_group.php",
+    url: "controller/user_group/c_list_select_group.php",
     type: "POST",
   }).done(function (resp) {
     var data = JSON.parse(resp);
@@ -176,7 +184,7 @@ function listComboBox() {
 }
 
 //Function open modal Staff
-let modalViewStaff = document.getElementById("openFindUserStaff");
+var modalViewStaff = document.getElementById("openFindUserStaff");
 modalViewStaff.addEventListener("click", function () {
   $("#modalViewStaff").modal({ backdrop: "static", keyboard: false });
   $("#modalViewStaff").modal("show");
@@ -186,23 +194,23 @@ modalViewStaff.addEventListener("click", function () {
 });
 
 //function open modal info staff y enviar datos al input personal , usuario y cuenta al agregar usuario
-$("#tblViewStaff").on("click", ".btnSelect", function () {
-  var data = tblStaff.row($(this).parents("tr")).data();
-  if (tblStaff.row(this).child.isShown()) {
-    //modal responsivo para moviles
-    var data = tblStaff.row(this).data();
+$("#tblViewStaff").off("click", ".btnSelect").on("click", ".btnSelect", function () {
+  var data = tblViewUserStaff.row($(this).parents("tr")).data();
+  if (tblViewUserStaff.row(this).child.isShown()) {
+    data = tblViewUserStaff.row(this).data();
   }
 
   $("#inputUserIdStaff").val(data.staff_id);
   $("#inputUserStaff").val(data.first_name + " " + data.last_name);
   $("#inputUserName").val(data.first_name + " " + data.last_name);
 
-  var firstInitial = data.first_name.charAt(0); // Obtener la primera letra de first_name
-  var firstWord = data.last_name.split(" ")[0].toLowerCase(); // Obtener la primera palabra de last_name
+  var firstInitial = data.first_name.charAt(0);
+  var firstWord = data.last_name.split(" ")[0].toLowerCase();
   $("#inputUserAccount").val(firstInitial + firstWord);
 
   $("#modalViewStaff").modal("hide");
 });
+
 
 //validar input de password y confirmar password
 $(document).ready(function () {
@@ -253,16 +261,18 @@ $(document).ready(function () {
 });
 
 //Crear usuario
-let btnCreateUser = document.getElementById("btnCreateUser");
+var btnCreateUser = document.getElementById("btnCreateUser");
 btnCreateUser.addEventListener("click", function () {
-  let txtUserStaff   = document.getElementById("inputUserStaff").value;
-  let txtUserName    = document.getElementById("inputUserName").value;
+  let txtUserStaff = document.getElementById("inputUserIdStaff").value;
+  let txtUserName = document.getElementById("inputUserName").value;
   let txtUserAccount = document.getElementById("inputUserAccount").value;
   let txtUserPassword = document.getElementById("inputUserPassword").value;
-  let txtUserRawPassword = document.getElementById("inputUserRawPassword").value;
-  let txtUserRol     = document.getElementById("selectUserRol").value;
-  let txtUserStatus  = document.getElementById("selectUserStatus").value;
-  
+  let txtUserRawPassword = document.getElementById(
+    "inputUserRawPassword"
+  ).value;
+  let txtUserRol = document.getElementById("selectUserRol").value;
+  let txtUserStatus = document.getElementById("selectUserStatus").value;
+
   // Usamos la ruta generada por Dropzone en el campo oculto
   let photoPath = document.getElementById("userPhotoPath").value;
 
@@ -289,19 +299,36 @@ btnCreateUser.addEventListener("click", function () {
       rawPassword: txtUserRawPassword,
       rol: txtUserRol,
       status: txtUserStatus,
-      photo: photoPath, // Enviamos la ruta de la imagen en lugar del objeto File
+      photo: photoPath,
     },
-    success: function (resp) {
-      if (resp == 1) {
-        tbl_users.ajax.reload();
-        toastr["success"]("Usuario registrado exitosamente", "Success");
-        $("#addUser .btn.btn-tool[data-card-widget='collapse']").trigger("click");
-      } else if (resp == 2) {
-        toastr["warning"]("El usuario ya está registrado", "Warning");
-      } else if (resp == 0) {
-        toastr["error"]("Error al crear usuario, Por favor verifique su conexión", "Error");
-      }
+  }).done(function (resp) {
+    if (resp == 1) {
+      tbl_users.ajax.reload();
+      toastr["success"]("Registro exitosamente", "Éxito");
+      clearUserFields();
+      $("#addUser .btn.btn-tool[data-card-widget='collapse']").trigger(
+        "click"
+      );
+    } else if (resp == 2) {
+      toastr["warning"]("Usuario ya existe o este personal ya tiene un usuario creado.", "Alerta");
+    } else if (resp == 0) {
+      toastr["error"]("Error de conexión con la base de datos.", "Error");
     }
   });
 });
 
+function clearUserFields() {
+  // Limpiamos los valores de los campos de entrada
+  document.getElementById("inputUserIdStaff").value = "";
+  document.getElementById("inputUserStaff").value = "";
+  document.getElementById("inputUserName").value = "";
+  document.getElementById("inputUserAccount").value = "";
+  document.getElementById("inputUserPassword").value = "";
+  document.getElementById("inputUserRawPassword").value = "";
+  document.getElementById("selectUserRol").value = "";
+  document.getElementById("selectUserStatus").value = "";
+  document.getElementById("userPhotoPath").value = ""; // Reiniciar el campo de la ruta de la imagen
+
+  // Reiniciamos Dropzone
+  Dropzone.forElement("#inputUserImg").removeAllFiles(true); // true = también elimina archivos cargados correctamente
+}

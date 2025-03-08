@@ -260,7 +260,7 @@ require_once '../../assets/dictionary.php';
 <script>
     $(document).ready(function() {
         listUser();
-        listStaff();
+        listViewStaff();
         listComboBox();
     });
 </script>

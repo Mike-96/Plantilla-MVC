@@ -1,7 +1,12 @@
-var tbl_staff;
 function listStaff() {
+  // Verificar si ya existe una instancia y destruirla si es necesario
+  if ($.fn.dataTable.isDataTable("#list_staff")) {
+    tbl_staff.destroy(); // Destruye la instancia previa
+    $("#list_staff").empty(); // Limpia el contenido previo de la tabla
+  }
+
+  // Inicializa nuevamente el DataTable
   tbl_staff = $("#list_staff").DataTable({
-    //buttons:['copy','csv','excel','pdf','print'],
     ordering: true,
     bLengthChange: true,
     responsive: true,
@@ -18,12 +23,15 @@ function listStaff() {
     ajax: {
       url: "controller/staff/c_list_staff.php",
       type: "POST",
+      error: function (xhr, error, code) {
+        console.log("Error: ", error);
+      },
     },
     columns: [
       { data: "staff_id" },
       { data: "group_name" },
       {
-        data: null, // Combina `staff_name` y `last_name` en una sola columna
+        data: null,
         render: function (data) {
           return `${data.first_name} ${data.last_name}`;
         },
@@ -33,44 +41,33 @@ function listStaff() {
       {
         data: "status",
         render: function (data) {
-          if (data == "1") {
-            return "<span class='badge bg-success'>ACTIVO</span>";
-          } else {
-            return "<span class='badge bg-danger'>INACTIVO</span>";
-          }
+          return data == "1"
+            ? "<span class='badge bg-success'>ACTIVO</span>"
+            : "<span class='badge bg-danger'>INACTIVO</span>";
         },
       },
       { data: "created_at" },
       { data: "updated_at" },
       {
         defaultContent:
-          "<button type='button' class='btnView btn btn-sm bg-warning'>Ver mas <i class='far fa-eye'></i></button>",
+          "<button type='button' class='btnView btn btn-sm bg-warning'>Ver más <i class='far fa-eye'></i></button>",
       },
       {
         defaultContent:
-        "<button type='button' class='btn btn-sm btn-info dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'> Acciones </button>" +
-        "<div class='dropdown-menu'>" +
-        "<button class='btnEdit dropdown-item' type='button'><i class='fa fa-edit'></i> Editar</button>" +
-        "<button class='btnDelet dropdown-item' type='button'><i class='fas fa-trash-alt'></i> Eliminar</button>" +
-        "</div>",
-        // defaultContent:
-        //   "<button type='button' class='btn btn-sm btn-info dropdown-toggle' data-toggle='dropdown' aria-haspopup='undefined' aria-expanded='undefined'> Acciones </button>" +
-        //   "<div class='dropdown-menu'>" +
-        //   "<button class='btnEdit dropdown-item' type='button'><i class='fa fa-edit'></i> Editar</button>" +
-        //   "<button class='btnDelet dropdown-item' type='button'><i class='fas fa-trash-alt'></i> Eliminar</button>" +
-        //   "</div>",
+          "<button type='button' class='btn btn-sm btn-info dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'> Acciones </button>" +
+          "<div class='dropdown-menu'>" +
+          "<button class='btnEdit dropdown-item' type='button'><i class='fa fa-edit'></i> Editar</button>" +
+          "<button class='btnDelet dropdown-item' type='button'><i class='fas fa-trash-alt'></i> Eliminar</button>" +
+          "</div>",
       },
     ],
 
     select: false,
-    // Otras opciones...
     headerCallback: function (thead, data, start, end, display) {
       $(thead).find("th").addClass("text-center");
     },
     fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
       $($(nRow).find("td")[0]).css("text-align", "center");
-      //$($(nRow).find("td")[1]).css("text-align", "center");
-      //$($(nRow).find("td")[2]).css("text-align", "center");
       $($(nRow).find("td")[3]).css("text-align", "center");
       $($(nRow).find("td")[4]).css("text-align", "center");
       $($(nRow).find("td")[5]).css("text-align", "center");
@@ -82,7 +79,7 @@ function listStaff() {
   });
 
   tbl_staff.on("draw.td", function () {
-    var PageInfo = $("#list_staff").DataTable().page.info();
+    var PageInfo = tbl_staff.page.info();
     tbl_staff
       .column(0, { page: "current" })
       .nodes()
@@ -91,6 +88,7 @@ function listStaff() {
       });
   });
 }
+
 
 //selection id button / inputs
 var btn_CreateStaff = document.getElementById("btnCreateStaff");
@@ -333,7 +331,7 @@ $(document).ready(function () {
 //listar combo box list group + estatus
 function comboBox_Group() {
   $.ajax({
-    url: "controller/user_group/c_list_users_group.php",
+    url: "controller/user_group/c_list_select_group.php",
     type: "POST",
   }).done(function (resp) {
     var data = JSON.parse(resp);

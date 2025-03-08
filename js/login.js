@@ -59,16 +59,15 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-let btn_login = document.getElementById("btn_login");
-
+var btn_login = document.getElementById("btn_login");
 btn_login.onclick = function(e) {
     e.preventDefault(); // Previene el comportamiento por defecto del botón
 
-    let txt_email = document.getElementById("txt_email").value;
-    let txt_password = document.getElementById("txt_password").value;
+    var txt_email = document.getElementById("txt_email").value;
+    var txt_password = document.getElementById("txt_password").value;
 
-    if (txt_email == 0 || txt_password == 0) {
-      return mensaje("info","Fill in the empty fields!");
+    if (txt_email.trim() === "" || txt_password.trim() === "") {
+      return mensaje("info","Rellene los campos vacíos!");
     }
 
     $.ajax({
@@ -80,19 +79,20 @@ btn_login.onclick = function(e) {
         }
 
     }).done(function (resp) {
-      let data = JSON.parse(resp);
+      var data = JSON.parse(resp);
 
       if (data.length>0) {
-        if (data[0][6]=="0") {
-          return mensaje("warning","User is inactive, contact your system administrator!");
+        if (data[0][6] !== "1") {
+          return mensaje("warning", "El usuario no tiene acceso, comuníquese con el administrador del sistema!");
         }
-
         $.ajax({
           url: 'controller/users/c_create_sesion.php',
           type: 'POST',
           data: {
               user_id: data[0][0],
+              user_image: data[0][1],
               user_name: data[0][2],
+              email: data[0][3],
               rol: data[0][5]
           }
 
@@ -100,13 +100,12 @@ btn_login.onclick = function(e) {
           mensaje("success","Login successful!");
           setTimeout(function() {//damos un tiempo entre cada funcion para hacerlo mas dinamico
             location.reload(); //reload a la pagina para que cargue el index
-            }, 3000); // 3000 milisegundos = 3 segundos
-          //console.log(data);
+            }, 2000); // 2000 milisegundos = 2 segundos
         })
        
       } else {
-        mensaje("error","Incorrect e-mail address or password!");
-        console.log(data);
+        mensaje("error","Usuario o Contraseña incorrecta!");
+        //console.log(data);
       }
         
     })

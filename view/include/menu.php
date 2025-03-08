@@ -1,5 +1,6 @@
 <?php
     require_once 'assets/dictionary.php';
+    require_once 'config.php';
 ?>
 <aside class="main-sidebar sidebar-dark-success elevation-4">
     <!-- Brand Logo -->
@@ -13,10 +14,12 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="plantilla/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+        <img src="<?php echo URL . str_replace('../', '', $_SESSION['SESSION_IMG']); ?>" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block"><?php echo $_SESSION['SESSION_NAME'] ?></php></a>
+          <!-- user name  -->
+          <a href="#" class="d-block"><?php echo $_SESSION['SESSION_EMAIL'] ?></php></a>
+          <a href="#" class="d-block" style="font-size: 12px;"><?php echo $_SESSION['SESSION_NAME'] ?></php></a>
         </div>
       </div>
 

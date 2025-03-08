@@ -1,6 +1,6 @@
 <?php 
 
-    require '../../model/m_user.php';
+    require __DIR__ . "/../../model/model_users.php";
 
     $MU = new model_user();
     $staff = htmlspecialchars($_POST['staff'], ENT_QUOTES, 'UTF-8');

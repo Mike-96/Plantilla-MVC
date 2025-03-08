@@ -244,7 +244,7 @@ include_once '../../assets/dictionary.php';
 </section>
 
 <!-- modal generar staff -->
-<div class="modal fade" id="modalGenerateCodeStaff" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="undefined" draggable="undefined">
+<div class="modal fade" id="modalGenerateCodeStaff" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="undefined" draggable="undefined"">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
