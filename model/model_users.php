@@ -97,6 +97,62 @@ class model_user extends connectBD
         }
     }
 
+    public function list_ViewStaff()
+    {
+        $connexion = connectBD::connect();
+        $sql = "SELECT
+                    staff.staff_id, 
+                    staff.group_id, 
+                    staff.code_staff, 
+                    staff.first_name, 
+                    staff.last_name, 
+                    staff.email, 
+                    staff.dni, 
+                    staff.phone, 
+                    staff.`status`, 
+                    staff.department, 
+                    staff.salary, 
+                    staff.hire_date, 
+                    staff.address, 
+                    staff.city, 
+                    staff.country, 
+                    staff.birthdate, 
+                    staff.created_at, 
+                    staff.updated_at, 
+                    `status`.id_status as status, 
+                    users.staff_id, 
+                    user_group.group_name
+                FROM
+                    staff
+                    LEFT JOIN
+                    users
+                    ON 
+                        staff.staff_id = users.staff_id
+                    LEFT JOIN
+                    `status`
+                    ON 
+                        staff.`status` = `status`.id_status
+                    LEFT JOIN
+                    user_group
+                    ON 
+                        staff.group_id = user_group.group_id
+                WHERE
+                    `status`.id_status = 1 AND
+                    users.staff_id IS NULL";
+
+        $array = array();
+        $query = $connexion->prepare($sql);
+        $query->execute();
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($result as $response) {
+            $array["data"][] = $response;
+        }
+
+        $this->close_connection();
+        return $array;
+    }
+
     public function create_user($staff, $userName, $account, $password, $rawPassword, $rol, $status, $photo)
     {
         $connexion = connectBD::connect();

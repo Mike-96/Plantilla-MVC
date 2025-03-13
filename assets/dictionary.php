@@ -62,6 +62,9 @@ $dictionary = [
     "find" => "Buscar",
     "select" => "Seleccionar",
     "code" => "Código",
+    "changePassword" => "Cambiar Contraseña",
+    "newPassword" => "Nueva Contraseña",
+    "changeRol" => "Cambiar Roles",
 
 ];
 $title = [

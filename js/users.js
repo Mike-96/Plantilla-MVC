@@ -45,7 +45,7 @@ function listUser() {
         defaultContent: `
           <button type='button' class='btn btn-sm btn-info dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'> Acciones </button>
           <div class='dropdown-menu'>
-            <button class='btnEdit dropdown-item' type='button'><i class='fa fa-edit'></i> Editar</button>
+            <button class='btnChangeRol dropdown-item' type='button'><i class='fa fa-sync-alt'></i> Cambiar Roles</button>
             <button class='btnActivate dropdown-item' type='button'><i class='far fa-check-circle'></i> Activar</button>
             <button class='btnDeactivate dropdown-item' type='button'><i class='far fa-times-circle'></i> Desactivar</button>
             <button class='btnDelete dropdown-item' type='button'><i class='fas fa-trash-alt'></i> Eliminar</button>
@@ -59,9 +59,6 @@ function listUser() {
     },
     fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
       $($(nRow).find("td")[0]).css("text-align", "center");
-      $($(nRow).find("td")[1]).css("text-align", "center");
-      $($(nRow).find("td")[3]).css("text-align", "center");
-      $($(nRow).find("td")[4]).css("text-align", "center");
       $($(nRow).find("td")[5]).css("text-align", "center");
       $($(nRow).find("td")[6]).css("text-align", "center");
       $($(nRow).find("td")[7]).css("text-align", "center");
@@ -102,7 +99,7 @@ function listViewStaff() {
     async: false,
     processing: true,
     ajax: {
-      url: "controller/staff/c_list_staff.php",
+      url: "controller/users/c_view_staff.php",
       type: "POST",
       error: function (xhr, error, code) {
         console.log("Error: ", error);
@@ -214,51 +211,52 @@ $("#tblViewStaff").off("click", ".btnSelect").on("click", ".btnSelect", function
 
 //validar input de password y confirmar password
 $(document).ready(function () {
-  //agrega la funcion de ver o ocultar password
-  $("#togglePassword").click(function () {
-    var input = $("#inputUserPassword");
-    var icon = $(this).find("i");
-    if (input.attr("type") === "password") {
-      input.attr("type", "text");
-      icon.removeClass("fas fa-eye").addClass("fas fa-eye-slash");
-    } else {
-      input.attr("type", "password");
-      icon.removeClass("fas fa-eye-slash").addClass("fas fa-eye");
+  // Función genérica para ver/ocultar contraseña
+  function togglePasswordVisibility(toggleId, inputId) {
+    if ($(toggleId).length && $(inputId).length) {
+      $(toggleId).click(function () {
+        var input = $(inputId);
+        var icon = $(this).find("i");
+        if (input.attr("type") === "password") {
+          input.attr("type", "text");
+          icon.removeClass("fas fa-eye").addClass("fas fa-eye-slash");
+        } else {
+          input.attr("type", "password");
+          icon.removeClass("fas fa-eye-slash").addClass("fas fa-eye");
+        }
+      });
     }
-  });
-  //agrega la funcion de ver o ocultar repeat password
-  $("#togglePassword2").click(function () {
-    var input = $("#inputUserRawPassword");
-    var icon = $(this).find("i");
-    if (input.attr("type") === "password") {
-      input.attr("type", "text");
-      icon.removeClass("fas fa-eye").addClass("fas fa-eye-slash");
-    } else {
-      input.attr("type", "password");
-      icon.removeClass("fas fa-eye-slash").addClass("fas fa-eye");
-    }
-  });
-  //valida que los campos password y confirmar password sean iguales
-  $("#inputUserPassword, #inputUserRawPassword").on("input", function () {
-    var password1 = $("#inputUserPassword").val();
-    var password2 = $("#inputUserRawPassword").val();
+  }
 
-    // Verifica que ambos campos no estén vacíos antes de hacer la validación
-    if (password1 === "" && password2 === "") {
-      $("#inputUserPassword, #inputUserRawPassword").removeClass(
-        "is-valid is-invalid"
-      );
-    } else if (password1 === password2) {
-      $("#inputUserPassword, #inputUserRawPassword")
-        .removeClass("is-invalid")
-        .addClass("is-valid");
-    } else {
-      $("#inputUserPassword, #inputUserRawPassword")
-        .removeClass("is-valid")
-        .addClass("is-invalid");
+  // Función genérica para validar igualdad de contraseñas
+  function validatePasswords(input1, input2) {
+    if ($(input1).length && $(input2).length) {
+      $(input1 + ", " + input2).on("input", function () {
+        var password1 = $(input1).val();
+        var password2 = $(input2).val();
+
+        if (password1 === "" && password2 === "") {
+          $(input1 + ", " + input2).removeClass("is-valid is-invalid");
+        } else if (password1 === password2) {
+          $(input1 + ", " + input2).removeClass("is-invalid").addClass("is-valid");
+        } else {
+          $(input1 + ", " + input2).removeClass("is-valid").addClass("is-invalid");
+        }
+      });
     }
-  });
+  }
+
+  // Aplicar funcionalidad para campos de creación (si existen)
+  togglePasswordVisibility("#togglePassword", "#inputUserPassword");
+  togglePasswordVisibility("#togglePassword2", "#inputUserRawPassword");
+  validatePasswords("#inputUserPassword", "#inputUserRawPassword");
+
+  // Aplicar funcionalidad para campos de edición (si existen)
+  togglePasswordVisibility("#toggleEditPassword", "#inputEditUserPassword");
+  togglePasswordVisibility("#toggleEditPassword2", "#inputEditUserRawPassword");
+  validatePasswords("#inputEditUserPassword", "#inputEditUserRawPassword");
 });
+
 
 //Crear usuario
 var btnCreateUser = document.getElementById("btnCreateUser");
@@ -332,3 +330,36 @@ function clearUserFields() {
   // Reiniciamos Dropzone
   Dropzone.forElement("#inputUserImg").removeAllFiles(true); // true = también elimina archivos cargados correctamente
 }
+
+var btnCancelarAddUser = document.getElementById("btnCancelCreateUser");
+//Function cancel create staff
+btnCancelarAddUser.addEventListener("click", function () {
+  clearUserFields();
+  $("#addUser .btn.btn-tool[data-card-widget='collapse']").trigger("click");
+});
+
+//function open modal edit user
+$("#table_user").on("click", ".btnChangePassword", function () {
+  $("#modalEditPasswordUser").modal({ backdrop: "static", keyboard: false });
+  $("#modalEditPasswordUser").modal("show");
+  $("#modalEditPasswordUser").draggable({
+    handle: ".modal-header",
+  });
+
+});
+
+//function open cambio de rol
+$("#table_user").on("click", ".btnChangeRol", function () {
+  var data = tbl_users.row($(this).parents("tr")).data();
+  if (tbl_users.row(this).child.isShown()) {
+    //modal responsivo para moviles
+    var data = tbl_users.row(this).data();
+  }
+  $("#modalCambiarRolUser").modal({ backdrop: "static", keyboard: false });
+  $("#modalCambiarRolUser").modal("show");
+  $("#modalCambiarRolUser").draggable({
+    handle: ".modal-header",
+  });
+
+});
+

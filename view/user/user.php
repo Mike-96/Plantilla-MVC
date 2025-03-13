@@ -96,9 +96,9 @@ require_once '../../assets/dictionary.php';
                                             <span class="input-group-text"><i class="fas fa-key"></i></span>
                                         </div>
                                         <input type="password" class="form-control" id="inputUserPassword">
-                                            <div class="input-group-append">
-                                                <button id="togglePassword" type="button" class="input-group-text btn btn-sm"><i class="fas fa-eye"></i></button>
-                                            </div>
+                                        <div class="input-group-append">
+                                            <button id="togglePassword" type="button" class="input-group-text btn btn-sm"><i class="fas fa-eye"></i></button>
+                                        </div>
                                     </div>
                                 </div>
                                 <!-- raw password -->
@@ -109,9 +109,9 @@ require_once '../../assets/dictionary.php';
                                             <span class="input-group-text"><i class="fas fa-key"></i></span>
                                         </div>
                                         <input type="password" class="form-control" id="inputUserRawPassword">
-                                            <div class="input-group-append">
-                                                <button id="togglePassword2" type="button" class="input-group-text btn btn-sm"><i class="fas fa-eye"></i></button>
-                                            </div>
+                                        <div class="input-group-append">
+                                            <button id="togglePassword2" type="button" class="input-group-text btn btn-sm"><i class="fas fa-eye"></i></button>
+                                        </div>
                                     </div>
                                 </div>
                                 <!-- roles -->
@@ -161,25 +161,25 @@ require_once '../../assets/dictionary.php';
                 <div class="align-self-center">
 
                     <div class="col-12 d-flex align-items-stretch flex-column">
-                            <div class="col-lg-12 table-responsive">
+                        <div class="col-lg-12 table-responsive">
 
-                                <table id="tblViewStaff" class="display responsive" style="width:100%">
-                                    <thead class="bg-secondary">
-                                        <tr>
-                                            <th><?php echo $dictionary['number'] ?></th>
-                                            <th><?php echo $dictionary['code'] ?></th>
-                                            <th><?php echo $dictionary['staff'] ?></th>
-                                            <th><?php echo $dictionary['jobTitle'] ?></th>
-                                            <th><?php echo $dictionary['select'] ?></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
+                            <table id="tblViewStaff" class="display responsive" style="width:100%">
+                                <thead class="bg-secondary">
+                                    <tr>
+                                        <th><?php echo $dictionary['number'] ?></th>
+                                        <th><?php echo $dictionary['code'] ?></th>
+                                        <th><?php echo $dictionary['staff'] ?></th>
+                                        <th><?php echo $dictionary['jobTitle'] ?></th>
+                                        <th><?php echo $dictionary['select'] ?></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
 
-                                    </tbody>
-                                </table>
+                                </tbody>
+                            </table>
 
 
-                            </div>
+                        </div>
                     </div>
 
                 </div>
@@ -189,6 +189,95 @@ require_once '../../assets/dictionary.php';
     </div>
 </div>
 
+<!-- modal edit user -->
+<div class="modal fade" id="modalEditPasswordUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="undefined" draggable="undefined">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><b><i class="fas fa-exchange-alt"></i> <?php echo $dictionary['changePassword']; ?></b></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="undefined"><b><i class="far fa-times-circle"></i></b></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="align-self-center">
+
+                    <div class="form-row col-md-12">
+                        <!-- password -->
+                        <div class="form-group col-md-12">
+                            <label for="inputEditUserPassword"><?php echo $dictionary['newPassword']; ?><span style="color: red;">*</span></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-key"></i></span>
+                                </div>
+                                <input type="password" class="form-control" id="inputEditUserPassword">
+                                <div class="input-group-append">
+                                    <button id="toggleEditPassword" type="button" class="input-group-text btn btn-sm"><i class="fas fa-eye"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- raw password -->
+                        <div class="form-group col-md-12">
+                            <label for="inputEditUserRawPassword"><?php echo $dictionary['repeatPassword']; ?><span style="color: red;">*</span></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-key"></i></span>
+                                </div>
+                                <input type="password" class="form-control" id="inputEditUserRawPassword">
+                                <div class="input-group-append">
+                                    <button id="toggleEditPassword2" type="button" class="input-group-text btn btn-sm"><i class="fas fa-eye"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal"><i class="fas fa-ban"></i> <?php echo $dictionary['cancel']; ?></button>
+                        <button id="btnEditUser" type="button" class="btn btn-success btn-sm"><i class="fas fa-check"></i> <?php echo $dictionary['update']; ?></button>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- modal cambiar rol -->
+<div class="modal fade" id="modalCambiarRolUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="undefined" draggable="undefined">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><b><i class="fas fa-exchange-alt"></i> <?php echo $dictionary['changeRol']; ?></b></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="undefined"><b><i class="far fa-times-circle"></i></b></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="align-self-center">
+
+                    <div class="form-row col-md-12">
+                        <!-- roles -->
+                        <div class="form-group col-md-12">
+                            <label for="selectEditUserRol"><?php echo $dictionary['rolGroup']; ?><span style="color: red;">*</span></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-users-cog"></i></span>
+                                </div>
+                                <select class="custom-select form-control" id="selectEditUserRol"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal"><i class="fas fa-ban"></i> <?php echo $dictionary['cancel']; ?></button>
+                        <button id="btnEditUser" type="button" class="btn btn-success btn-sm"><i class="fas fa-check"></i> <?php echo $dictionary['update']; ?></button>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
 
 
 
