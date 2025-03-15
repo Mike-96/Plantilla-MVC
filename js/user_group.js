@@ -46,6 +46,23 @@ function ListUserGroup() {
       "</div>",
       },
     ],
+    language: {
+      emptyTable: "No hay datos disponibles en la tabla",
+      zeroRecords: "No se encontraron resultados coincidentes",
+      info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
+      infoEmpty: "Mostrando 0 a 0 de 0 registros",
+      infoFiltered: "(filtrado de _MAX_ registros totales)",
+      lengthMenu: "Mostrar _MENU_ registros por página",
+      loadingRecords: "Cargando...",
+      processing: "Procesando...",
+      search: "Buscar:",
+      paginate: {
+        first: "Primero",
+        last: "Último",
+        next: "Siguiente",
+        previous: "Anterior",
+      },
+    },
 
     select: false,
     // Otras opciones...

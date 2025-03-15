@@ -61,7 +61,7 @@ require_once '../../assets/dictionary.php';
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-id-card"></i></span>
                                         </div>
-                                        <input type="text" class="form-control" id="inputUserIdStaff" disabled hidden>
+                                        <input type="text" class="form-control" id="inputUserIdStaff" disabled>
                                         <input type="text" class="form-control" id="inputUserStaff" disabled>
                                         <span class="input-group-append">
                                             <button id="openFindUserStaff" type="button" class="btn btn-info"><i class="fas fa-search"></i> <?php echo $dictionary['find']; ?></button>
@@ -189,7 +189,7 @@ require_once '../../assets/dictionary.php';
     </div>
 </div>
 
-<!-- modal edit user -->
+<!-- modal edit password-->
 <div class="modal fade" id="modalEditPasswordUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="undefined" draggable="undefined">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
@@ -210,6 +210,7 @@ require_once '../../assets/dictionary.php';
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-key"></i></span>
                                 </div>
+                                <input type="text" id="inputEditUserIdPassword" hidden>
                                 <input type="password" class="form-control" id="inputEditUserPassword">
                                 <div class="input-group-append">
                                     <button id="toggleEditPassword" type="button" class="input-group-text btn btn-sm"><i class="fas fa-eye"></i></button>
@@ -231,8 +232,8 @@ require_once '../../assets/dictionary.php';
                         </div>
                     </div>
                     <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal"><i class="fas fa-ban"></i> <?php echo $dictionary['cancel']; ?></button>
-                        <button id="btnEditUser" type="button" class="btn btn-success btn-sm"><i class="fas fa-check"></i> <?php echo $dictionary['update']; ?></button>
+                        <button id="btnCancelChangePassword" type="button" class="btn btn-danger btn-sm" data-dismiss="modal"><i class="fas fa-ban"></i> <?php echo $dictionary['cancel']; ?></button>
+                        <button id="btnEditPasswordUser" type="button" class="btn btn-success btn-sm"><i class="fas fa-check"></i> <?php echo $dictionary['update']; ?></button>
                     </div>
 
                 </div>
@@ -263,13 +264,14 @@ require_once '../../assets/dictionary.php';
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-users-cog"></i></span>
                                 </div>
+                                <input type="text" id="inputEditUserIdSelectRol" hidden>
                                 <select class="custom-select form-control" id="selectEditUserRol"></select>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal"><i class="fas fa-ban"></i> <?php echo $dictionary['cancel']; ?></button>
-                        <button id="btnEditUser" type="button" class="btn btn-success btn-sm"><i class="fas fa-check"></i> <?php echo $dictionary['update']; ?></button>
+                        <button id="btnEditRolUser" type="button" class="btn btn-success btn-sm"><i class="fas fa-check"></i> <?php echo $dictionary['update']; ?></button>
                     </div>
 
                 </div>
@@ -351,5 +353,6 @@ require_once '../../assets/dictionary.php';
         listUser();
         listViewStaff();
         listComboBox();
+        comboBox_Rol();
     });
 </script>

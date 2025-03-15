@@ -46,13 +46,30 @@ function listUser() {
           <button type='button' class='btn btn-sm btn-info dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'> Acciones </button>
           <div class='dropdown-menu'>
             <button class='btnChangeRol dropdown-item' type='button'><i class='fa fa-sync-alt'></i> Cambiar Roles</button>
-            <button class='btnActivate dropdown-item' type='button'><i class='far fa-check-circle'></i> Activar</button>
-            <button class='btnDeactivate dropdown-item' type='button'><i class='far fa-times-circle'></i> Desactivar</button>
+            <button class='btnActivateUser dropdown-item' type='button'><i class='far fa-check-circle'></i> Activar</button>
+            <button class='btnDesactivateUser dropdown-item' type='button'><i class='far fa-times-circle'></i> Desactivar</button>
             <button class='btnDelete dropdown-item' type='button'><i class='fas fa-trash-alt'></i> Eliminar</button>
             <button class='btnChangePassword dropdown-item' type='button'><i class='fas fa-key'></i> Cambiar Password</button>
           </div>`,
       },
     ],
+    language: {
+      emptyTable: "No hay datos disponibles en la tabla",
+      zeroRecords: "No se encontraron resultados coincidentes",
+      info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
+      infoEmpty: "Mostrando 0 a 0 de 0 registros",
+      infoFiltered: "(filtrado de _MAX_ registros totales)",
+      lengthMenu: "Mostrar _MENU_ registros por página",
+      loadingRecords: "Cargando...",
+      processing: "Procesando...",
+      search: "Buscar:",
+      paginate: {
+        first: "Primero",
+        last: "Último",
+        next: "Siguiente",
+        previous: "Anterior",
+      },
+    },
     select: true,
     headerCallback: function (thead, data, start, end, display) {
       $(thead).find("th").addClass("text-center");
@@ -106,7 +123,7 @@ function listViewStaff() {
       },
     },
     columns: [
-      { data: "staff_id" },
+      { data: "staff" },
       { data: "code_staff" },
       {
         data: null,
@@ -120,6 +137,23 @@ function listViewStaff() {
           "<button type='button' class='btnSelect btn btn-sm bg-warning'><i class='fas fa-paper-plane'></i></button>",
       },
     ],
+    language: {
+      emptyTable: "Todo el personal ya tiene usuario creado", // Personaliza aquí
+      zeroRecords: "No se encontraron resultados coincidentes", // Para búsquedas vacías
+      info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
+      infoEmpty: "Mostrando 0 a 0 de 0 registros",
+      infoFiltered: "(filtrado de _MAX_ registros totales)",
+      lengthMenu: "Mostrar _MENU_ registros por página",
+      loadingRecords: "Cargando...",
+      processing: "Procesando...",
+      search: "Buscar:",
+      paginate: {
+        first: "Primero",
+        last: "Último",
+        next: "Siguiente",
+        previous: "Anterior",
+      },
+    },
     select: true,
     headerCallback: function (thead, data, start, end, display) {
       $(thead).find("th").addClass("text-center");
@@ -197,7 +231,7 @@ $("#tblViewStaff").off("click", ".btnSelect").on("click", ".btnSelect", function
     data = tblViewUserStaff.row(this).data();
   }
 
-  $("#inputUserIdStaff").val(data.staff_id);
+  $("#inputUserIdStaff").val(data.staff);
   $("#inputUserStaff").val(data.first_name + " " + data.last_name);
   $("#inputUserName").val(data.first_name + " " + data.last_name);
 
@@ -207,7 +241,6 @@ $("#tblViewStaff").off("click", ".btnSelect").on("click", ".btnSelect", function
 
   $("#modalViewStaff").modal("hide");
 });
-
 
 //validar input de password y confirmar password
 $(document).ready(function () {
@@ -257,7 +290,6 @@ $(document).ready(function () {
   validatePasswords("#inputEditUserPassword", "#inputEditUserRawPassword");
 });
 
-
 //Crear usuario
 var btnCreateUser = document.getElementById("btnCreateUser");
 btnCreateUser.addEventListener("click", function () {
@@ -286,6 +318,16 @@ btnCreateUser.addEventListener("click", function () {
     return; // Cortamos la ejecución si hay error
   }
 
+  if (txtUserPassword !== txtUserRawPassword) {
+    toastr["error"]("Las contraseñas no coinciden.", "Error");
+    return;
+  }
+  
+  if (txtUserPassword.length < 6) {
+    toastr["error"]("La contraseña debe tener al menos 8 caracteres.", "Error");
+    return;
+  }
+  
   $.ajax({
     url: "controller/users/c_create_user.php",
     type: "POST",
@@ -302,6 +344,7 @@ btnCreateUser.addEventListener("click", function () {
   }).done(function (resp) {
     if (resp == 1) {
       tbl_users.ajax.reload();
+      tblViewUserStaff.ajax.reload();
       toastr["success"]("Registro exitosamente", "Éxito");
       clearUserFields();
       $("#addUser .btn.btn-tool[data-card-widget='collapse']").trigger(
@@ -315,6 +358,7 @@ btnCreateUser.addEventListener("click", function () {
   });
 });
 
+//limpiar campos de usuario 
 function clearUserFields() {
   // Limpiamos los valores de los campos de entrada
   document.getElementById("inputUserIdStaff").value = "";
@@ -338,28 +382,277 @@ btnCancelarAddUser.addEventListener("click", function () {
   $("#addUser .btn.btn-tool[data-card-widget='collapse']").trigger("click");
 });
 
-//function open modal edit user
-$("#table_user").on("click", ".btnChangePassword", function () {
-  $("#modalEditPasswordUser").modal({ backdrop: "static", keyboard: false });
-  $("#modalEditPasswordUser").modal("show");
-  $("#modalEditPasswordUser").draggable({
-    handle: ".modal-header",
+//listar combo box list group
+function comboBox_Rol() {
+  $.ajax({
+    url: "controller/user_group/c_list_select_group.php",
+    type: "POST",
+  }).done(function (resp) {
+    var data = JSON.parse(resp);
+    // Verifica que data.data sea un array
+    if (data.data.length > 0) {
+      var options = "";
+      for (var i = 0; i < data.data.length; i++) {
+        options +=
+          "<option value='" +
+          data.data[i].group_id +
+          "'>" +
+          data.data[i].group_name +
+          "</option>";
+      }
+      $("#selectEditUserRol").html(options);
+    } else {
+      $("#selectEditUserRol").html("<option value=''>No records found</option>");
+    }
   });
-
-});
+}
 
 //function open cambio de rol
 $("#table_user").on("click", ".btnChangeRol", function () {
   var data = tbl_users.row($(this).parents("tr")).data();
   if (tbl_users.row(this).child.isShown()) {
-    //modal responsivo para moviles
-    var data = tbl_users.row(this).data();
+    data = tbl_users.row(this).data();
   }
+
+  var userRoleId = data.group_id; // ID del rol actual del usuario
+  var isActiveRole = $("#selectEditUserRol option[value='" + userRoleId + "']").length > 0;
+
+  if (!isActiveRole) {
+    // Mostrar alerta si el rol actual no está en la lista (está inactivo)
+    Swal.fire({
+      title: "¿Está seguro?",
+      text: "¡Este rol actualmente está inactivo! Si continúa, no podrá reasignarlo hasta que esté activo nuevamente.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "¡Sí, Continuar!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        abrirModalCambioRol(data);
+      }
+    });
+  } else {
+    // Si el rol es activo, abrir el modal directamente
+    abrirModalCambioRol(data);
+  }
+});
+
+// Función para abrir el modal y rellenar datos
+function abrirModalCambioRol(data) {
   $("#modalCambiarRolUser").modal({ backdrop: "static", keyboard: false });
   $("#modalCambiarRolUser").modal("show");
   $("#modalCambiarRolUser").draggable({
     handle: ".modal-header",
   });
 
+  $("#inputEditUserIdSelectRol").val(data.user_id);
+  $("#selectEditUserRol").val(data.group_id);
+}
+
+var btnChangeRol = document.getElementById("btnEditRolUser");
+btnChangeRol.addEventListener("click", function () {
+  var txtUserId = document.getElementById("inputEditUserIdSelectRol").value;
+  var txtRolId = document.getElementById("selectEditUserRol").value;
+
+  if (txtRolId.trim() === "") {
+    toastr["error"]("Debe de asignar un rol", "Error");
+    return; // Cortamos la ejecución si hay error
+  }
+
+  $.ajax({
+    url: "controller/users/c_change_rol_user.php",
+    type: "POST",
+    data: {
+      userId: txtUserId,
+      rolId: txtRolId,
+    },
+  }).done(function (resp) {
+    if (resp == 1) {
+      tbl_users.ajax.reload();
+      toastr["success"]("Rol cambiado exitosamente", "Éxito");
+      $("#modalCambiarRolUser").modal("hide");
+    } else if (resp == 0) {
+      toastr["error"]("Error de conexión con la base de datos.", "Error");
+    }
+  });
+});
+
+//function open modal edit password user
+$("#table_user").on("click", ".btnChangePassword", function () {
+  var data = tbl_users.row($(this).parents("tr")).data();
+  if (tbl_users.row(this).child.isShown()) {
+    data = tbl_users.row(this).data();
+  }
+
+  $("#modalEditPasswordUser").modal({ backdrop: "static", keyboard: false });
+  $("#modalEditPasswordUser").modal("show");
+  $("#modalEditPasswordUser").draggable({
+    handle: ".modal-header",
+  });
+
+  $("#inputEditUserIdPassword").val(data.user_id);
+
+});
+
+var btnEditPassword = document.getElementById("btnEditPasswordUser");
+btnEditPassword.addEventListener("click", function () {
+  var txtUserId = document.getElementById("inputEditUserIdPassword").value;
+  var txtPassword = document.getElementById("inputEditUserPassword").value;
+  var txtRawPassword = document.getElementById("inputEditUserRawPassword").value;
+
+  if (txtPassword.trim() === "" || txtRawPassword.trim() === "") {
+    toastr["error"]("Verifique los campos Vacios", "Error");
+    return; // Cortamos la ejecución si hay error
+  }
+  if (txtPassword !== txtPassword) {
+    toastr["error"]("Las contraseñas no coinciden.", "Error");
+    return;
+  }
+  
+  if (txtPassword.length < 6) {
+    toastr["error"]("La contraseña debe tener al menos 6 caracteres.", "Error");
+    return;
+  }
+
+  $.ajax({
+    url: "controller/users/c_change_password.php",
+    type: "POST",
+    data: {
+      userID: txtUserId,
+      password: txtPassword,
+      rawPassword: txtRawPassword,
+    },
+  }).done(function (resp) {
+    if (resp == 1) {
+      limpiarPassword();
+      tbl_users.ajax.reload();
+      toastr["success"]("Contraseña cambiada exitosamente", "Éxito");
+      $("#modalEditPasswordUser").modal("hide");
+    } else if (resp == 0) {
+      toastr["error"]("Error de conexión con la base de datos.", "Error");
+    }
+  });
+});
+
+var btnCancelarEditPassword = document.getElementById("btnCancelChangePassword");
+btnCancelarEditPassword.addEventListener("click", function () {
+  limpiarPassword();
+});
+
+function limpiarPassword() {
+  document.getElementById("inputEditUserIdPassword").value = "";
+  document.getElementById("inputEditUserPassword").value = "";
+  document.getElementById("inputEditUserRawPassword").value = "";
+}
+
+// Function Activate User
+$("#table_user").on("click", ".btnActivateUser", function () {
+  var data = tbl_users.row($(this).parents("tr")).data();
+  let id = data.user_id;
+  let statusValue = data.id_status;
+  let statusId = 1;
+
+  // Validación previa del estado
+  if (statusValue == 1) {
+    toastr["warning"]("El usuario ya se encuentra activado", "Warning");
+    return;
+  }
+
+  // Confirmación personalizada con SweetAlert
+  Swal.fire({
+    title: "¿Está seguro de activar este usuario?",
+    text: "El usuario podrá acceder al sistema una vez activado.",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Sí, Activar!",
+    cancelButtonText: "Cancelar",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // Lógica de AJAX
+      $.ajax({
+        url: "controller/users/c_activate_user.php",
+        type: "POST",
+        data: {
+          userID: id,
+          status: statusId,
+        },
+      })
+        .done(function () {
+          tbl_users.ajax.reload(); // Recargar la tabla
+          toastr["success"]("Usuario activado exitosamente", "Éxito");
+        })
+        .fail(function (xhr, status, error) {
+          // Manejo de errores en AJAX
+          toastr["error"](
+            "Hubo un problema al procesar la solicitud: " + error,
+            "Error"
+          );
+        });
+    }
+  });
+});
+
+// Function Desactivate User
+$("#table_user").on("click", ".btnDesactivateUser", function () {
+  var data = tbl_users.row($(this).parents("tr")).data();
+  let id = data.user_id;
+  let statusValue = data.id_status;
+  let statusId = 2;
+
+  // Validación previa del estado
+  if (statusValue != 1) {
+    toastr["warning"]("El usuario ya se encuentra desactivado", "Warning");
+    return;
+  }
+
+  // Confirmación personalizada con SweetAlert
+  Swal.fire({
+    title: "¿Está seguro de desactivar este usuario?",
+    text: "Una vez desactivado, no podrá acceder al sistema a menos que sea reactivado.",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Sí, Desactivar!",
+    cancelButtonText: "Cancelar",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // Lógica de AJAX
+      $.ajax({
+        url: "controller/users/c_desactivate_user.php",
+        type: "POST",
+        data: {
+          userID: id,
+          status: statusId,
+        },
+      }).done(function (response) {
+        // Asegúrate de que la respuesta sea un objeto
+        response = JSON.parse(response); // Esto asegura que `response` es un objeto y no una cadena.
+      
+        if (response.status === "self-deactivation-blocked") {
+          toastr["warning"](
+            "No puedes desactivar tu propia cuenta mientras estás logueado.",
+            "Advertencia"
+          );
+          return;
+        }
+      
+        if (response.status === "success") {
+          tbl_users.ajax.reload(); // Recargar la tabla
+          toastr["success"]("Usuario desactivado exitosamente", "Éxito");
+        } else {
+          toastr["error"]("Hubo un problema al desactivar el usuario.", "Error");
+        }
+      }).fail(function (xhr, status, error) {
+        toastr["error"](
+          "Hubo un problema al procesar la solicitud: " + error,
+          "Error"
+        );
+      });
+    }
+  });
 });
 

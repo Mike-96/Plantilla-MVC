@@ -24,7 +24,7 @@ function mensajeLogin(){
   let timerInterval
 Swal.fire({
   title: "Wellcome",
-  html: 'Create session in <b></b> milliseconds.',
+  html: 'Creando la seseion <b></b> milliseconds.',
   timer: 1500,
   timerProgressBar: true,
   heightAuto:false,

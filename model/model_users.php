@@ -101,7 +101,7 @@ class model_user extends connectBD
     {
         $connexion = connectBD::connect();
         $sql = "SELECT
-                    staff.staff_id, 
+                    staff.staff_id as staff, 
                     staff.group_id, 
                     staff.code_staff, 
                     staff.first_name, 
@@ -182,5 +182,69 @@ class model_user extends connectBD
             $this->close_connection();
             return 2;
         }
+    }
+
+    public function update_password($userID,$password, $rawPassword)
+    {
+        $connexion = connectBD::connect();
+        $sql = "UPDATE users SET hash_password = ?, raw_password = ? WHERE staff_id = ?";
+        $query = $connexion->prepare($sql);
+        $query->bindParam(1, $password);
+        $query->bindParam(2, $rawPassword);
+        $query->bindParam(3, $userID);
+        $query->execute();
+
+        $this->close_connection();
+        return 1;
+    }
+    
+    public function update_rol($userID,$rol)
+    {
+        $connexion = connectBD::connect();
+        $sql = "UPDATE users SET group_id WHERE user_id = ?";
+        $query = $connexion->prepare($sql);
+        $query->bindParam(1, $rol);
+        $query->bindParam(2, $userID);
+        $query->execute();
+
+        $this->close_connection();
+        return 1;
+    }
+
+    public function activate_user ($userID,$status)
+    {
+        $connexion = connectBD::connect();
+        $sql = "UPDATE users SET `status` = ? WHERE user_id = ?";
+        $query = $connexion->prepare($sql);
+        $query->bindParam(1, $status);
+        $query->bindParam(2, $userID);
+        $query->execute();
+
+        $this->close_connection();
+        return 1;
+    }
+
+    public function desactivate_user ($userID,$status)
+    {
+        $connexion = connectBD::connect();
+        $sql = "UPDATE users SET `status` = ? WHERE user_id = ?";
+        $query = $connexion->prepare($sql);
+        $query->bindParam(1, $status);
+        $query->bindParam(2, $userID);
+        $query->execute();
+
+        $this->close_connection();
+        return 1;
+    }
+    public function delete_user($userID)
+    {
+        $connexion = connectBD::connect();
+        // Actualiza el registro existente
+        $sqlDelete = "DELETE FROM users WHERE user_id = ?";
+        $queryDelete = $connexion->prepare($sqlDelete);
+        $queryDelete->bindParam(1, $userID, PDO::PARAM_INT);
+        $queryDelete->execute();
+
+        $this->close_connection();
     }
 }
