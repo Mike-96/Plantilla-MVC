@@ -217,7 +217,7 @@ btn_EditGroup.addEventListener("click", function () {
         //if 1 , insert table of database
         tbl_users_group.ajax.reload();
         $("#modalEditGroup").modal("hide");
-        toastr["success"]("GROUP successfully update", "Success");
+        toastr["success"]("Grupo actualizado", "Success");
       } else if (resp == 2) {
         //if 2, not insert, register is al ready register
         toastr["warning"]("EL GRUPO YA ESTA REGISTRADO", "Warning");
@@ -239,7 +239,7 @@ $("#list_group").on("click", ".btnActivate", function () {
   let  statusValue = data.status;
   let status = 1;
   if (statusValue == 1) {
-    toastr["warning"]("The GROUP is already ACTIVATED", "Warning");
+    toastr["warning"]("EL Grupo ya se encuentra activado", "Warning");
     return;
   }
   Swal.fire({
@@ -260,7 +260,7 @@ $("#list_group").on("click", ".btnActivate", function () {
         },
       }).done(function () {
         tbl_users_group.ajax.reload();
-        toastr["success"]("Group successfully ACTIVATED", "Success");
+        toastr["success"]("Grupo activado correctamente", "Success");
       });
     }
   });
@@ -273,7 +273,7 @@ $("#list_group").on("click", ".btnDesactivate", function () {
   let statusValue = data.status;
   let status = 2;
   if (statusValue == 2) {
-    toastr["warning"]("The GROUP is already DESACTIVATED", "Warning");
+    toastr["warning"]("Grupo ya se encuentra desactivado", "Warning");
     return;
   }
   Swal.fire({
@@ -294,7 +294,7 @@ $("#list_group").on("click", ".btnDesactivate", function () {
         },
       }).done(function () {
         tbl_users_group.ajax.reload();
-        toastr["success"]("Group successfully DESACTIVATED", "Success");
+        toastr["success"]("Grupo desactivado correctamente", "Success");
       });
     }
   });
@@ -310,13 +310,13 @@ $("#list_group").on("click", ".btnDelet", function () {
   let id = data.group_id;
 
   Swal.fire({
-    title: "Are you sure?",
-    text: "You won't be able to revert this!",
+    title: "Esta seguro?",
+    text: "No podra revertir esto!",
     icon: "warning",
     showCancelButton: true,
     confirmButtonColor: "#3085d6",
     cancelButtonColor: "#d33",
-    confirmButtonText: "Yes, delete it!",
+    confirmButtonText: "Si, Eliminar!",
   }).then((result) => {
     if (result.isConfirmed) {
       $.ajax({
@@ -327,7 +327,7 @@ $("#list_group").on("click", ".btnDelet", function () {
         },
       }).done(function () {
         tbl_users_group.ajax.reload();
-        toastr["success"]("Group successfully DELETED", "Success");
+        toastr["success"]("Grupo Eliminado correctamente", "Success");
       });
     }
   });

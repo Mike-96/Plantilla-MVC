@@ -37,8 +37,9 @@ require_once 'config.php';
       </div>
       <div class="info">
         <!-- user name  -->
-        <a href="#" class="d-block"><?php echo $_SESSION['SESSION_EMAIL'] ?></php></a>
-        <a href="#" class="d-block" style="font-size: 12px;"><?php echo $_SESSION['SESSION_NAME'] ?></php></a>
+        <a href="#" class="d-block" style="font-size: 12px;"><?php echo $_SESSION['SESSION_EMAIL'] ?></php></a>
+        <a href="#" class="d-block" style="font-size: 10px;"><?php echo $_SESSION['SESSION_NAME'] ?></php></a>
+        <a href="#" class="d-block" style="font-size: 10px;"><?php echo $_SESSION['SESSION_ROL'] ?></php></a>
       </div>
     </div>
 

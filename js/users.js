@@ -45,10 +45,10 @@ function listUser() {
         defaultContent: `
           <button type='button' class='btn btn-sm btn-info dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'> Acciones </button>
           <div class='dropdown-menu'>
-            <button class='btnChangeRol dropdown-item' type='button'><i class='fa fa-sync-alt'></i> Cambiar Roles</button>
+            <button class='btnChangeRolUser dropdown-item' type='button'><i class='fa fa-sync-alt'></i> Cambiar Roles</button>
             <button class='btnActivateUser dropdown-item' type='button'><i class='far fa-check-circle'></i> Activar</button>
             <button class='btnDesactivateUser dropdown-item' type='button'><i class='far fa-times-circle'></i> Desactivar</button>
-            <button class='btnDelete dropdown-item' type='button'><i class='fas fa-trash-alt'></i> Eliminar</button>
+            <button class='btnDeletUser dropdown-item' type='button'><i class='fas fa-trash-alt'></i> Eliminar</button>
             <button class='btnChangePassword dropdown-item' type='button'><i class='fas fa-key'></i> Cambiar Password</button>
           </div>`,
       },
@@ -408,7 +408,7 @@ function comboBox_Rol() {
 }
 
 //function open cambio de rol
-$("#table_user").on("click", ".btnChangeRol", function () {
+$("#table_user").on("click", ".btnChangeRolUser", function () {
   var data = tbl_users.row($(this).parents("tr")).data();
   if (tbl_users.row(this).child.isShown()) {
     data = tbl_users.row(this).data();
@@ -464,8 +464,8 @@ btnChangeRol.addEventListener("click", function () {
     url: "controller/users/c_change_rol_user.php",
     type: "POST",
     data: {
-      userId: txtUserId,
-      rolId: txtRolId,
+      userID: txtUserId,
+      rol: txtRolId,
     },
   }).done(function (resp) {
     if (resp == 1) {
@@ -475,6 +475,11 @@ btnChangeRol.addEventListener("click", function () {
     } else if (resp == 0) {
       toastr["error"]("Error de conexión con la base de datos.", "Error");
     }
+  }).fail(function (xhr, status, error) {
+    toastr["error"](
+      "Hubo un problema al procesar la solicitud: " + error,
+      "Error"
+    );
   });
 });
 
@@ -655,4 +660,59 @@ $("#table_user").on("click", ".btnDesactivateUser", function () {
     }
   });
 });
+
+// Function delete User
+$("#table_user").on("click", ".btnDeletUser", function () {
+  var data = tbl_users.row($(this).parents("tr")).data();
+  if (tbl_users.row(this).child.isShown()) {
+    data = tbl_users.row(this).data();
+  }
+
+  let id = data.user_id;
+
+  Swal.fire({
+    title: "¿Está seguro de eliminar este usuario?",
+    text: "No podrá revertir esta acción.",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Sí, eliminar!",
+    cancelButtonText: "Cancelar",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Swal.showLoading(); // Loader mientras se procesa
+      
+      $.ajax({
+        url: "controller/users/c_delete_user.php",
+        type: "POST",
+        data: { userID: id },
+      }).done(function (response) {
+        response = JSON.parse(response);
+      
+        if (response.status === "self-deletion-blocked") {
+          Swal.close();
+          toastr["warning"]("No puedes eliminar tu propia cuenta.", "Advertencia");
+          return;
+        }
+      
+        if (response.status === "success") {
+          tbl_users.ajax.reload();
+          tblViewUserStaff.ajax.reload();
+          Swal.close();
+          toastr["success"]("Usuario eliminado correctamente", "Éxito");
+        } else {
+          Swal.close();
+          toastr["error"]("Error al eliminar el usuario", "Error");
+        }
+      })
+      .fail(function (xhr, status, error) {
+        Swal.close();
+        toastr["error"]("Error en la solicitud: " + error, "Error");
+      });
+    }
+  });
+});
+
+
 

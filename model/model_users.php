@@ -7,13 +7,14 @@ class model_user extends connectBD
     public function verify_user($email, $password)
     {
         $connexion = connectBD::connect();
-        $sql = "SELECT 
+        $sql = "SELECT
                 users.user_id, 
                 users.user_image, 
                 users.user_name, 
                 users.email, 
                 users.sex, 
                 users.group_id, 
+                user_group.group_name, 
                 users.`status`, 
                 users.staff_id, 
                 users.hash_password, 
@@ -22,7 +23,11 @@ class model_user extends connectBD
                 users.created_at, 
                 users.updated_at
                 FROM
-                users 
+                users
+                LEFT JOIN
+                user_group
+                ON 
+                    users.group_id = user_group.group_id
                 WHERE 
                 users.email = BINARY ?";
 
@@ -184,7 +189,7 @@ class model_user extends connectBD
         }
     }
 
-    public function update_password($userID,$password, $rawPassword)
+    public function update_password($userID, $password, $rawPassword)
     {
         $connexion = connectBD::connect();
         $sql = "UPDATE users SET hash_password = ?, raw_password = ? WHERE staff_id = ?";
@@ -197,11 +202,11 @@ class model_user extends connectBD
         $this->close_connection();
         return 1;
     }
-    
-    public function update_rol($userID,$rol)
+
+    public function update_rol($userID, $rol)
     {
         $connexion = connectBD::connect();
-        $sql = "UPDATE users SET group_id WHERE user_id = ?";
+        $sql = "UPDATE users SET group_id = ? WHERE user_id = ?";
         $query = $connexion->prepare($sql);
         $query->bindParam(1, $rol);
         $query->bindParam(2, $userID);
@@ -211,7 +216,7 @@ class model_user extends connectBD
         return 1;
     }
 
-    public function activate_user ($userID,$status)
+    public function activate_user($userID, $status)
     {
         $connexion = connectBD::connect();
         $sql = "UPDATE users SET `status` = ? WHERE user_id = ?";
@@ -224,7 +229,7 @@ class model_user extends connectBD
         return 1;
     }
 
-    public function desactivate_user ($userID,$status)
+    public function desactivate_user($userID, $status)
     {
         $connexion = connectBD::connect();
         $sql = "UPDATE users SET `status` = ? WHERE user_id = ?";
@@ -236,15 +241,29 @@ class model_user extends connectBD
         $this->close_connection();
         return 1;
     }
+
+    // Dentro de la clase model_user
     public function delete_user($userID)
     {
         $connexion = connectBD::connect();
-        // Actualiza el registro existente
+
+        // SQL para eliminar el usuario
         $sqlDelete = "DELETE FROM users WHERE user_id = ?";
         $queryDelete = $connexion->prepare($sqlDelete);
         $queryDelete->bindParam(1, $userID, PDO::PARAM_INT);
+
+        // Ejecuta la consulta
         $queryDelete->execute();
 
-        $this->close_connection();
+        // Verificar si se eliminó alguna fila
+        if ($queryDelete->rowCount() > 0) {
+            // Si se eliminó el usuario
+            $this->close_connection();
+            return true;  // Regresa un valor verdadero indicando éxito
+        } else {
+            // Si no se eliminó el usuario
+            $this->close_connection();
+            return false;  // Regresa falso si no se eliminó
+        }
     }
 }

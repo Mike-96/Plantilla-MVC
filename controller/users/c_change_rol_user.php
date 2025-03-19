@@ -1,6 +1,6 @@
 <?php 
 
-require '../../model/model_users.php';
+require __DIR__ . "/../../model/model_users.php";
 
 $MU = new model_user();
     $userID = htmlspecialchars($_POST['userID'], ENT_QUOTES, 'UTF-8');

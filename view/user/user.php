@@ -61,7 +61,7 @@ require_once '../../assets/dictionary.php';
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-id-card"></i></span>
                                         </div>
-                                        <input type="text" class="form-control" id="inputUserIdStaff" disabled>
+                                        <input type="text" class="form-control" id="inputUserIdStaff" disabled hidden>
                                         <input type="text" class="form-control" id="inputUserStaff" disabled>
                                         <span class="input-group-append">
                                             <button id="openFindUserStaff" type="button" class="btn btn-info"><i class="fas fa-search"></i> <?php echo $dictionary['find']; ?></button>

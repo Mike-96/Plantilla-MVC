@@ -23,7 +23,7 @@ function mensaje(icono,mensaje) {
 function mensajeLogin(){
   let timerInterval
 Swal.fire({
-  title: "Wellcome",
+  title: "Bienvenido!",
   html: 'Creando la seseion <b></b> milliseconds.',
   timer: 1500,
   timerProgressBar: true,
@@ -82,7 +82,7 @@ btn_login.onclick = function(e) {
       var data = JSON.parse(resp);
 
       if (data.length>0) {
-        if (data[0][6] !== "1") {
+        if (data[0][7] !== "1") {
           return mensaje("warning", "El usuario no tiene acceso, comuníquese con el administrador del sistema!");
         }
         $.ajax({
@@ -93,7 +93,7 @@ btn_login.onclick = function(e) {
               user_image: data[0][1],
               user_name: data[0][2],
               email: data[0][3],
-              rol: data[0][5]
+              rol: data[0][6]
           }
 
         }).done(function(r){ 
