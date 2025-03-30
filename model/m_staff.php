@@ -157,12 +157,33 @@ class model_staff extends connectBD
     public function delete_staff($staff_id)
     {
         $connexion = connectBD::connect();
-        // Actualiza el registro existente
+
+        // Verificar si el staff tiene un usuario asociado
+        $sqlCheck = "SELECT COUNT(*) as count 
+                 FROM staff
+                 LEFT JOIN users ON staff.staff_id = users.staff_id
+                 WHERE staff.staff_id = ? 
+                 AND users.staff_id IS NOT NULL";
+
+        $queryCheck = $connexion->prepare($sqlCheck);
+        $queryCheck->bindParam(1, $staff_id, PDO::PARAM_INT);
+        $queryCheck->execute();
+        $result = $queryCheck->fetch(PDO::FETCH_ASSOC);
+
+        // Si el personal tiene un usuario, no se puede eliminar
+        if ($result['count'] > 0) {
+            return json_encode(["status" => "error", "message" => "No puedes eliminar este Personal porque tiene un usuario asociado."]);
+        }
+
+        // Si no tiene usuario, proceder con la eliminación
         $sqlDelete = "DELETE FROM staff WHERE staff_id = ?";
         $queryDelete = $connexion->prepare($sqlDelete);
         $queryDelete->bindParam(1, $staff_id, PDO::PARAM_INT);
         $queryDelete->execute();
 
         $this->close_connection();
+
+        return json_encode(["status" => "success", "message" => "Personal eliminado correctamente."]);
     }
 }
+?>

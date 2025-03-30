@@ -558,36 +558,44 @@ btn_AddCancel.addEventListener("click", function () {
   $("#addStaff .btn.btn-tool[data-card-widget='collapse']").trigger("click");
 });
 
-//Function delete staff
+// Function delete staff
 $("#list_staff").on("click", ".btnDelet", function () {
   var data = tbl_staff.row($(this).parents("tr")).data();
   if (tbl_staff.row(this).child.isShown()) {
-    //modal responsivo para moviles
+    // Modal responsivo para móviles
     var data = tbl_staff.row(this).data();
   }
   let id = data.staff_id;
 
   Swal.fire({
-    title: "Esta seguro?",
+    title: "¿Está seguro?",
     text: "¡No podrás revertir esto!",
     icon: "warning",
     showCancelButton: true,
     confirmButtonColor: "#3085d6",
     cancelButtonColor: "#d33",
-    confirmButtonText: "¡Sí, Eliminar!",
+    confirmButtonText: "¡Sí, Eliminar!"
   }).then((result) => {
     if (result.isConfirmed) {
       $.ajax({
         url: "controller/staff/c_delet_staff.php",
         type: "POST",
         data: {
-          staff_id: id,
+          staff_id: id
         },
-      }).done(function () {
-        tbl_staff.ajax.reload();
-        toastr["success"]("El registro fue eliminado exitosamente", "Success");
+        dataType: "json", // Definimos que esperamos una respuesta JSON
+      }).done(function (response) {
+        // Aquí manejamos la respuesta JSON del servidor
+        if (response.status === "success") {
+          toastr["success"](response.message, "Success");
+          tbl_staff.ajax.reload(); // Recargamos la tabla
+        } else {
+          toastr["error"](response.message, "Error");
+        }
+      }).fail(function () {
+        toastr["error"]("Error en la solicitud", "Error");
       });
     }
-    
   });
 });
+

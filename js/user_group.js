@@ -322,13 +322,20 @@ $("#list_group").on("click", ".btnDelet", function () {
       $.ajax({
         url: "controller/user_group/c_delet_group.php",
         type: "POST",
-        data: {
-          id: id,
-        },
-      }).done(function () {
-        tbl_users_group.ajax.reload();
-        toastr["success"]("Grupo Eliminado correctamente", "Success");
-      });
+        data: { id: id },
+        dataType: "json",
+      })
+        .done(function (response) {
+          if (response.status === "success") {
+            toastr["success"](response.message, "Success");
+            tbl_users_group.ajax.reload();
+          } else {
+            toastr["error"](response.message, "Error");
+          }
+        })
+        .fail(function () {
+          toastr["error"]("Error en la solicitud", "Error");
+        });      
     }
   });
 });
