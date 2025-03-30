@@ -65,6 +65,7 @@ $dictionary = [
     "changePassword" => "Cambiar Contraseña",
     "newPassword" => "Nueva Contraseña",
     "changeRol" => "Cambiar Roles",
+    "configsRol" => " Configuraciones de Roles",
 
 ];
 $title = [
@@ -75,6 +76,7 @@ $title = [
     "users" => "Usuarios",
     "listUsers" => "Lista de Usuarios",
     "staffLis" => "Lista de Personal",
+    "configsRol" => " Configuraciones de Roles",
 ];
 $routers = [
     "listGroups" => "Lista de Grupos",
@@ -84,5 +86,7 @@ $routers = [
     "listUsers" => "Lista de Usuarios",
     "listRoles" => "Lista de Roles",
     "staff" => "Personal",
+    "configs" => " Configuraciones",
+    "configsRol" => " Configuraciones de Roles",
 ];
 ?>

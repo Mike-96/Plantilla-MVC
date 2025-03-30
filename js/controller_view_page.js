@@ -3,6 +3,7 @@ const btnViewUser = document.getElementById("btnViewUser");
 const btnRolUser = document.getElementById("btnRolUser");
 const btnWhatsapp = document.getElementById("btnWhatsapp");
 const btnStaff = document.getElementById("btnStaff");
+const btnConfigsRol = document.getElementById("btnConfigsRol");
 
 function load_mainContainer(id, view) {
     $("#" + id).load(view);
@@ -25,6 +26,10 @@ btnRolUser.addEventListener("click", function() {
 //mostrar vista staff
 btnStaff.addEventListener("click", function() {
     load_mainContainer("main_container", "./view/staff/staff.php");
+});
+//mostrar vista ConfigsRol
+btnConfigsRol.addEventListener("click", function() {
+    load_mainContainer("main_container", "./view/configs/rolConfigs.php");
 });
 
 function clearPreviousView() {

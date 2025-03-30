@@ -108,7 +108,38 @@ require_once 'config.php';
           </a>
         </li>
 
-        <li class="nav-header">EXAMPLES</li>
+        <!--  -->
+
+        
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="fas fa-cog"></i>
+            <p>
+              <?php echo $routers['configs']; ?>
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <!-- configuracion de roles -->
+            <li class="nav-item text-sm">
+              <a href="#" id="btnConfigsRol" class="nav-link">
+                <i class="fas fa-code-branch"></i>
+                <p>
+                  <?php echo $dictionary['configsRol']; ?>
+                </p>
+              </a>
+            </li>
+            <!-- /configuracion de roles -->
+          </ul>
+        </li>
+
+        <!--  -->
+
+
+
+
+
+
       </ul>
     </nav>
     <!-- /.sidebar-menu -->

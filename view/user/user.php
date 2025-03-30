@@ -281,9 +281,6 @@ require_once '../../assets/dictionary.php';
     </div>
 </div>
 
-
-
-
 <!-- card list user -->
 <section class="content">
     <div class="container-fluid">
@@ -295,16 +292,6 @@ require_once '../../assets/dictionary.php';
                             <i class="fas fa-address-card"></i>
                             <?php echo $title['listUsers']; ?>
                         </h3>
-                        <div class="card-tools">
-                            <ul class="nav nav-pills ml-auto">
-                                <li class="nav-item">
-                                    <a class="nav-link active btn-sm" href="#list-users" data-toggle="tab"><?php echo $dictionary['list'] ?></a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link btn-sm" href="#box-users" data-toggle="tab"><?php echo $dictionary['card'] ?></a>
-                                </li>
-                            </ul>
-                        </div>
                     </div><!-- /.card-header -->
                     <div class="card-body">
                         <div class="tab-content p-0">
@@ -332,9 +319,6 @@ require_once '../../assets/dictionary.php';
                                     </div>
                                 </div>
 
-                            </div>
-                            <div class="chart tab-pane" id="box-users" style="position: relative; height: 300px;">
-                                <h1>Papiriiiiinnnn </h1>
                             </div>
                         </div>
                     </div><!-- /.card-body -->
