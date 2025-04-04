@@ -143,6 +143,29 @@ require_once '../../assets/dictionary.php';
     </div>
 </div>
 
+<!-- modal permissions -->
+<div class="modal fade" id="modalPermissionGroup" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="undefined" draggable="undefined">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"><b><i class="fas fa-edit"></i><?php echo $title['editRol']; ?></b></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><b><i class="far fa-times-circle"></i></b></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="align-self-center">
+
+                    <!--  -->
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal"><i class="fas fa-ban"></i> <?php echo $dictionary['cancel']; ?></button>
+                <button id="btnEditCreateRoleGroup" type="button" class="btn btn-success btn-sm"><i class="fas fa-check"></i> <?php echo $dictionary['update']; ?></button>
+            </div>
+        </div>
+    </div>
+</div>
 <script src="js/user_group.js"></script>
 <script>
     $(document).ready(function() {

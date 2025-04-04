@@ -42,6 +42,7 @@ function ListUserGroup() {
       "<button class='btnEdit dropdown-item' type='button'><i class='fa fa-edit'></i> Editar</button>" +
       "<button class='btnActivate dropdown-item' type='button'><i class='far fa-check-circle'></i> Activar</button>" +
       "<button class='btnDesactivate dropdown-item' type='button'><i class='far fa-times-circle'></i> Desactivar</button>" +
+      "<button class='btnPermissions dropdown-item' type='button'><i class='fas fa-code-branch'></i> Permisos</button>" +
       "<button class='btnDelet dropdown-item' type='button'><i class='fas fa-trash-alt'></i> Eliminar</button>" +
       "</div>",
       },
@@ -338,4 +339,19 @@ $("#list_group").on("click", ".btnDelet", function () {
         });      
     }
   });
+});
+
+//function open modal edit group
+$("#list_group").on("click", ".btnPermissions", function () {
+  var data = tbl_users_group.row($(this).parents("tr")).data();
+  if (tbl_users_group.row(this).child.isShown()) {
+    //modal responsivo para moviles
+    var data = tbl_users_group.row(this).data();
+  }
+  $("#modalPermissionGroup").modal({ backdrop: "static", keyboard: false });
+  $("#modalPermissionGroup").modal("show");
+  $("#modalPermissionGroup").draggable({
+    handle: ".modal-header" // Puedes arrastrar el modal desde la cabecera
+  });
+
 });

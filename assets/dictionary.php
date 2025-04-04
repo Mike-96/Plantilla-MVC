@@ -77,6 +77,10 @@ $title = [
     "listUsers" => "Lista de Usuarios",
     "staffLis" => "Lista de Personal",
     "configsRol" => " Configuraciones de Roles",
+    "POS"=> "Punto de Venta",
+    "configs" => "Configuraciones",
+    "products" => "Productos",
+    "listProducts" => "Lista de Productos",
 ];
 $routers = [
     "listGroups" => "Lista de Grupos",
@@ -88,5 +92,7 @@ $routers = [
     "staff" => "Personal",
     "configs" => " Configuraciones",
     "configsRol" => " Configuraciones de Roles",
+    "pos" => "POS",
+    "products" => "Productos",
 ];
 ?>

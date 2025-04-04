@@ -49,14 +49,34 @@ require_once 'config.php';
         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
         <li class="nav-header"><?php echo $title['navigationMenu']; ?></li>
+        <!--  -->
         <li class="nav-item menu-open">
-          <a href="./index.php" class="nav-link active">
+          <a href="#"  id="btnPOS" class="nav-link active">
+            <i class="nav-icon fas fa-shopping-cart"></i>
+            <p>
+              <?php echo $routers['pos']; ?>
+            </p>
+          </a>
+        </li>
+        <!--  -->
+        <li class="nav-item menu-open">
+          <a href="./index.php" class="nav-link">
             <i class="nav-icon fas fa-tachometer-alt"></i>
             <p>
               <?php echo $routers['dashboard']; ?>
             </p>
           </a>
         </li>
+
+        <li class="nav-item">
+          <a href="#" id="btnProductos" class="nav-link">
+            <i class="nav-icon fas fa-shopping-basket"></i>
+            <p>
+              <?php echo $routers['products']; ?>
+            </p>
+          </a>
+        </li>
+
         <li class="nav-item">
           <a href="#" id="btnWhatsapp" class="nav-link">
             <i class="nav-icon fab fa-whatsapp"></i>
@@ -110,7 +130,7 @@ require_once 'config.php';
 
         <!--  -->
 
-        
+
         <li class="nav-item">
           <a href="#" class="nav-link">
             <i class="fas fa-cog"></i>

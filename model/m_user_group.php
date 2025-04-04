@@ -161,4 +161,27 @@ class model_user_group extends connectBD
         $this->close_connection();
         return $array;
     }
+
+    // public function update_group_permissions($group_id, $permissions)
+    // {
+    //     try {
+    //         $connexion = connectBD::connect();
+
+    //         // Convertimos el array de permisos en JSON para almacenarlo
+    //         $permissions_json = json_encode($permissions);
+
+    //         $sqlUpdate = "UPDATE user_group SET permission = ? WHERE group_id = ?";
+    //         $queryUpdate = $connexion->prepare($sqlUpdate);
+    //         $queryUpdate->bindParam(1, $permissions_json, PDO::PARAM_STR);
+    //         $queryUpdate->bindParam(2, $group_id, PDO::PARAM_INT);
+
+    //         $result = $queryUpdate->execute();
+
+    //         $this->close_connection();
+
+    //         return $result ? "success" : "error";
+    //     } catch (Exception $e) {
+    //         return "error: " . $e->getMessage();
+    //     }
+    // }
 }

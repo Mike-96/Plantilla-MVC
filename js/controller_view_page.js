@@ -4,6 +4,8 @@ const btnRolUser = document.getElementById("btnRolUser");
 const btnWhatsapp = document.getElementById("btnWhatsapp");
 const btnStaff = document.getElementById("btnStaff");
 const btnConfigsRol = document.getElementById("btnConfigsRol");
+const btnPos = document.getElementById("btnPOS");
+const btnProducto = document.getElementById("btnProductos");
 
 function load_mainContainer(id, view) {
     $("#" + id).load(view);
@@ -30,6 +32,14 @@ btnStaff.addEventListener("click", function() {
 //mostrar vista ConfigsRol
 btnConfigsRol.addEventListener("click", function() {
     load_mainContainer("main_container", "./view/configs/rolConfigs.php");
+});
+//mostrar vista ConfigsRol
+btnPos.addEventListener("click", function() {
+    load_mainContainer("main_container", "./view/pos/pos.php");
+});
+//mostrar vista ConfigsRol
+btnProducto.addEventListener("click", function() {
+    load_mainContainer("main_container", "./view/producto/producto.php");
 });
 
 function clearPreviousView() {
